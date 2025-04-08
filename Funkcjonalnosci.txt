@@ -4,14 +4,18 @@ Wykonane funkcjonalności
 1. Logowanie oraz rejestracja użytkowników
 Aktorzy: Klienci, Administratorzy
 
-Opis: Użytkownicy mogą tworzyć konta oraz logować się do systemu, co umożliwia im dostęp do pełnej funkcjonalności, takiej jak składanie zamówień, przeglądanie menu i zarządzanie danymi osobowymi. Administratorzy mają dodatkowe uprawnienia do zarządzania użytkownikami i danymi restauracji.
+Opis: Użytkownicy mogą tworzyć konta oraz logować się do systemu, co umożliwia im dostęp do pełnej funkcjonalności, 
+takiej jak składanie zamówień, przeglądanie menu i zarządzanie danymi osobowymi. 
+Administratorzy mają dodatkowe uprawnienia do zarządzania użytkownikami i danymi restauracji.
 
 2. Dodawanie nowych dań do menu
 Aktorzy: Administratorzy
 
-Opis: Administratorzy mają uprawnienia do dodawania, edytowania i usuwania dań z menu. Pozwala to na dynamiczne aktualizowanie oferty restauracji w zależności od sezonowych zmian lub wprowadzenia nowych propozycji.
+Opis: Administratorzy mają uprawnienia do dodawania, edytowania i usuwania dań z menu. 
+Pozwala to na dynamiczne aktualizowanie oferty restauracji w zależności od sezonowych zmian lub wprowadzenia nowych propozycji.
 
 3. Panel administracyjny
 Aktorzy: Administratorzy
 
-Opis: Panel administracyjny umożliwia zarządzanie użytkownikami, daniami oraz zamówieniami. Administratorzy mają dostęp do narzędzi potrzebnych do efektywnego zarządzania restauracją i monitorowania działalności systemu.
+Opis: Panel administracyjny umożliwia zarządzanie użytkownikami, daniami oraz zamówieniami. 
+Administratorzy mają dostęp do narzędzi potrzebnych do efektywnego zarządzania restauracją i monitorowania działalności systemu.
