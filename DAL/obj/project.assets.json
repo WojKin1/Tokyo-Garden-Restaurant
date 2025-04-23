@@ -4046,11 +4046,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\DAL\\DAL.csproj",
+      "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\DAL\\DAL.csproj",
       "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dominik\\source\\repos\\Tokyo_Garden\\DAL\\obj\\",
+      "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4068,8 +4068,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IDAL\\IDAL.csproj": {
-              "projectPath": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IDAL\\IDAL.csproj"
+            "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj": {
+              "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj"
             }
           }
         }

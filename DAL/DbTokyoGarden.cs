@@ -16,5 +16,7 @@ namespace DAL
         }
 
         public DbSet<Adresy> Adres { get; set; }
+        public DbSet<Uzytkownik> uzytkownik { get; set; }
+        public DbSet<Alergeny> alergenies { get; set; }
     }
 }
