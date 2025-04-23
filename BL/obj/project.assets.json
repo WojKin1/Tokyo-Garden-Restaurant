@@ -69,11 +69,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\BL\\BL.csproj",
+      "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj",
       "projectName": "BL",
-      "projectPath": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\BL\\BL.csproj",
+      "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj",
       "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dominik\\source\\repos\\Tokyo_Garden\\BL\\obj\\",
+      "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -91,11 +91,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IBL\\IBL.csproj": {
-              "projectPath": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IBL\\IBL.csproj"
+            "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj": {
+              "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj"
             },
-            "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IDAL\\IDAL.csproj": {
-              "projectPath": "C:\\Users\\Dominik\\source\\repos\\tokyo_garden\\IDAL\\IDAL.csproj"
+            "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj": {
+              "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj"
             }
           }
         }
