@@ -1,0 +1,15 @@
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\bin\Debug\net8.0\IDAL.deps.json
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\bin\Debug\net8.0\IDAL.dll
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\bin\Debug\net8.0\IDAL.pdb
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\bin\Debug\net8.0\Model.dll
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\bin\Debug\net8.0\Model.pdb
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.csproj.AssemblyReference.cache
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.AssemblyInfoInputs.cache
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.AssemblyInfo.cs
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.csproj.CoreCompileInputs.cache
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.csproj.Up2Date
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.dll
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\refint\IDAL.dll
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\IDAL.pdb
+C:\Users\Dominik\source\repos\Tokyo_Garden\IDAL\obj\Debug\net8.0\ref\IDAL.dll
