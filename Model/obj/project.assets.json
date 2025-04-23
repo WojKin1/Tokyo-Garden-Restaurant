@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dominik\\source\\repos\\Tokyo_Garden\\Model\\Model.csproj",
+      "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj",
       "projectName": "Model",
-      "projectPath": "C:\\Users\\Dominik\\source\\repos\\Tokyo_Garden\\Model\\Model.csproj",
+      "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj",
       "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dominik\\source\\repos\\Tokyo_Garden\\Model\\obj\\",
+      "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
