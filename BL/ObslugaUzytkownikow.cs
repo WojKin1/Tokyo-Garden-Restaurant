@@ -6,14 +6,21 @@ namespace BL
 {
     public class ObslugaUzytkownikow : IObslugaUzytkownik
     {
+        private readonly IUzytkownikRepository UzytkownikRepo;
+
+        public ObslugaUzytkownikow(IUzytkownikRepository repo)
+        {
+            UzytkownikRepo = repo;
+        }
+
         public IEnumerable<Uzytkownik> PobierzPosortowaneUzytkownikow()
         {
-            throw new NotImplementedException();
+            return UzytkownikRepo.GetUzytkownik().OrderBy(u => u.nazwisko);
         }
 
         public int PoliczUzytkownikow()
         {
-            throw new NotImplementedException();
+            return UzytkownikRepo.GetUzytkownik().Count();
         }
     }
 }

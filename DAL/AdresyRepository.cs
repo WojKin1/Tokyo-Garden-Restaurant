@@ -6,20 +6,38 @@ namespace DAL
     public class AdresyRepository : IAdresyRepository
 
     {
-        DbTokyoGarden db;
+        private readonly DbTokyoGarden db;
 
         public AdresyRepository(DbTokyoGarden db)
         {
             this.db = db;
         }
+
+        public void InsertAdres(Adresy adres)
+        {
+            db.Adres.Add(adres);
+        }
+
+        public void UpdateAdres(Adresy adres)
+        {
+            db.Adres.Update(adres);
+        }
+
         public void DeleteAdres(int adresId)
         {
-            throw new NotImplementedException();
+            var adres = db.Adres.Find(adresId);
+            if (adres != null)
+                db.Adres.Remove(adres);
+        }
+
+        public void Save()
+        {
+            db.SaveChanges();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            db.Dispose();
         }
 
         public IEnumerable<Adresy> GetAdresy()
@@ -32,19 +50,5 @@ namespace DAL
             return db.Adres.Find(adresId);
         }
 
-        public void InsertAdres(Adresy adres)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateAdres(Adresy adres)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

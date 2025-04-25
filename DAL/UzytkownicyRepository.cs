@@ -6,7 +6,7 @@ namespace DAL
     public class UzytkownicyRepository : IUzytkownikRepository
 
     {
-        DbTokyoGarden db;
+        private readonly DbTokyoGarden db;
 
         public UzytkownicyRepository(DbTokyoGarden db)
         {
@@ -14,12 +14,14 @@ namespace DAL
         }
         public void DeleteUzytkownik(int uzytkownikId)
         {
-            throw new NotImplementedException();
+            var uzytkownik = db.uzytkownik.Find(uzytkownikId);
+            if (uzytkownik != null)
+                db.uzytkownik.Remove(uzytkownik);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            db.Dispose();
         }
 
         public IEnumerable<Uzytkownik> GetUzytkownik()
@@ -32,24 +34,19 @@ namespace DAL
             return db.uzytkownik.Find(UzytkownikId);
         }
 
-        public void InsertAdres(Uzytkownik uzytkownik)
-        {
-            throw new NotImplementedException();
-        }
-
         public void InsertUzytkownik(Uzytkownik uzytkownik)
         {
-            throw new NotImplementedException();
+            db.uzytkownik.Add(uzytkownik);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
 
         public void UpdateUzytkownik(Uzytkownik uzytkownik)
         {
-            throw new NotImplementedException();
+            db.uzytkownik.Update(uzytkownik);
         }
     }
 }

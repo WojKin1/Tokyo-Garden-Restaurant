@@ -6,13 +6,17 @@ namespace Model
     {
         [Key]
         public int id { get; set; }
+
         [MaxLength(25)]
         public string miasto { get; set; }
-        [MaxLength(10)]
-        public string nr_domu { get; set; }
-        [MaxLength(25)]
-        public string nr_mieszkania { get; set; }
+
+        public int nr_domu { get; set; }
+
+        public int nr_mieszkania { get; set; }
+
         [MaxLength(50)]
         public string ulica { get; set; }
+
+        public virtual ICollection<Zamowienie> Zamowienia { get; set; }
     }
 }

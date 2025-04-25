@@ -6,7 +6,7 @@ namespace BL
 {
     public class ObslugaAdresow : IObslugaAdresow
     {
-        IAdresyRepository AdresyRepo;
+        private readonly IAdresyRepository AdresyRepo;
 
         public ObslugaAdresow(IAdresyRepository AdresyRepo)
         {

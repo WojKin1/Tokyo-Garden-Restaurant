@@ -4,16 +4,23 @@ using Model;
 
 namespace BL
 {
-    public class ObsługaAlergenow : IObslugaAlergenow
+    public class ObslugaAlergenow : IObslugaAlergenow
     {
+        private readonly IAlergenyRepository AlergenRepo;
+
+        public ObslugaAlergenow(IAlergenyRepository repo)
+        {
+            AlergenRepo = repo;
+        }
+
         public IEnumerable<Alergeny> PobierzPosortowaneAlergeny()
         {
-            throw new NotImplementedException();
+            return AlergenRepo.GetAlergeny().OrderBy(a => a.nazwa);
         }
 
         public int PoliczAlergeny()
         {
-            throw new NotImplementedException();
+            return AlergenRepo.GetAlergeny().Count();
         }
     }
 }

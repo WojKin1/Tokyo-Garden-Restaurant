@@ -3,9 +3,9 @@ using Model;
 
 namespace DAL
 {
-    class AlergenyRepository : IAlergenyRepository
+    public class AlergenyRepository : IAlergenyRepository
     {
-        private DbTokyoGarden db;
+        private readonly DbTokyoGarden db;
 
         public AlergenyRepository(DbTokyoGarden db)
         {
@@ -13,17 +13,14 @@ namespace DAL
         }
         public void DeleteAlergen(int alergenId)
         {
-            throw new NotImplementedException();
+            var alergen = db.alergenies.Find(alergenId);
+            if (alergen != null)
+                db.alergenies.Remove(alergen);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Alergeny> GetAlergen()
-        {
-            return db.alergenies.ToList();
+            db.Dispose();
         }
 
         public Alergeny GetAlergenByID(int AlergenId)
@@ -33,27 +30,22 @@ namespace DAL
 
         public IEnumerable<Alergeny> GetAlergeny()
         {
-            throw new NotImplementedException();
-        }
-
-        public Alergeny GetAlergenyByID(int alergenId)
-        {
-            throw new NotImplementedException();
+            return db.alergenies.ToList();
         }
 
         public void InsertAlergen(Alergeny alergen)
         {
-            throw new NotImplementedException();
+            db.alergenies.Add(alergen);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
 
         public void UpdateAlergen(Alergeny alergen)
         {
-            throw new NotImplementedException();
+            db.alergenies.Update(alergen);
         }
     }
 }
