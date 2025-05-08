@@ -21,3 +21,15 @@ C:\Users\Dominik\Source\Repos\Tokyo-Garden-Restaurant\tokyo_garden\Model\obj\Deb
 C:\Users\Dominik\Source\Repos\Tokyo-Garden-Restaurant\tokyo_garden\Model\obj\Debug\net8.0\refint\Model.dll
 C:\Users\Dominik\Source\Repos\Tokyo-Garden-Restaurant\tokyo_garden\Model\obj\Debug\net8.0\Model.pdb
 C:\Users\Dominik\Source\Repos\Tokyo-Garden-Restaurant\tokyo_garden\Model\obj\Debug\net8.0\ref\Model.dll
+G:\Talib\Tokyo-Garden-Restaurant\Model\bin\Debug\net8.0\Model.deps.json
+G:\Talib\Tokyo-Garden-Restaurant\Model\bin\Debug\net8.0\Model.dll
+G:\Talib\Tokyo-Garden-Restaurant\Model\bin\Debug\net8.0\Model.pdb
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.GeneratedMSBuildEditorConfig.editorconfig
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.AssemblyInfoInputs.cache
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.AssemblyInfo.cs
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.csproj.CoreCompileInputs.cache
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.sourcelink.json
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.dll
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\refint\Model.dll
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\Model.pdb
+G:\Talib\Tokyo-Garden-Restaurant\Model\obj\Debug\net8.0\ref\Model.dll

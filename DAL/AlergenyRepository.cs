@@ -1,5 +1,7 @@
 ﻿using IDAL;
 using Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
@@ -11,6 +13,7 @@ namespace DAL
         {
             this.db = db;
         }
+
         public void DeleteAlergen(int alergenId)
         {
             var alergen = db.alergenies.Find(alergenId);
@@ -23,9 +26,9 @@ namespace DAL
             db.Dispose();
         }
 
-        public Alergeny GetAlergenByID(int AlergenId)
+        public Alergeny GetAlergenyByID(int alergenId)
         {
-            return db.alergenies.Find(AlergenId);
+            return db.alergenies.Find(alergenId);
         }
 
         public IEnumerable<Alergeny> GetAlergeny()

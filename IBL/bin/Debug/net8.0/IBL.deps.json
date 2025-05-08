@@ -19,18 +19,12 @@
           "Model": "1.0.0"
         },
         "runtime": {
-          "IDAL.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "IDAL.dll": {}
         }
       },
       "Model/1.0.0": {
         "runtime": {
-          "Model.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Model.dll": {}
         }
       }
     }

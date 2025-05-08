@@ -1,10 +1,11 @@
 ﻿using IDAL;
 using Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
     public class UzytkownicyRepository : IUzytkownikRepository
-
     {
         private readonly DbTokyoGarden db;
 
@@ -12,26 +13,15 @@ namespace DAL
         {
             this.db = db;
         }
-        public void DeleteUzytkownik(int uzytkownikId)
-        {
-            var uzytkownik = db.uzytkownik.Find(uzytkownikId);
-            if (uzytkownik != null)
-                db.uzytkownik.Remove(uzytkownik);
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
-        }
 
         public IEnumerable<Uzytkownik> GetUzytkownik()
         {
             return db.uzytkownik.ToList();
         }
 
-        public Uzytkownik GetUzytkownikByID(int UzytkownikId)
+        public Uzytkownik GetUzytkownikByID(int uzytkownikID)
         {
-            return db.uzytkownik.Find(UzytkownikId);
+            return db.uzytkownik.Find(uzytkownikID);
         }
 
         public void InsertUzytkownik(Uzytkownik uzytkownik)
@@ -39,14 +29,26 @@ namespace DAL
             db.uzytkownik.Add(uzytkownik);
         }
 
-        public void Save()
+        public void DeleteUzytkownik(int uzytkownikID)
         {
-            db.SaveChanges();
+            var uzytkownik = db.uzytkownik.Find(uzytkownikID);
+            if (uzytkownik != null)
+                db.uzytkownik.Remove(uzytkownik);
         }
 
         public void UpdateUzytkownik(Uzytkownik uzytkownik)
         {
             db.uzytkownik.Update(uzytkownik);
+        }
+
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
 }

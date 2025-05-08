@@ -1,6 +1,7 @@
 using IDAL;
 using Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
@@ -13,31 +14,31 @@ namespace DAL
             this.db = db;
         }
 
-        public IEnumerable<PozycjaZamowienia> GetPozycje()
+        public IEnumerable<PozycjaZamowienia> GetPozycjeZamowienia()
         {
             return db.PozycjeZamowienia.ToList();
         }
 
-        public PozycjaZamowienia GetPozycjaByID(int id)
+        public PozycjaZamowienia GetPozycjaZamowieniaByID(int id)
         {
             return db.PozycjeZamowienia.Find(id);
         }
 
-        public void InsertPozycja(PozycjaZamowienia p)
+        public void InsertPozycjaZamowienia(PozycjaZamowienia pozycja)
         {
-            db.PozycjeZamowienia.Add(p);
+            db.PozycjeZamowienia.Add(pozycja);
         }
 
-        public void DeletePozycja(int id)
+        public void DeletePozycjaZamowienia(int id)
         {
             var p = db.PozycjeZamowienia.Find(id);
             if (p != null)
                 db.PozycjeZamowienia.Remove(p);
         }
 
-        public void UpdatePozycja(PozycjaZamowienia p)
+        public void UpdatePozycjaZamowienia(PozycjaZamowienia pozycja)
         {
-            db.PozycjeZamowienia.Update(p);
+            db.PozycjeZamowienia.Update(pozycja);
         }
 
         public void Save()

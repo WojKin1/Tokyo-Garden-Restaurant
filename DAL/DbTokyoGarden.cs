@@ -1,18 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
     public class DbTokyoGarden : DbContext
     {
+        // Konstruktor dla testów (InMemory DB)
+        public DbTokyoGarden(DbContextOptions<DbTokyoGarden> options) : base(options)
+        {
+        }
+
+        // Domyślny konstruktor – do użycia w normalnym uruchamianiu aplikacji
+        public DbTokyoGarden()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TokyoGarden;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TokyoGarden;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Klucz złożony dla relacji wiele-do-wielu (AlergenPozycjaMenu)
+            modelBuilder.Entity<AlergenPozycjaMenu>()
+                .HasKey(x => new { x.id_pozycja_menu, x.id_alergen });
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Adresy> Adres { get; set; }

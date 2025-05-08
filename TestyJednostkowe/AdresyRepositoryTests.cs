@@ -1,49 +1,102 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using Model;
 using DAL;
-using IDAL;
+using Model;
 
-public class AdresyRepositoryTests
+namespace TestyJednostkowe
 {
-    private DbContextOptions<DbTokyoGarden> GetInMemoryDbOptions()
+    public class AdresyRepositoryTests
     {
-        return new DbContextOptionsBuilder<DbTokyoGarden>()
-            .UseInMemoryDatabase(databaseName: "InMemoryDb")
-            .Options;
-    }
+        private DbTokyoGarden GetDbContext()
+        {
+            var options = new DbContextOptionsBuilder<DbTokyoGarden>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
 
-    [Fact]
-    public void TestGetAdresy()
-    {
-        var options = GetInMemoryDbOptions();
-        var context = new DbTokyoGarden(options);
+            return new DbTokyoGarden(options);
+        }
 
-        context.Adres.Add(new Adresy { miasto = "Warszawa" });
-        context.Adres.Add(new Adresy { miasto = "Kraków" });
-        context.SaveChanges();
+        [Fact]
+        public void InsertAdres_PowinienDodacAdresDoBazy()
+        {
+            // Arrange
+            var context = GetDbContext();
+            var repo = new AdresyRepository(context);
+            var adres = new Adresy
+            {
+                id = 1,
+                miasto = "Warszawa",
+                nr_domu = 10,
+                nr_mieszkania = 2,
+                ulica = "Nowowiejska"
+            };
 
-        var repository = new AdresyRepository(context);
+            // Act
+            repo.InsertAdres(adres);
+            repo.Save();
 
-        var adresy = repository.GetAdresy();
+            // Assert
+            var zBazy = context.Adres.FirstOrDefault();
+            Assert.NotNull(zBazy);
+            Assert.Equal("Warszawa", zBazy.miasto);
+        }
 
-        Assert.Equal(2, adresy.Count());
-    }
+        [Fact]
+        public void GetAdresy_PowinienZwrocicWszystkie()
+        {
+            // Arrange
+            var context = GetDbContext();
+            var repo = new AdresyRepository(context);
 
-    [Fact]
-    public void TestAddAdres()
-    {
-        var options = GetInMemoryDbOptions();
-        var context = new DbTokyoGarden(options);
+            repo.InsertAdres(new Adresy { id = 1, miasto = "Gdañsk", nr_domu = 12, nr_mieszkania = 3, ulica = "D³uga" });
+            repo.InsertAdres(new Adresy { id = 2, miasto = "Poznañ", nr_domu = 15, nr_mieszkania = 0, ulica = "Pó³wiejska" });
+            repo.Save();
 
-        var repository = new AdresyRepository(context);
-        var adres = new Adresy { miasto = "Wroc³aw" };
+            // Act
+            var lista = repo.GetAdresy().ToList();
 
-        repository.InsertAdres(adres);
-        repository.Save();
+            // Assert
+            Assert.Equal(2, lista.Count);
+        }
 
-        var savedAdres = context.Adres.Find(adres.id);
-        Assert.NotNull(savedAdres);
-        Assert.Equal("Wroc³aw", savedAdres.miasto);
+        [Fact]
+        public void GetAdresyByID_PowinienZwrocicPoprawnyAdres()
+        {
+            // Arrange
+            var context = GetDbContext();
+            var repo = new AdresyRepository(context);
+            var adres = new Adresy { id = 5, miasto = "Kraków", nr_domu = 22, nr_mieszkania = 1, ulica = "Floriañska" };
+
+            repo.InsertAdres(adres);
+            repo.Save();
+
+            // Act
+            var wynik = repo.GetAdresyByID(5);
+
+            // Assert
+            Assert.NotNull(wynik);
+            Assert.Equal("Kraków", wynik.miasto);
+        }
+
+        [Fact]
+        public void DeleteAdres_PowinienUsunacAdresZBazy()
+        {
+            // Arrange
+            var context = GetDbContext();
+            var repo = new AdresyRepository(context);
+
+            repo.InsertAdres(new Adresy { id = 7, miasto = "£ódŸ", nr_domu = 5, nr_mieszkania = 0, ulica = "Piotrkowska" });
+            repo.Save();
+
+            // Act
+            repo.DeleteAdres(7);
+            repo.Save();
+
+            // Assert
+            var wynik = repo.GetAdresyByID(7);
+            Assert.Null(wynik);
+        }
     }
 }

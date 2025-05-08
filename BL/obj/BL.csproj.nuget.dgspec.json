@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj": {}
+    "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\BL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj": {
+    "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj",
+        "projectUniqueName": "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\BL.csproj",
         "projectName": "BL",
-        "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\BL.csproj",
-        "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\BL\\obj\\",
+        "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\BL.csproj",
+        "packagesPath": "C:\\Users\\Wojciech\\.nuget\\packages\\",
+        "outputPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Wojciech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,11 +33,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj": {
-                "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj"
+              "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj": {
+                "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj"
               },
-              "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj": {
-                "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj"
+              "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj": {
+                "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj"
               }
             }
           }
@@ -68,21 +72,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj": {
+    "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj",
+        "projectUniqueName": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj",
         "projectName": "IBL",
-        "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\IBL.csproj",
-        "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IBL\\obj\\",
+        "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj",
+        "packagesPath": "C:\\Users\\Wojciech\\.nuget\\packages\\",
+        "outputPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Wojciech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -97,8 +105,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj": {
-                "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj"
+              "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj": {
+                "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj"
               }
             }
           }
@@ -133,21 +141,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj": {
+    "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj",
+        "projectUniqueName": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj",
         "projectName": "IDAL",
-        "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\IDAL.csproj",
-        "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\IDAL\\obj\\",
+        "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj",
+        "packagesPath": "C:\\Users\\Wojciech\\.nuget\\packages\\",
+        "outputPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Wojciech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -162,8 +174,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj": {
-                "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj"
+              "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\Model.csproj": {
+                "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\Model.csproj"
               }
             }
           }
@@ -198,21 +210,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj": {
+    "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj",
+        "projectUniqueName": "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dominik\\Source\\Repos\\Tokyo-Garden-Restaurant\\tokyo_garden\\Model\\obj\\",
+        "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\Wojciech\\.nuget\\packages\\",
+        "outputPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\Model\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Wojciech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -259,7 +275,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,6 +1,7 @@
 using IDAL;
 using Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
@@ -13,31 +14,26 @@ namespace DAL
             this.db = db;
         }
 
-        public IEnumerable<AlergenPozycjaMenu> GetAll()
+        public IEnumerable<AlergenPozycjaMenu> GetAlergenPozycjaMenu()
         {
             return db.AlergenPozycjaMenu.ToList();
         }
 
-        public AlergenPozycjaMenu GetById(int pozycjaId, int alergenId)
+        public AlergenPozycjaMenu GetByIDs(int idAlergen, int idPozycjaMenu)
         {
-            return db.AlergenPozycjaMenu.FirstOrDefault(x => x.id_pozycja_menu == pozycjaId && x.id_alergen == alergenId);
+            return db.AlergenPozycjaMenu.FirstOrDefault(x => x.id_alergen == idAlergen && x.id_pozycja_menu == idPozycjaMenu);
         }
 
-        public void Insert(AlergenPozycjaMenu entity)
+        public void InsertAlergenPozycjaMenu(AlergenPozycjaMenu apm)
         {
-            db.AlergenPozycjaMenu.Add(entity);
+            db.AlergenPozycjaMenu.Add(apm);
         }
 
-        public void Delete(int pozycjaId, int alergenId)
+        public void DeleteAlergenPozycjaMenu(int idAlergen, int idPozycjaMenu)
         {
-            var entity = GetById(pozycjaId, alergenId);
+            var entity = GetByIDs(idAlergen, idPozycjaMenu);
             if (entity != null)
                 db.AlergenPozycjaMenu.Remove(entity);
-        }
-
-        public void Update(AlergenPozycjaMenu entity)
-        {
-            db.AlergenPozycjaMenu.Update(entity);
         }
 
         public void Save()
