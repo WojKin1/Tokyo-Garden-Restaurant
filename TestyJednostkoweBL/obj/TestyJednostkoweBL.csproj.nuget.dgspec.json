@@ -1,0 +1,440 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\TestyJednostkoweBL\\TestyJednostkoweBL.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj",
+        "projectName": "BL",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj"
+              },
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
+        "projectName": "IBL",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IBL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj",
+        "projectName": "IDAL",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj",
+        "projectName": "Model",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\TestyJednostkoweBL\\TestyJednostkoweBL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\TestyJednostkoweBL\\TestyJednostkoweBL.csproj",
+        "projectName": "TestyJednostkoweBL",
+        "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\TestyJednostkoweBL\\TestyJednostkoweBL.csproj",
+        "packagesPath": "C:\\Users\\majer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\TestyJednostkoweBL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\majer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj"
+              },
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\DAL\\DAL.csproj"
+              },
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
+              },
+              "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\majer\\Desktop\\Tokyo-Garden-Restaurant-main\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.6.6, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.5.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
