@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JemToDobre</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>Witaj w Japońskiej Restauracji</h1>
+    <p>Zapraszamy na kulinarne podróże do Japonii!</p>
+</header>
+<nav>
+    <div class="nav-left">
+        <div class="nav-links">
+            <a th:href="@{menu2}">Menu</a>
+            <a href="#about">O nas</a>
+            <a href="#contact-form">Kontakt</a>
+        </div>
+    </div>
+    <div class="center-link">
+        <a th:href="@{menu2}">Zamów teraz</a>
+    </div>
+    <div class="nav-right">
+        <div class="nav-links nav-right login-register" id="loginRegisterLinks">
+            <a th:if="${isLoggedIn}" href="logout">Wyloguj</a>
+            <a th:unless="${isLoggedIn}" href="login">Zaloguj</a>
+            <a th:unless="${isLoggedIn}" href="register">Zarejestruj</a>
+            <div th:if="${isLoggedIn}" class="dropdown">
+                <button class="dropbtn"><span style="font-family: 'Courier New', monospace; font-size: 1.2em;">Profil</span> <i class="fas fa-user" style="padding-left: 13px; font-size: 1.2em;"></i></button>
+                <div class="dropdown-content">
+                    <a href="/user/profile">Mój Profil</a>
+                    <a href="/user/edit">Edytuj Informacje</a>
+                </div>
+            </div>
+        </div>
+        <div class="cart-icon">
+            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</nav>
+<section class="first-section">
+    <h2>Nasze Specjały</h2>
+    <div class="gallery">
+        <img src="css/sushi.png" alt="Sushi">
+        <img src="css/ramen.png" alt="Ramen">
+        <img src="css/sashimi.png" alt="Sashimi">
+    </div>
+    <p style="padding-top: 10px; text-align: center;">W naszej restauracji serwujemy tradycyjne japońskie potrawy, takie jak sushi, sashimi, ramen i wiele innych.</p>
+    <p style="text-align: center;">Zapraszamy do spróbowania naszych pyszności!</p>
+</section>
+<section id="about">
+    <h2>O Nas</h2><br>
+    <p>Nasza restauracja specjalizuje się w autentycznych japońskich smakach, które przeniosą Cię w podróż kulinarną do serca Japonii.<br></p>
+    <p> Nasza pasja do tradycyjnej kuchni japońskiej jest w każdym daniu odczuwalna, od świeżości sushi po bogactwo smaku w każdym kawałku sashimi.
+        Ponadto, w naszym przytulnym i eleganckim wnętrzu możesz poczuć się jakbyś przeniósł się do Tokio, relaksując się w przyjemnej atmosferze, która sprawia,
+        że każdy posiłek staje się wyjątkowym doświadczeniem.<br> </p>
+
+    <p>Nasz zespół doświadczonych kucharzy, wywodzących się z różnych regionów Japonii,
+        starannie dobiera składniki i przygotowuje potrawy, aby zapewnić naszym gościom nie tylko najwyższą jakość, ale także autentyczność każdego smaku.<br></p>
+    <p style="text-align: center;">Dołącz do nas, abyś mógł doświadczyć prawdziwego smaku Japonii w każdym kęsie!</p><br>
+</section>
+<section id="contact-form">
+    <h2>Wyślij do nas wiadomość</h2>
+    <form action="send_message.php" method="post">
+        <input type="text" id="name" name="name" required placeholder="Imię i Nazwiskon"><br>
+        <input type="email" id="email" name="email" required placeholder="Email"><br>
+        <textarea id="message" name="message" rows="4" required placeholder="Wiadomość"></textarea><br>
+
+        <button type="submit">Wyślij</button>
+    </form>
+</section>
+<footer id="contact">
+    <div class="footer-content">
+        <div class="contact-info">
+            <h2>Kontakt</h2>
+            <p>Zapraszamy do odwiedzenia naszej restauracji!</p>
+            <p>Adres: ul. Sushi 123, 00-000 Katowice</p>
+            <p>Telefon: 123-456-789</p>
+            <p>Email: info@Jem-ToDobre.com</p>
+        </div>
+        <div class="additional-info">
+            <h2>Informacje</h2>
+            <p>Zachęcamy do składania zamówień telefonicznie lub online.</p>
+            <p>Nasza restauracja oferuje również catering na różne okazje.</p>
+        </div>
+    </div>
+    <div class="social-media">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Jem-ToDobre. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+
+<button id="back-to-top" title="Wróć na górę"><i class="fas fa-chevron-up"></i></button>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            let offset = 80;
+            let target = document.querySelector(this.getAttribute('href'));
+            let targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            let startingPosition = window.pageYOffset;
+            let distance = targetPosition - startingPosition - offset;
+            let duration = 800; // czas trwania animacji w milisekundach
+            let startTime = null;
+
+            function scrollToTarget(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let step = Math.min(progress / duration, 1); // zapewnienie, że step będzie zawsze <= 1
+                window.scrollTo(0, startingPosition + distance * easeInOutQuad(step));
+
+                if (progress < duration) {
+                    window.requestAnimationFrame(scrollToTarget);
+                }
+            }
+
+            function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            window.requestAnimationFrame(scrollToTarget);
+        });
+    });
+    let backToTopButton = document.getElementById("back-to-top");
+
+    window.onscroll = function() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopButton.classList.add("show");
+        } else {
+            backToTopButton.classList.remove("show");
+        }
+    };
+
+    backToTopButton.addEventListener('click', function() {
+        let startingPosition = window.pageYOffset;
+        let duration = 800; // czas trwania animacji w milisekundach
+        let startTime = null;
+
+        function scrollToTop(timestamp) {
+            if (!startTime) startTime = timestamp;
+            let progress = timestamp - startTime;
+            let step = Math.min(progress / duration, 1); // zapewnienie, że step będzie zawsze <= 1
+            window.scrollTo(0, startingPosition * (1 - easeInOutQuad(step)));
+
+            if (progress < duration) {
+                window.requestAnimationFrame(scrollToTop);
+            }
+        }
+
+        function easeInOutQuad(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+        window.requestAnimationFrame(scrollToTop);
+    });
+
+    let nav = document.querySelector('nav');
+    let navLinks = document.querySelector('.nav-links');
+    let centerLink = document.querySelector('.center-link');
+    let loginRegister = document.querySelector('.login-register');
+    let firstSection = document.querySelector('section');
+    let navMargin = document.querySelector('.nav-right');
+
+    let navOffsetTop = nav.offsetTop;
+
+    function updateNav() {
+        if (window.pageYOffset >= navOffsetTop) {
+            nav.classList.add('sticky');
+            navLinks.classList.add('sticky');
+            centerLink.classList.add('sticky');
+            navMargin.classList.add('sticky');
+            firstSection.classList.add('sticky-margin');
+        } else {
+            nav.classList.remove('sticky');
+            navLinks.classList.remove('sticky');
+            centerLink.classList.remove('sticky'); // Usuwanie klasy sticky z centerLink
+            navMargin.classList.remove('sticky');
+            firstSection.classList.remove('sticky-margin');
+        }
+    }
+
+    window.addEventListener('scroll', updateNav);
+
+
+</script>
+
+</body>
+</html>

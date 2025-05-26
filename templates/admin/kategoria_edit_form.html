@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edycja Kategorii</title>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edycja Kategorii</h1>
+    <form method="post" th:action="@{/admin/kategoria/edit}" th:object="${kategoria}">
+        <input type="hidden" id="ID_Kategoria" name="ID_Kategoria" th:value="${kategoria.ID_Kategoria}" />
+        <div class="form-group">
+            <label for="nazwa">Nazwa Kategorii:</label>
+            <input type="text" id="nazwa" name="Nazwa_Kategorii" th:value="${kategoria.Nazwa_Kategorii}" required />
+        </div>
+        <div class="form-group">
+            <button type="submit">Zapisz</button>
+            <button type="button" onclick="window.location.href='/admin/kategorie'">Anuluj</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

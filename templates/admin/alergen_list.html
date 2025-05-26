@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_list.css">
+    <title>Lista Alergenów</title>
+</head>
+<body>
+<div class="container">
+    <h1>Lista Alergenów</h1>
+    <a class="add-button" href="/admin/alergen/new">Dodaj Alergen</a>
+    <div class="menu-items">
+        <div class="menu-item" th:each="alergen : ${alergeny}">
+            <div class="item-header">
+                <h2 th:text="${alergen.Nazwa_Alergenu}">Nazwa Kategorii</h2>
+            </div>
+            <div class="actions">
+                <a class="edit-button" th:href="@{/admin/alergen/edit/{id}(id=${alergen.ID_Alergen})}">Edytuj</a>
+                <a class="delete-button" th:href="@{/admin/alergen/delete/{id}(id=${alergen.ID_Alergen})}">Usuń</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
