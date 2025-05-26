@@ -22,5 +22,16 @@ namespace BL
         {
             return UzytkownikRepo.GetUzytkownik().Count();
         }
+
+        public bool CzyUzytkownikIstnieje(int uzytkownikID)
+        {
+            return UzytkownikRepo.UzytkownikExists(uzytkownikID);
+        }
+
+        public IEnumerable<Uzytkownik> PobierzUzytkownikowWedlugRoli(string rola)
+        {
+            return UzytkownikRepo.GetUzytkownikByRole(rola);
+        }
+
     }
 }

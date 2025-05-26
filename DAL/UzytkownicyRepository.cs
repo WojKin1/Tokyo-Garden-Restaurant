@@ -9,46 +9,19 @@ namespace DAL
     {
         private readonly DbTokyoGarden db;
 
-        public UzytkownicyRepository(DbTokyoGarden db)
+        public Uzytkownik GetUzytkownikByEmail(string email)
         {
-            this.db = db;
+            return db.uzytkownik.FirstOrDefault(u => u.Email == email);
         }
 
-        public IEnumerable<Uzytkownik> GetUzytkownik()
+        public bool UzytkownikExists(int uzytkownikID)
         {
-            return db.uzytkownik.ToList();
+            return db.uzytkownik.Any(u => u.ID == uzytkownikID);
         }
 
-        public Uzytkownik GetUzytkownikByID(int uzytkownikID)
+        public IEnumerable<Uzytkownik> GetUzytkownikByRole(string rola)
         {
-            return db.uzytkownik.Find(uzytkownikID);
-        }
-
-        public void InsertUzytkownik(Uzytkownik uzytkownik)
-        {
-            db.uzytkownik.Add(uzytkownik);
-        }
-
-        public void DeleteUzytkownik(int uzytkownikID)
-        {
-            var uzytkownik = db.uzytkownik.Find(uzytkownikID);
-            if (uzytkownik != null)
-                db.uzytkownik.Remove(uzytkownik);
-        }
-
-        public void UpdateUzytkownik(Uzytkownik uzytkownik)
-        {
-            db.uzytkownik.Update(uzytkownik);
-        }
-
-        public void Save()
-        {
-            db.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
+            return db.uzytkownik.Where(u => u.Rola == rola).ToList();
         }
     }
 }
