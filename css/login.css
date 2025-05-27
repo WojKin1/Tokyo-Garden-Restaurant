@@ -1,0 +1,175 @@
+body {
+    font-family: Open Sans;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("logo2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+    width: 500px;
+    text-align: center;
+}
+
+.container img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 0;
+    text-align: left;
+    padding-left: 80px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    width: 60%;
+    padding: 10px;
+    padding-left: 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+input[type="checkbox"] {
+    margin: 0;
+    margin-right: 5px;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border: 1px solid #4c2264;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4c2264;
+    border-color: #4c2264;
+}
+
+input[type="checkbox"]:checked:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.checkbox-group label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.checkbox-group label:first-child {
+    margin-left: 0;
+}
+
+.checkbox-group label:last-child {
+    margin-right: 0;
+}
+
+
+button {
+    background-color: #4c2264;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #7a288a;
+}
+
+a {
+    color: #4c2264;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    margin: 0;
+}
+
+.toggle-checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 30px;
+    height: 20px;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 20px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: transform 0.4s;
+    border-radius: 50%;
+}
+
+.toggle-checkbox:checked + .toggle-slider {
+    background-color: #4c2264;
+}
+
+.toggle-checkbox:checked + .toggle-slider:before {
+    transform: translateX(10px);
+}
+

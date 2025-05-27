@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/admin_list.css">
+    <title>Lista Kategorii</title>
+</head>
+<body>
+<div class="container">
+    <h1>Lista Kategorii</h1>
+    <a class="add-button" href="/admin/kategoria/new">Dodaj Kategorię</a>
+    <div class="menu-items">
+        <div class="menu-item" th:each="kategoria : ${kategorie}">
+            <div class="item-header">
+                <h2 th:text="${kategoria.Nazwa_Kategorii}">Nazwa Kategorii</h2>
+            </div>
+            <div class="actions">
+                <a class="edit-button" th:href="@{/admin/kategoria/edit/{id}(id=${kategoria.ID_Kategoria})}">Edytuj</a>
+                <a class="delete-button" th:href="@{/admin/kategoria/delete/{id}(id=${kategoria.ID_Kategoria})}">Usuń</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
