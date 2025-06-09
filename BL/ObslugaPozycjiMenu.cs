@@ -23,5 +23,26 @@ namespace BL
         {
             return _repo.GetPozycje().Count();
         }
+
+        public IEnumerable<PozycjaMenu> WyszukajPozycje(string fragmentNazwy)
+        {
+            if (string.IsNullOrWhiteSpace(fragmentNazwy))
+                return PobierzPosortowanePozycje();
+
+            return _repo.GetPozycje().Where(p => p.nazwa_pozycji.Contains(fragmentNazwy, StringComparison.OrdinalIgnoreCase)).OrderBy(p => p.nazwa_pozycji);
+        }
+
+        public IEnumerable<PozycjaMenu> PobierzPozycjePoKategorii(int kategoriaId)
+        {
+            return _repo.GetPozycje().Where(p => p.KategoriaId == kategoriaId).OrderBy(p => p.nazwa_pozycji);
+        }
+
+        public bool CzyPozycjaIstnieje(string nazwa)
+        {
+            if (string.IsNullOrWhiteSpace(nazwa))
+                return false;
+
+            return _repo.GetPozycje().Any(p => p.nazwa_pozycji.Equals(nazwa, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

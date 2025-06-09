@@ -7,5 +7,8 @@ namespace IBL
     {
         IEnumerable<AlergenPozycjaMenu> PobierzWszystkiePowiazania();
         int PoliczPowiazania();
+        IEnumerable<AlergenPozycjaMenu> PobierzPowiazaniaDlaAlergenu(int idAlergen);
+        IEnumerable<AlergenPozycjaMenu> PobierzPowiazaniaDlaPozycjiMenu(int idPozycjaMenu);
+        bool CzyPozycjaZawieraAlergen(int idPozycjaMenu, int idAlergen);
     }
 }

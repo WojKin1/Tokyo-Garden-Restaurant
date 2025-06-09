@@ -7,5 +7,7 @@ namespace IBL
     {
         IEnumerable<Kategoria> PobierzKategorie();
         int PoliczKategorie();
+        IEnumerable<Kategoria> WyszukajKategorie(string fragmentNazwy);
+        bool CzyKategoriaIstnieje(string nazwa);
     }
 }

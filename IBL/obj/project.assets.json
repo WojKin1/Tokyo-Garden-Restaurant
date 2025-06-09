@@ -1,68 +1,28 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
-      "IDAL/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "Model": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/IDAL.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/IDAL.dll": {}
-        }
-      },
-      "Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Model.dll": {}
-        }
-      }
-    }
+    "net8.0": {}
   },
-  "libraries": {
-    "IDAL/1.0.0": {
-      "type": "project",
-      "path": "../IDAL/IDAL.csproj",
-      "msbuildProject": "../IDAL/IDAL.csproj"
-    },
-    "Model/1.0.0": {
-      "type": "project",
-      "path": "../Model/Model.csproj",
-      "msbuildProject": "../Model/Model.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
     "net8.0": [
-      "IDAL >= 1.0.0"
+      "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Wojciech\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Dominik\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj",
+      "projectUniqueName": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
       "projectName": "IBL",
-      "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj",
-      "packagesPath": "C:\\Users\\Wojciech\\.nuget\\packages\\",
-      "outputPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\obj\\",
+      "projectPath": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
+      "packagesPath": "C:\\Users\\Dominik\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Wojciech\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Dominik\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -77,8 +37,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj": {
-              "projectPath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IDAL\\IDAL.csproj"
+            "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj": {
+              "projectPath": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj"
             }
           }
         }
@@ -113,8 +73,19 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Nie można odnaleźć informacji o projekcie dla elementu „C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj”. Jeśli używasz programu Visual Studio, może to być spowodowane tym, że projekt został rozładowany lub nie jest częścią bieżącego rozwiązania, więc uruchom polecenie przywracania z poziomu wiersza polecenia. W innych przypadkach może to oznaczać, że plik projektu jest nieprawidłowy lub nie zawiera elementów docelowych wymaganych do przywrócenia.",
+      "libraryId": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

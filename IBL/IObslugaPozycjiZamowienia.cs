@@ -7,5 +7,8 @@ namespace IBL
     {
         IEnumerable<PozycjaZamowienia> PobierzPozycjeZamowienia();
         int PoliczPozycjeZamowienia();
+        IEnumerable<PozycjaZamowienia> PobierzPozycjePoZamowieniu(int zamowienieId);
+        double ObliczWartoscZamowienia(int zamowienieId);
+        bool CzyPozycjaZamowieniaIstnieje(int id);
     }
 }

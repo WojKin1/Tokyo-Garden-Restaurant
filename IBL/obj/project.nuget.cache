@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "bRiZhlL+sxnk/xa6+fYURDce3k874ySlhJ9tjsP6uHftEOWIwIivnLlnqWMbAcjQsbz+H9USQbvjc6S2aOL3NQ==",
-  "success": true,
-  "projectFilePath": "G:\\Talib\\Tokyo-Garden-Restaurant\\IBL\\IBL.csproj",
+  "dgSpecHash": "0A9wUmyVptg=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Nie można odnaleźć informacji o projekcie dla elementu „C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj”. Jeśli używasz programu Visual Studio, może to być spowodowane tym, że projekt został rozładowany lub nie jest częścią bieżącego rozwiązania, więc uruchom polecenie przywracania z poziomu wiersza polecenia. W innych przypadkach może to oznaczać, że plik projektu jest nieprawidłowy lub nie zawiera elementów docelowych wymaganych do przywrócenia.",
+      "libraryId": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

@@ -23,5 +23,20 @@ namespace BL
         {
             return _repo.GetPozycjeZamowienia().Count();
         }
+
+        public IEnumerable<PozycjaZamowienia> PobierzPozycjePoZamowieniu(int zamowienieId)
+        {
+            return _repo.GetPozycjeZamowienia().Where(p => p.ZamowienieId == zamowienieId);
+        }
+
+        public double ObliczWartoscZamowienia(int zamowienieId)
+        {
+            return _repo.GetPozycjeZamowienia().Where(p => p.ZamowienieId == zamowienieId).Sum(p => p.cena * p.ilosc);
+        }
+
+        public bool CzyPozycjaZamowieniaIstnieje(int id)
+        {
+            return _repo.GetPozycjeZamowienia().Any(p => p.id == id);
+        }
     }
 }

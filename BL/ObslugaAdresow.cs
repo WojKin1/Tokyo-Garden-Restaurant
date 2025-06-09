@@ -22,5 +22,20 @@ namespace BL
         {
             return AdresyRepo.GetAdresy().Count();
         }
+
+        public IEnumerable<Adresy> PobierzAdresyZWielkimiMiastami(int minimalnaDlugoscNazwyMiasta)
+        {
+            return AdresyRepo.GetAdresy().Where(a => a.miasto != null && a.miasto.Length >= minimalnaDlugoscNazwyMiasta);
+        }
+
+        public IEnumerable<Adresy> PobierzAdresyBezNumeruMieszkania()
+        {
+            return AdresyRepo.GetAdresy().Where(a => a.nr_mieszkania == 0);
+        }
+
+        public IEnumerable<Adresy> PobierzAdresyDlaUlicy(string ulica)
+        {
+            return AdresyRepo.GetAdresy().Where(a => a.ulica != null && a.ulica.Equals(ulica, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

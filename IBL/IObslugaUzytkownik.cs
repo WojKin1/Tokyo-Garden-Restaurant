@@ -8,5 +8,8 @@ namespace IBL
 
         int PoliczUzytkownikow();
 
+        bool CzyUzytkownikIstnieje(int uzytkownikID);
+        IEnumerable<Uzytkownik> PobierzUzytkownikowWedlugRoli(string rola);
+
     }
 }

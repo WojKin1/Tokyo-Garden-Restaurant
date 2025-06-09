@@ -1,8 +1,27 @@
 {
   "version": 2,
-  "dgSpecHash": "MqOsdhxCJHMntiJX4Ag/hHFepbd0PflruQ1M0d5qMub0c+cEjvT57Uv+IVxx3efYPljwQlLkxYLEEqpyh+DNNw==",
-  "success": true,
-  "projectFilePath": "G:\\Talib\\Tokyo-Garden-Restaurant\\BL\\BL.csproj",
+  "dgSpecHash": "0r05ypVoGeM=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\BL\\BL.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Nie można odnaleźć informacji o projekcie dla elementu „C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj”. Jeśli używasz programu Visual Studio, może to być spowodowane tym, że projekt został rozładowany lub nie jest częścią bieżącego rozwiązania, więc uruchom polecenie przywracania z poziomu wiersza polecenia. W innych przypadkach może to oznaczać, że plik projektu jest nieprawidłowy lub nie zawiera elementów docelowych wymaganych do przywrócenia.",
+      "libraryId": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IBL\\IBL.csproj",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Nie można odnaleźć informacji o projekcie dla elementu „C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj”. Jeśli używasz programu Visual Studio, może to być spowodowane tym, że projekt został rozładowany lub nie jest częścią bieżącego rozwiązania, więc uruchom polecenie przywracania z poziomu wiersza polecenia. W innych przypadkach może to oznaczać, że plik projektu jest nieprawidłowy lub nie zawiera elementów docelowych wymaganych do przywrócenia.",
+      "libraryId": "C:\\Users\\Dominik\\Downloads\\Tokyo-Garden-Restaurant-main\\Tokyo-Garden-Restaurant-main\\IDAL\\IDAL.csproj",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
