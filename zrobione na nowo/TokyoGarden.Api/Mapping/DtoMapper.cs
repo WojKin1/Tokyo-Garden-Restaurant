@@ -4,8 +4,10 @@ using TokyoGarden.Model;
 
 namespace TokyoGarden.Api.Mapping
 {
+    // Klasa statyczna do mapowania encji na DTO
     public static class DtoMapper
     {
+        // Mapowanie encji Uzytkownicy na UzytkownikDTO
         public static UzytkownikDTO ToDto(this Uzytkownicy u) =>
             u == null ? null! : new UzytkownikDTO
             {
@@ -15,6 +17,7 @@ namespace TokyoGarden.Api.Mapping
                 TypUzytkownika = u.typ_uzytkownika
             };
 
+        // Mapowanie encji Adresy na AdresDTO
         public static AdresDTO ToDto(this Adresy a) =>
             a == null ? null! : new AdresDTO
             {
@@ -25,6 +28,7 @@ namespace TokyoGarden.Api.Mapping
                 NrMieszkania = a.nr_mieszkania
             };
 
+        // Mapowanie encji Kategorie na KategoriaDTO
         public static KategoriaDTO ToDto(this Kategorie k) =>
             k == null ? null! : new KategoriaDTO
             {
@@ -32,6 +36,7 @@ namespace TokyoGarden.Api.Mapping
                 NazwaKategorii = k.nazwa_kategorii
             };
 
+        // Mapowanie encji Alergeny na AlergenDTO
         public static AlergenDTO ToDto(this Alergeny a) =>
             a == null ? null! : new AlergenDTO
             {
@@ -39,6 +44,7 @@ namespace TokyoGarden.Api.Mapping
                 NazwaAlergenu = a.nazwa_alergenu
             };
 
+        // Mapowanie encji Pozycje_Menu na PozycjaMenuDTO
         public static PozycjaMenuDTO ToDto(this Pozycje_Menu p) =>
             p == null ? null! : new PozycjaMenuDTO
             {
@@ -50,6 +56,7 @@ namespace TokyoGarden.Api.Mapping
                 Alergeny = p.alergeny?.Select(x => x.ToDto()).ToList() ?? new()
             };
 
+        // Mapowanie encji Pozycje_Zamowienia na PozycjaZamowieniaDTO
         public static PozycjaZamowieniaDTO ToDto(this Pozycje_Zamowienia pz) =>
             pz == null ? null! : new PozycjaZamowieniaDTO
             {
@@ -59,6 +66,7 @@ namespace TokyoGarden.Api.Mapping
                 PozycjaMenu = pz.pozycja_menu?.ToDto()
             };
 
+        // Mapowanie encji Zamowienia na ZamowienieDTO
         public static ZamowienieDTO ToDto(this Zamowienia z) =>
             z == null ? null! : new ZamowienieDTO
             {
