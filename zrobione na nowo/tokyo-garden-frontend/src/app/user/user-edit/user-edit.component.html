@@ -1,0 +1,34 @@
+<div class="container">
+  <img src="/assets/logo.png" alt="Logo">
+  <h2>Edycja Informacji Użytkownika</h2>
+
+  <div *ngIf="errors.length">
+    <ul>
+      <li class="error" *ngFor="let error of errors">{{ error }}</li>
+    </ul>
+  </div>
+
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <input type="hidden" formControlName="id">
+
+    <div class="form-group">
+      <input type="text" formControlName="nazwaUzytkownika" placeholder="Nazwa użytkownika">
+    </div>
+
+    <div class="form-group">
+      <input type="password" formControlName="password" placeholder="Nowe hasło (opcjonalnie)">
+    </div>
+
+    <div class="form-group">
+      <input type="password" formControlName="password2" placeholder="Powtórz nowe hasło">
+    </div>
+
+    <div class="form-group">
+      <input type="tel" formControlName="telefon" placeholder="Telefon (9 cyfr)">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" [disabled]="editForm.invalid">Zapisz</button>
+    </div>
+  </form>
+</div>

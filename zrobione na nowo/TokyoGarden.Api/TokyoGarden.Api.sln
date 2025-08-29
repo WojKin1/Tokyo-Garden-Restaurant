@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.Api", "TokyoGarden.Api.csproj", "{78A17C0C-E017-42D1-A5FA-95763C130545}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.Model", "..\TokyoGarden.Model\TokyoGarden.Model.csproj", "{9D9855B3-C8F5-4B09-A018-498ACDDBAD85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.IDAL", "..\TokyoGarden.IDAL\TokyoGarden.IDAL.csproj", "{52BDC46B-95AF-46C2-8B87-6732057E4931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.DAL", "..\TokyoGarden.DAL\TokyoGarden.DAL.csproj", "{EA5E58D0-733C-46B4-808A-8752AC4AE612}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.IBL", "..\TokyoGarden.IBL\TokyoGarden.IBL.csproj", "{78E96C59-8A32-4A68-B800-C01E00D10EBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokyoGarden.BL", "..\TokyoGarden.BL\TokyoGarden.BL.csproj", "{6E7CDA2E-4B5F-4D17-B882-4F4B7C02E258}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78A17C0C-E017-42D1-A5FA-95763C130545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A17C0C-E017-42D1-A5FA-95763C130545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A17C0C-E017-42D1-A5FA-95763C130545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A17C0C-E017-42D1-A5FA-95763C130545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9855B3-C8F5-4B09-A018-498ACDDBAD85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9855B3-C8F5-4B09-A018-498ACDDBAD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9855B3-C8F5-4B09-A018-498ACDDBAD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9855B3-C8F5-4B09-A018-498ACDDBAD85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BDC46B-95AF-46C2-8B87-6732057E4931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BDC46B-95AF-46C2-8B87-6732057E4931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BDC46B-95AF-46C2-8B87-6732057E4931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BDC46B-95AF-46C2-8B87-6732057E4931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5E58D0-733C-46B4-808A-8752AC4AE612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5E58D0-733C-46B4-808A-8752AC4AE612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5E58D0-733C-46B4-808A-8752AC4AE612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5E58D0-733C-46B4-808A-8752AC4AE612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E96C59-8A32-4A68-B800-C01E00D10EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E96C59-8A32-4A68-B800-C01E00D10EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E96C59-8A32-4A68-B800-C01E00D10EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E96C59-8A32-4A68-B800-C01E00D10EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7CDA2E-4B5F-4D17-B882-4F4B7C02E258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7CDA2E-4B5F-4D17-B882-4F4B7C02E258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7CDA2E-4B5F-4D17-B882-4F4B7C02E258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7CDA2E-4B5F-4D17-B882-4F4B7C02E258}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {567A8F1F-4AA7-421A-9022-852232B2F81B}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Lista Alergenów</h1>
+  <a class="add-button" [routerLink]="['/admin/alergen/new']">Dodaj Alergen</a>
+
+  <div class="menu-items">
+    <div class="menu-item" *ngFor="let alergen of alergeny">
+      <div class="item-header">
+        <h2>{{ alergen.nazwa_alergenu }}</h2>
+      </div>
+      <div class="actions">
+        <a class="edit-button" [routerLink]="['/admin/alergen/edit', alergen.id]">Edytuj</a>
+        <button class="delete-button" (click)="deleteAlergen(alergen.id)">Usuń</button>
+      </div>
+    </div>
+  </div>
+</div>

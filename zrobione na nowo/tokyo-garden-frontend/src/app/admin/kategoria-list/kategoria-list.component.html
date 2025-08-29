@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Lista Kategorii</h1>
+  <a class="add-button" [routerLink]="['/admin/kategoria/new']">Dodaj Kategorię</a>
+
+  <div class="menu-items">
+    <div class="menu-item" *ngFor="let kategoria of kategorie">
+      <div class="item-header">
+        <h2>{{ kategoria.nazwa_kategorii }}</h2>
+      </div>
+      <div class="actions">
+        <a class="edit-button" [routerLink]="['/admin/kategoria/edit', kategoria.id]">Edytuj</a>
+        <button class="delete-button" (click)="deleteKategoria(kategoria.id)">Usuń</button>
+      </div>
+    </div>
+  </div>
+</div>

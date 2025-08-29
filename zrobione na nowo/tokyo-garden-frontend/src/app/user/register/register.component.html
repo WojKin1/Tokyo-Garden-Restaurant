@@ -1,0 +1,34 @@
+<div class="container">
+  <img src="assets/logo.png" alt="Logo">
+  <h2>Rejestracja</h2>
+
+  <ul id="errors">
+    <li *ngFor="let error of errors" class="error">{{ error }}</li>
+  </ul>
+
+  <form (ngSubmit)="register()" #registerForm="ngForm">
+    <div class="form-group">
+      <input type="text" name="nazwaUzytkownika" [(ngModel)]="registerData.nazwaUzytkownika" required placeholder="Nazwa użytkownika">
+    </div>
+    <div class="form-group">
+      <input type="password" name="haslo1" [(ngModel)]="registerData.haslo1" required placeholder="Hasło">
+    </div>
+    <div class="form-group">
+      <input type="password" name="haslo2" [(ngModel)]="registerData.haslo2" required placeholder="Powtórz hasło">
+    </div>
+    <div class="form-group">
+      <input type="tel" name="phone" [(ngModel)]="registerData.phone" required placeholder="Telefon" pattern="[0-9]{9}">
+    </div>
+
+    <div class="form-group checkbox-group">
+      <input type="checkbox" id="regulamin" name="regulamin" [(ngModel)]="registerData.regulamin">
+      <label for="regulamin">Akceptuję regulamin</label>
+    </div>
+
+    <a href="/Regulamin.txt" target="_blank">Przeczytaj regulamin</a>
+
+    <div class="form-group">
+      <button type="submit">Zarejestruj</button>
+    </div>
+  </form>
+</div>

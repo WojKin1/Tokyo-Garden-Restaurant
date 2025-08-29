@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Twój koszyk</h1>
+
+  <div *ngIf="loading">Ładowanie...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div id="cart-items">
+    <div *ngFor="let item of cart" class="cart-item">
+      <div class="item-details">
+        <img *ngIf="item.image_data"
+             [src]="'data:image/png;base64,' + item.image_data"
+             alt="Zdjęcie dania"
+             class="item-image">
+        <div class="item-info">
+          <h4>{{ item.nazwa_pozycji }}</h4>
+          <p>{{ item.cena | number:'1.2-2' }} PLN</p>
+        </div>
+      </div>
+      <button (click)="removeFromCart(item.id)">Usuń</button>
+    </div>
+  </div>
+
+  <div id="total-price">
+    <h4>Łączna Cena:</h4>
+    <p>{{ totalPrice | number:'1.2-2' }} PLN</p>
+  </div>
+
+  <button routerLink="/orders" id="checkout-button" [disabled]="!cart.length">
+    Złóż zamówienie
+  </button>
+</div>

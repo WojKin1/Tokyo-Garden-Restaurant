@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Lista Pozycji Menu</h1>
+  <a class="add-button" [routerLink]="['/admin/pozycja/new']">Dodaj Pozycję</a>
+
+  <div *ngIf="loading">Ładowanie...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div class="menu-items">
+    <div class="menu-item" *ngFor="let pozycja of pozycje">
+      <div class="item-header">
+        <h2>{{ pozycja.nazwa_pozycji }}</h2>
+        <p class="category">{{ pozycja.kategoria_menu?.nazwa_kategorii || 'Brak kategorii' }}</p>
+      </div>
+
+      <p class="description">{{ pozycja.opis }}</p>
+      <p class="price">{{ pozycja.cena | currency:'PLN':'symbol':'1.2-2' }}</p>
+      <p class="ingredients">{{ pozycja.skladniki }}</p>
+
+      <div class="allergens" *ngIf="pozycja.alergeny?.length">
+        <p>Alergeny:</p>
+        <ul>
+          <li *ngFor="let alergen of pozycja.alergeny">
+            {{ alergen.nazwa_alergenu }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="actions">
+        <a class="edit-button" [routerLink]="['/admin/pozycja/edit', pozycja.id]">Edytuj</a>
+        <button class="delete-button" (click)="deletePozycja(pozycja.id)">Usuń</button>
+      </div>
+    </div>
+  </div>
+</div>

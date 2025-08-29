@@ -1,0 +1,36 @@
+<header>
+  <h1>Witaj w Japońskiej Restauracji</h1>
+  <p>Zapraszamy na kulinarne podróże do Japonii!</p>
+</header>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-links">
+      <a routerLink="/menu">Menu</a>
+      <a routerLink="/" fragment="about">O nas</a>
+      <a routerLink="/" fragment="contact-form">Kontakt</a>
+    </div>
+  </div>
+
+  <div class="center-link">
+    <a routerLink="/menu">Zamów teraz</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-links nav-right login-register" id="loginRegisterLinks">
+      <!-- gdy nie zalogowany -->
+      <a *ngIf="!isLoggedIn" routerLink="/login">Zaloguj</a>
+      <a *ngIf="!isLoggedIn" routerLink="/register">Zarejestruj</a>
+
+      <!-- gdy zalogowany -->
+      <span *ngIf="isLoggedIn" class="welcome-text">
+        Witaj {{ currentUserName }}
+      </span>
+      <a *ngIf="isLoggedIn" (click)="logout()">Wyloguj</a>
+    </div>
+
+    <div class="cart-icon">
+      <a routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+  </div>
+</nav>

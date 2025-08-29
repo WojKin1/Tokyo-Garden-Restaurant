@@ -1,0 +1,92 @@
+.menu-section {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+}
+
+.first-section-nav{
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+img{
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-items img:hover{
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.menu-section h2, .menu-section h3{
+    color: #4c2264;
+    text-align: center;
+}
+
+.description_h{
+    color: #4c2264;
+    text-align: center;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.menu-section .menu-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.menu-item p{
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.menu-item img {
+    width: 45%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-item-name {
+    display: block;
+    margin-top: 10px;
+}
+
+.menu-section .menu-item a {
+    display: block;
+    text-align: center;
+    color: #4c2264;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 30px;
+    width: 45%;
+}
+
+.menu-section .menu-item a:hover {
+    color: #6a0dad;
+}
+
+.add-to-cart-button {
+    display: block;
+    width: 200px;
+    height: 30px;
+    margin: 10px auto;
+    padding: 5px 20px;
+    background-color: #4c2264;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-button:hover {
+    background-color: #7a288a;
+}

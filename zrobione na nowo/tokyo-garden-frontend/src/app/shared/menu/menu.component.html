@@ -1,0 +1,41 @@
+<header>
+  <h1>Nasze Menu</h1>
+  <p>Odkryj smak Japonii!</p>
+</header>
+
+<section class="first-section">
+  <p class="first-section-nav">Daj się zaskoczyć naszym nietuzinkowym smakiem!!</p>
+</section>
+
+<section *ngFor="let category of (groupedMenu | keyvalue)" class="menu-section">
+  <h2 class="category-title">{{ category.key }}</h2>
+
+  <div class="menu-items">
+    <div *ngFor="let pozycja of category.value" class="menu-item">
+      <h3 class="menu-item-name">{{ pozycja.nazwa_pozycji }}</h3>
+
+      <img *ngIf="pozycja.image_data"
+           [src]="'data:image/png;base64,' + pozycja.image_data"
+           alt="Zdjęcie dania"/>
+
+      <p>{{ pozycja.opis }}</p>
+
+      <h4 class="description_h">Składniki:</h4>
+      <p>{{ pozycja.skladniki }}</p>
+
+      <h4 class="description_h">Alergeny:</h4>
+      <div class="alergen-list">
+        <div *ngFor="let alergen of pozycja.alergeny" class="alergen">
+          <span>{{ alergen.nazwa_Alergenu }}</span>
+        </div>
+      </div>
+
+      <h4 class="description_h">Cena</h4>
+      <p>{{ pozycja.cena }} zł</p>
+
+      <button class="add-to-cart-button" (click)="addToCart(pozycja)">
+        Dodaj do koszyka
+      </button>
+    </div>
+  </div>
+</section>

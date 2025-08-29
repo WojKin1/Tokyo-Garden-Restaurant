@@ -1,0 +1,58 @@
+<header>
+  <h1>Witaj w Japońskiej Restauracji</h1>
+  <p>Zapraszamy na kulinarne podróże do Japonii!</p>
+</header>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-links">
+      <a routerLink="/menu">Menu</a>
+      <a routerLink="/about">O nas</a>
+      <a routerLink="/contact">Kontakt</a>
+    </div>
+  </div>
+
+  <div class="center-link">
+    <a routerLink="/menu">Zamów teraz</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-links nav-right login-register" id="loginRegisterLinks">
+      <!-- gdy zalogowany -->
+      <a *ngIf="isLoggedIn" routerLink="/" (click)="logout()">Wyloguj</a>
+
+      <!-- gdy niezalogowany -->
+      <a *ngIf="!isLoggedIn" routerLink="/login">Zaloguj</a>
+      <a *ngIf="!isLoggedIn" routerLink="/register">Zarejestruj</a>
+
+      <!-- dropdown tylko dla zalogowanego -->
+      <div *ngIf="isLoggedIn" class="dropdown">
+        <button class="dropbtn">
+          <span style="font-family: 'Courier New', monospace; font-size: 1.2em;">Profil</span>
+          <i class="fas fa-user" style="padding-left: 13px; font-size: 1.2em;"></i>
+        </button>
+        <div class="dropdown-content">
+          <a routerLink="/user/profile">Mój Profil</a>
+          <a routerLink="/user/edit">Edytuj Informacje</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-icon">
+      <a routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+  </div>
+</nav>
+
+<section class="first-section">
+  <h2>Nasze Specjały</h2>
+  <div class="gallery">
+    <img src="assets/sushi.png" alt="Sushi">
+    <img src="assets/ramen.png" alt="Ramen">
+    <img src="assets/sashimi.png" alt="Sashimi">
+  </div>
+  <p style="padding-top: 10px; text-align: center;">
+    W naszej restauracji serwujemy tradycyjne japońskie potrawy, takie jak sushi, sashimi, ramen i wiele innych.
+  </p>
+  <p style="text-align: center;">Zapraszamy do spróbowania naszych pyszności!</p>
+</section>

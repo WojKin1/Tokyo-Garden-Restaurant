@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>{{ isEditMode ? 'Edytuj Kategorię' : 'Dodaj Kategorię' }}</h1>
+
+  <form (ngSubmit)="saveKategoria()" #form="ngForm">
+    <input type="hidden" [(ngModel)]="kategoria.id" name="id" />
+
+    <div class="form-group">
+      <label for="nazwa">Nazwa:</label>
+      <input type="text" id="nazwa" name="nazwa_kategorii" [(ngModel)]="kategoria.nazwa_kategorii" required />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Zapisz</button>
+    <button type="button" (click)="cancel()">Anuluj</button>
+  </form>
+</div>
