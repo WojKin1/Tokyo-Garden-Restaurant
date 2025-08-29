@@ -6,13 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
+    // Kontroler API dla operacji na pozycjach zamówienia
     [Route("api/[controller]")]
     [ApiController]
     public class PozycjeZamowieniaController : ControllerBase
     {
         private readonly IPozycjeZamowieniaService _service;
-        public PozycjeZamowieniaController(IPozycjeZamowieniaService service) { _service = service; }
 
+        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        public PozycjeZamowieniaController(IPozycjeZamowieniaService service)
+        {
+            _service = service;
+        }
+
+        // Pobieranie wszystkich pozycji zamówienia z detalami
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -20,6 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(p => p.ToDto()));
         }
 
+        // Pobieranie pozycji zamówienia po identyfikatorze
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -29,6 +37,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(item.ToDto());
         }
 
+        // Tworzenie nowej pozycji zamówienia w bazie danych
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Pozycje_Zamowienia item)
         {
@@ -38,6 +47,7 @@ namespace TokyoGarden.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = item.id }, fresh?.ToDto() ?? item.ToDto());
         }
 
+        // Aktualizacja istniejącej pozycji zamówienia
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Pozycje_Zamowienia item)
         {
@@ -46,6 +56,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Usuwanie pozycji zamówienia po identyfikatorze
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -53,6 +64,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Pobieranie pozycji zamówienia po identyfikatorze zamówienia
         [HttpGet("order/{orderId}")]
         public async Task<IActionResult> GetByOrder(int orderId)
         {

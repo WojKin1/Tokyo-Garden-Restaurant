@@ -6,13 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
+    // Kontroler API dla operacji na alergenach
     [Route("api/[controller]")]
     [ApiController]
     public class AlergenyController : ControllerBase
     {
         private readonly IAlergenyService _service;
-        public AlergenyController(IAlergenyService service) { _service = service; }
 
+        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        public AlergenyController(IAlergenyService service)
+        {
+            _service = service;
+        }
+
+        // Pobieranie wszystkich alergenów z bazy danych
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -20,6 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(a => a.ToDto()));
         }
 
+        // Pobieranie alergenu po identyfikatorze
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -27,6 +35,7 @@ namespace TokyoGarden.Api.Controllers
             return item == null ? NotFound() : Ok(item.ToDto());
         }
 
+        // Tworzenie nowego alergenu w bazie danych
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Alergeny item)
         {
@@ -34,6 +43,7 @@ namespace TokyoGarden.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = item.id }, item.ToDto());
         }
 
+        // Aktualizacja istniejącego alergenu
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Alergeny item)
         {
@@ -42,6 +52,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Usuwanie alergenu po identyfikatorze
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -49,6 +60,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Pobieranie alergenu po nazwie
         [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetByName(string name)
         {

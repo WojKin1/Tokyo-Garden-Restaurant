@@ -6,17 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
+    // Kontroler API dla operacji na adresach
     [Route("api/[controller]")]
     [ApiController]
     public class AdresyController : ControllerBase
     {
         private readonly IAdresyService _service;
 
+        // Inicjalizacja serwisu przez wstrzykiwanie zależności
         public AdresyController(IAdresyService service)
         {
             _service = service;
         }
 
+        // Pobieranie wszystkich adresów z bazy danych
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -24,6 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(a => a.ToDto()));
         }
 
+        // Pobieranie adresu po identyfikatorze
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -32,6 +36,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(address.ToDto());
         }
 
+        // Tworzenie nowego adresu w bazie danych
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Adresy address)
         {
@@ -39,6 +44,7 @@ namespace TokyoGarden.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = address.id }, address.ToDto());
         }
 
+        // Aktualizacja istniejącego adresu
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Adresy address)
         {
@@ -47,6 +53,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Usuwanie adresu po identyfikatorze
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -54,6 +61,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Pobieranie adresów po nazwie miasta
         [HttpGet("city/{city}")]
         public async Task<IActionResult> GetByCity(string city)
         {

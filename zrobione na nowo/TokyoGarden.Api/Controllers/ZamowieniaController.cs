@@ -6,13 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
+    // Kontroler API dla operacji na zamówieniach
     [Route("api/[controller]")]
     [ApiController]
     public class ZamowieniaController : ControllerBase
     {
         private readonly IZamowieniaService _service;
-        public ZamowieniaController(IZamowieniaService service) { _service = service; }
 
+        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        public ZamowieniaController(IZamowieniaService service)
+        {
+            _service = service;
+        }
+
+        // Pobieranie wszystkich zamówień z detalami
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -20,6 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(z => z.ToDto()));
         }
 
+        // Pobieranie zamówienia po identyfikatorze z detalami
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -28,6 +36,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(item.ToDto());
         }
 
+        // Tworzenie nowego zamówienia w bazie danych
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Zamowienia item)
         {
@@ -36,6 +45,7 @@ namespace TokyoGarden.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = item.id }, fresh.ToDto());
         }
 
+        // Aktualizacja istniejącego zamówienia
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Zamowienia item)
         {
@@ -44,6 +54,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Usuwanie zamówienia po identyfikatorze
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -51,6 +62,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
+        // Ponowne obliczanie sumy zamówienia
         [HttpPost("{id}/recalculate")]
         public async Task<IActionResult> RecalculateTotal(int id)
         {
@@ -58,6 +70,7 @@ namespace TokyoGarden.Api.Controllers
             return updated == null ? NotFound() : Ok(updated.ToDto());
         }
 
+        // Pobieranie zamówień po identyfikatorze użytkownika
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetByUser(int userId)
         {
@@ -65,6 +78,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(z => z.ToDto()));
         }
 
+        // Pobieranie zamówień po statusie
         [HttpGet("status/{status}")]
         public async Task<IActionResult> GetByStatus(string status)
         {
