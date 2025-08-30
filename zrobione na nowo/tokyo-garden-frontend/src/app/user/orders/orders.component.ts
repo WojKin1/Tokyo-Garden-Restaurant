@@ -4,13 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CartService } from '../../services/cart.service';
-
-interface CartItem {
-  id: number;
-  nazwa_pozycji: string;
-  cena: number;
-  image_data?: string;
-}
+import { CartItem } from '../../models/cart-item';
 
 interface OrderData {
   orderOptions: string;

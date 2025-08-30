@@ -4,70 +4,82 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+// Interfejs przechowujący dane rejestracji użytkownika
 interface RegisterData {
-  nazwaUzytkownika: string;
-  haslo1: string;
-  haslo2: string;
-  phone: string;
-  regulamin: boolean;
+    nazwaUzytkownika: string;
+    haslo1: string;
+    haslo2: string;
+    phone: string;
+    regulamin: boolean;
 }
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    standalone: true,
+    imports: [CommonModule, FormsModule, RouterModule],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  registerData: RegisterData = {
-    nazwaUzytkownika: '',
-    haslo1: '',
-    haslo2: '',
-    phone: '',
-    regulamin: false
-  };
+    // Obiekt przechowujący dane formularza rejestracji
+    registerData: RegisterData = {
+        nazwaUzytkownika: '',
+        haslo1: '',
+        haslo2: '',
+        phone: '',
+        regulamin: false
+    };
 
-  errors: string[] = [];
+    // Tablica przechowująca komunikaty błędów walidacji
+    errors: string[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+    // Konstruktor z wstrzyknięciem HttpClient i Routera
+    constructor(private http: HttpClient, private router: Router) { }
 
-  register() {
-    this.errors = [];
+    // Funkcja obsługująca rejestrację użytkownika
+    register() {
+        // Resetowanie błędów przy każdej próbie rejestracji
+        this.errors = [];
 
-    if (this.registerData.haslo1 !== this.registerData.haslo2) {
-      this.errors.push('Hasła muszą być takie same.');
-      return;
-    }
-
-    if (!this.registerData.regulamin) {
-      this.errors.push('Musisz zaakceptować regulamin.');
-      return;
-    }
-
-    if (!/^\d{9}$/.test(this.registerData.phone)) {
-      this.errors.push('Numer telefonu musi mieć 9 cyfr.');
-      return;
-    }
-
-    this.http.post<any>('/api/Uzytkownicy', {
-      nazwa_uzytkownika: this.registerData.nazwaUzytkownika,
-      haslo: this.registerData.haslo1,
-      telefon: this.registerData.phone,
-      typ_uzytkownika: "Uzytkownik"
-    })
-    .subscribe({
-      next: () => {
-        this.router.navigate(['/login']); // po rejestracji od razu na logowanie
-      },
-      error: (err) => {
-        console.error('Register error', err);
-        if (err.status === 400) {
-          this.errors.push(err.error);
-        } else {
-          this.errors.push('Błąd podczas rejestracji.');
+        // Sprawdzenie czy hasła są identyczne
+        if (this.registerData.haslo1 !== this.registerData.haslo2) {
+            this.errors.push('Hasła muszą być takie same.');
+            return;
         }
-      }
-    });
-  }
+
+        // Sprawdzenie akceptacji regulaminu przez użytkownika
+        if (!this.registerData.regulamin) {
+            this.errors.push('Musisz zaakceptować regulamin.');
+            return;
+        }
+
+        // Walidacja numeru telefonu – musi mieć 9 cyfr
+        if (!/^\d{9}$/.test(this.registerData.phone)) {
+            this.errors.push('Numer telefonu musi mieć 9 cyfr.');
+            return;
+        }
+
+        // Wysłanie danych rejestracyjnych na backend
+        this.http.post<any>('/api/Uzytkownicy', {
+            nazwa_uzytkownika: this.registerData.nazwaUzytkownika,
+            haslo: this.registerData.haslo1,
+            telefon: this.registerData.phone,
+            typ_uzytkownika: "Uzytkownik"
+        })
+            .subscribe({
+                // Obsługa poprawnej rejestracji
+                next: () => {
+                    this.router.navigate(['/login']); // po rejestracji od razu na logowanie
+                },
+                // Obsługa błędów przy rejestracji
+                error: (err) => {
+                    console.error('Register error', err);
+                    if (err.status === 400) {
+                        this.errors.push(err.error);
+                    } else {
+                        this.errors.push('Błąd podczas rejestracji.');
+                    }
+                }
+            });
+    }
 }
