@@ -1,0 +1,94 @@
+.admin-panel-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logo {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.admin-nav {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-section {
+    margin-bottom: 15px;
+}
+
+    .nav-section h4 {
+        color: #34495e;
+        font-size: 1.1em;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+.nav-link {
+    display: block;
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+    .nav-link:hover, .nav-link.active {
+        background-color: #ecf0f1;
+        color: #2980b9;
+    }
+
+.admin-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8e44ad; /* Fioletowy kolor pasuj¹cy do stylu */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 5px;
+}
+
+    .admin-btn:hover {
+        background-color: #6c3483;
+    }
+
+/* Responsywnoœæ */
+@media (max-width: 600px) {
+    .admin-panel-container {
+        margin: 10px;
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .admin-btn {
+        width: 100%;
+    }
+}
