@@ -17,8 +17,15 @@ export const routes: Routes = [
   { path: 'cart', loadComponent: () => import('./user/cart/cart.component').then(m => m.CartComponent) },
   { path: 'orders', loadComponent: () => import('./user/orders/orders.component').then(m => m.OrdersComponent) },
 
+  //Moj profil
+  { path: 'user/profile', loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent) },
+    { path: 'profile', redirectTo: 'user/profile', pathMatch: 'full' },
+
   // Edycja danych użytkownika
   { path: 'user/edit', loadComponent: () => import('./user/user-edit/user-edit.component').then(m => m.UserEditComponent) },
+
+  //Panel admina:
+  { path: 'admin', loadComponent: () => import('./admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent) },
 
   // Admin - alergeny
   { path: 'admin/alergeny', loadComponent: () => import('./admin/alergen-list/alergen-list.component').then(m => m.AlergenListComponent) },
