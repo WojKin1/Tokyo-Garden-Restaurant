@@ -62,4 +62,12 @@ export class UserService {
       sessionStorage.setItem(this.storageKey, JSON.stringify(user));
     }
   }
+
+    /** Pobierz profil zalogowanego użytkownika z API */
+    getCurrentUserProfile(): Observable<UserDto> {
+        const current = this.getStoredUser();
+        if (!current) return throwError(() => new Error('Brak zalogowanego użytkownika'));
+        return this.getById(current.id);
+    }
 }
+
