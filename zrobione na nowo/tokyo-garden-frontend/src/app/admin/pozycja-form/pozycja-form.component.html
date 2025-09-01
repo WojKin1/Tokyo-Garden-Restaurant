@@ -2,51 +2,52 @@
   <h1>{{ isEditMode ? 'Edytuj Pozycję' : 'Dodaj Pozycję' }}</h1>
 
   <form (ngSubmit)="savePozycja()" enctype="multipart/form-data" #form="ngForm">
-    <input type="hidden" [(ngModel)]="pozycja.id" name="id" />
+      <input type="hidden" [(ngModel)]="pozycja.id" name="id" />
 
-    <div class="form-group">
-      <label for="nazwa">Nazwa:</label>
-      <input type="text" id="nazwa" name="nazwa_pozycji" [(ngModel)]="pozycja.nazwa_pozycji" required />
-    </div>
-
-    <div class="form-group">
-      <label for="opis">Opis:</label>
-      <input type="text" id="opis" name="opis" [(ngModel)]="pozycja.opis" required />
-    </div>
-
-    <div class="form-group">
-      <label for="cena">Cena:</label>
-      <input type="number" step="0.01" id="cena" name="cena" [(ngModel)]="pozycja.cena" required />
-    </div>
-
-    <div class="form-group">
-      <label for="skladniki">Składniki:</label>
-      <input type="text" id="skladniki" name="skladniki" [(ngModel)]="pozycja.skladniki" required />
-    </div>
-
-    <div class="form-group">
-      <label for="kategoria">Kategoria:</label>
-      <select id="kategoria" name="kategoria_id" [(ngModel)]="pozycja.kategoria_id" required>
-        <option *ngFor="let k of kategorie" [value]="k.id">{{ k.nazwa_kategorii }}</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="alergeny">Alergeny:</label>
-      <select id="alergeny" name="alergeny" [(ngModel)]="pozycja.alergeny" multiple>
-        <option *ngFor="let a of alergeny" [value]="a.nazwa_alergenu">{{ a.nazwa_alergenu }}</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="zdjecie">Zdjęcie:</label>
-      <input type="file" id="zdjecie" (change)="onFileSelected($event)" />
-      <div *ngIf="pozycja.image_data">
-        <img [src]="'data:image/png;base64,' + pozycja.image_data" alt="Zdjęcie" style="max-width: 200px; margin-top: 10px;" />
+      <div class="form-group">
+          <label for="nazwa">Nazwa:</label>
+          <input type="text" id="nazwa" name="nazwa_pozycji" [(ngModel)]="pozycja.nazwa_pozycji" required />
       </div>
-    </div>
 
-    <button type="submit">Zapisz</button>
-    <button type="button" (click)="cancel()">Anuluj</button>
+      <div class="form-group">
+          <label for="opis">Opis:</label>
+          <input type="text" id="opis" name="opis" [(ngModel)]="pozycja.opis" required />
+      </div>
+
+      <div class="form-group">
+          <label for="cena">Cena:</label>
+          <input type="number" step="0.01" id="cena" name="cena" [(ngModel)]="pozycja.cena" required />
+      </div>
+
+      <div class="form-group">
+          <label for="skladniki">Składniki:</label>
+          <input type="text" id="skladniki" name="skladniki" [(ngModel)]="pozycja.skladniki" required />
+      </div>
+
+      <div class="form-group">
+          <label for="kategoria">Kategoria:</label>
+          <select id="kategoria" name="kategoria_id" [(ngModel)]="pozycja.kategoria_id" required>
+              <option *ngFor="let k of kategorie" [value]="k.id">{{ k.nazwa_kategorii }}</option>
+          </select>
+      </div>
+
+      <div class="form-group">
+          <label for="alergeny">Alergeny:</label>
+          <select id="alergeny" name="alergeny" [(ngModel)]="pozycja.alergeny" multiple>
+              <option *ngFor="let a of alergeny" [value]="a.nazwa_alergenu">{{ a.nazwa_alergenu }}</option>
+          </select>
+      </div>
+
+      <div class="form-group">
+          <label for="zdjecie">Zdjęcie:</label>
+          <input type="file" id="zdjecie" (change)="onFileSelected($event)" />
+          <div *ngIf="pozycja.image_data">
+              <img [src]="'data:image/png;base64,' + pozycja.image_data" alt="Zdjęcie" style="max-width: 200px; margin-top: 10px;" />
+          </div>
+      </div>
+
+      <button type="submit">Zapisz</button>
+      <button type="button" (click)="cancel()">Anuluj</button>
+      <button type="button" (click)="goToAdmin()">Panel administratora</button>
   </form>
 </div>
