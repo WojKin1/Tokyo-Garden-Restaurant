@@ -72,18 +72,49 @@ nav {
     transition: background-color 0.3s ease, box-shadow 0.3s;
 }
 
-.cart-icon a {
-    color: #4c2264;
-    text-decoration: none;
+.cart-icon {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    color: white !important;
+    background: #4b215f !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    min-width: 80px !important;
+    position: relative !important;
 }
 
-.center-link a:hover{
-    background-color: #7a288a;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
+.cart-icon a {
+        display: flex;
+        align-items: center;
+        color: white !important;
+        font-size: 16px !important;
+        height: 100% !important;
+        width: 100%;
+        text-decoration: none !important;
+    }
+
+.cart-icon .fas {
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
+        color: white !important;
+        margin-right: 5px !important;
+    }
+
+.cart-icon:hover {
+        background-color: #3a1a49 !important;
+        transition: background-color 0.3s !important;
+    }
 
 .cart-icon i:hover{
     color: #7a288a;
+}
+
+.center-link a:hover {
+    background-color: #7a288a;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .nav-links a,
