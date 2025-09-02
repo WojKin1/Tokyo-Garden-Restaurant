@@ -1,36 +1,74 @@
-<header>
-  <h1>Witaj w Japońskiej Restauracji</h1>
-  <p>Zapraszamy na kulinarne podróże do Japonii!</p>
+<header style="display: block; padding: 10px 20px; background: #f7f7f7; border-bottom: 2px solid #ccc;">
+    <h1 style="margin: 0; font-size: 1.5em;">Witaj w Japońskiej Restauracji</h1>
+    <p style="margin: 0;">Zapraszamy na kulinarne podróże do Japonii!</p>
 </header>
-
-<nav>
-  <div class="nav-left">
-    <div class="nav-links">
-      <a routerLink="/menu">Menu</a>
-      <a routerLink="/" fragment="about">O nas</a>
-      <a routerLink="/" fragment="contact-form">Kontakt</a>
+<nav style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.9);
+    padding: 10px 20px;
+    border-bottom: 2px solid #ccc;
+    min-height: 60px;
+    gap: 15px;
+">
+    <!-- Lewa część -->
+    <div style="display: flex; gap: 15px;">
+        <a routerLink="/menu" style="text-decoration: none; color: black;">Menu</a>
+        <a routerLink="/" fragment="about" style="text-decoration: none; color: black;">O nas</a>
+        <a routerLink="/" fragment="contact-form" style="text-decoration: none; color: black;">Kontakt</a>
     </div>
-  </div>
-
-  <div class="center-link">
-    <a routerLink="/menu">Zamów teraz</a>
-  </div>
-
-  <div class="nav-right">
-    <div class="nav-links nav-right login-register" id="loginRegisterLinks">
-      <!-- gdy nie zalogowany -->
-      <a *ngIf="!isLoggedIn" routerLink="/login">Zaloguj</a>
-      <a *ngIf="!isLoggedIn" routerLink="/register">Zarejestruj</a>
-
-      <!-- gdy zalogowany -->
-      <span *ngIf="isLoggedIn" class="welcome-text">
-        Witaj {{ currentUserName }}
-      </span>
-      <a *ngIf="isLoggedIn" (click)="logout()">Wyloguj</a>
+    <!-- Środkowy przycisk Zamów teraz -->
+    <div>
+        <a routerLink="/menu" style="
+            text-decoration: none;
+            background: #4b215f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-align: center;
+            display: inline-block;
+        ">
+            Zamów teraz
+        </a>
     </div>
-
-    <div class="cart-icon">
-      <a routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+    <!-- Prawa część -->
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <!-- Logowanie / profil -->
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a *ngIf="!isLoggedIn" routerLink="/login" style="text-decoration: none; color: black;">Zaloguj</a>
+            <a *ngIf="!isLoggedIn" routerLink="/register" style="text-decoration: none; color: black;">Zarejestruj</a>
+            <span *ngIf="isLoggedIn" style="color: black;">Witaj {{ currentUserName }}</span>
+            <a *ngIf="isLoggedIn" (click)="logout()" style="text-decoration: none; color: black;">Wyloguj</a>
+            <a *ngIf="isLoggedIn" routerLink="/profile" style="text-decoration: none; color: black;">Profil</a>
+            <a *ngIf="isAdmin" routerLink="/admin/alergeny" style="text-decoration: none; color: black;">Panel admina</a>
+        </div>
     </div>
-  </div>
+    <!-- Osobny div dla Koszyka z klasą cart-icon -->
+    <div class="cart-icon" style="
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+        background: #4b215f;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        min-width: 80px;
+        color: white; /* Upewnia się, że napis jest widoczny na tle */
+        background-color: yellow; /* Tymczasowy kolor debugujący */
+    " (click)="navigateToCart()">
+        Koszyk 
+        <span *ngIf="cartCount > 0" style="
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        ">
+            {{ cartCount }}
+        </span>
+    </div>
 </nav>

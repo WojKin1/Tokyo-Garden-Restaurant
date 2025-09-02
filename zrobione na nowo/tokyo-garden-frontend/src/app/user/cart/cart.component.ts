@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService, CartItem } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'app-cart',
@@ -20,7 +22,8 @@ export class CartComponent implements OnInit {
     errorMessage = '';
 
     // Konstruktor z wstrzyknięciem serwisu koszyka
-    constructor(private cartService: CartService) { }
+    constructor(private cartService: CartService, private router: Router) { }
+
 
     // Wywoływane przy inicjalizacji komponentu
     ngOnInit(): void {
@@ -33,6 +36,7 @@ export class CartComponent implements OnInit {
         this.loading = true; // Ustawienie stanu ładowania
         this.cartService.getCart().subscribe({
             next: (data: CartItem[]) => {
+                console.log('Dane w koszyku:', data);
                 // Przypisanie danych koszyka, domyślna ilość 1
                 this.cart = data.map(item => ({ ...item, ilosc: item.ilosc ?? 1 }));
                 // Obliczenie łącznej ceny po załadowaniu
@@ -80,6 +84,13 @@ export class CartComponent implements OnInit {
     // Funkcja kończy składanie zamówienia
     finalizeOrder(): void {
         // Tutaj wyślij dane zamówienia do backendu
-        alert('Tutaj wyślij zamówienie do backendu');
+        //alert('Tutaj wyślij zamówienie do backendu');
+        this.router.navigate(['/orders']);
+    }
+
+    // metoda do przejścia na stronę główną
+    goToHome(): void {
+        // Nawigacja do strony głównej
+        this.router.navigate(['/']);
     }
 }

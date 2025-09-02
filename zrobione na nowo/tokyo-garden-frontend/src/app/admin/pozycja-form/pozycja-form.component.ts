@@ -10,13 +10,13 @@ import { AuthService } from '../../services/auth.service';
 // interfejs reprezentujący kategorię w systemie
 export interface KategoriaDto {
     id: number;
-    nazwa_kategorii: string;
+    nazwaKategorii: string;
 }
 
 // interfejs reprezentujący alergen w systemie
 export interface AlergenDto {
     id: number;
-    nazwa_alergenu: string;
+    nazwaAlergenu: string;
 }
 
 // interfejs reprezentujący pozycję w menu restauracji
@@ -78,11 +78,8 @@ export class PozycjaFormComponent implements OnInit {
 
     // funkcja inicjalizująca komponent
     ngOnInit(): void {
-
         // blokada dostępu jeśli użytkownik nie jest administratorem
         if (!this.authService.isAdmin()) {
-
-            // przekierowanie użytkownika na stronę główną
             this.router.navigate(['/']);
             return;
         }
@@ -91,26 +88,26 @@ export class PozycjaFormComponent implements OnInit {
         this.loadKategorie();
         this.loadAlergeny();
 
-        // sprawdzenie czy istnieje parametr id w routingu
+        // pobranie parametru 'id' z routingu
         const idParam = this.route.snapshot.paramMap.get('id');
+
         if (idParam) {
             this.isEditMode = true;
-            const id = Number(idParam);
+            const id = Number(idParam); // konwersja string -> number
 
             // pobranie danych pozycji z backendu i przypisanie do formularza
             this.pozycjaService.getPozycjaById(id).subscribe({
                 next: (data) => {
                     this.pozycja = {
                         ...data,
-                        alergeny: data.alergeny?.map((a: any) => a.id) || []
+                        alergeny: data.alergeny?.map((a: any) => Number(a.Id)) || []
                     };
                 },
-
-                // logowanie błędu w przypadku problemów z serwerem
                 error: (err) => console.error('Błąd ładowania pozycji', err)
             });
         }
     }
+
 
     // metoda pobierająca wszystkie kategorie
     loadKategorie(): void {
@@ -135,8 +132,10 @@ export class PozycjaFormComponent implements OnInit {
 
         // wywołanie serwisu pobierającego alergeny
         this.alergenService.getAllAlergeny().subscribe({
-            next: (data) => this.alergeny = data,
-
+            next: (data) => {
+                console.log('Odebrane alergeny:', data);
+                this.alergeny = data;
+            },
             // logowanie błędu w przypadku problemów z serwerem
             error: (err) => console.error('Błąd ładowania alergenów', err)
         });

@@ -5,10 +5,14 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 // importujemy serwis do operacji na alergenach
 import { AlergenService } from '../../services/alergen.service';
-// importujemy interfejs alergenu z formularza
-import { AlergenDto } from '../alergen-form/alergen-form.component';
 // importujemy AuthService aby sprawdzać uprawnienia użytkownika
 import { AuthService } from '../../services/auth.service';
+
+// interfejs dla Angulara (mapowany z DTO backendu)
+interface Alergen {
+    id: number;
+    nazwa_alergenu: string; // dopasowane do użycia w HTML
+}
 
 @Component({
     selector: 'app-alergen-list',
@@ -20,7 +24,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AlergenListComponent implements OnInit {
     // tablica przechowująca wszystkie alergeny pobrane z API
-    alergeny: AlergenDto[] = [];
+    alergeny: Alergen[] = [];
 
     // konstruktor z wstrzykniętymi serwisami i routerem
     constructor(
@@ -45,7 +49,13 @@ export class AlergenListComponent implements OnInit {
     loadAlergeny(): void {
         this.alergenService.getAllAlergeny().subscribe({
             // jeśli dane zostaną pobrane pomyślnie, zapisujemy je w lokalnej tablicy
-            next: (data) => (this.alergeny = data),
+            next: (data) => {
+                // mapowanie właściwości z backendu (NazwaAlergenu) na format oczekiwany w Angularze
+                this.alergeny = data.map(a => ({
+                    id: a.id,
+                    nazwa_alergenu: a.nazwaAlergenu
+                }));
+            },
             // jeśli wystąpi błąd podczas pobierania, logujemy go do konsoli
             error: (err) => console.error('Błąd ładowania alergenów', err),
         });

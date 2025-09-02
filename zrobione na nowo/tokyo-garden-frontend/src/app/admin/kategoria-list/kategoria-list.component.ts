@@ -5,9 +5,9 @@ import { KategoriaService } from '../../services/kategoria.service';
 import { AuthService } from '../../services/auth.service';
 
 // interfejs reprezentujący kategorię w systemie
-export interface KategoriaDto {
+export interface Kategoria {
     id: number;
-    nazwa_kategorii: string;
+    nazwa_kategorii: string; // dopasowane do użycia w HTML
 }
 
 @Component({
@@ -20,7 +20,7 @@ export interface KategoriaDto {
 export class KategoriaListComponent implements OnInit {
 
     // tablica przechowująca wszystkie kategorie pobrane z serwisu
-    kategorie: KategoriaDto[] = [];
+    kategorie: Kategoria[] = [];
 
     constructor(
         // serwis odpowiedzialny za operacje na kategoriach
@@ -56,7 +56,13 @@ export class KategoriaListComponent implements OnInit {
 
         // subskrypcja danych z serwisu i przypisanie ich do tablicy
         this.kategoriaService.getAllKategorie().subscribe({
-            next: (data) => (this.kategorie = data),
+            // jeśli dane zostaną pobrane pomyślnie, mapujemy je na format używany w Angularze
+            next: (data) => {
+                this.kategorie = data.map(k => ({
+                    id: k.id,
+                    nazwa_kategorii: k.nazwaKategorii // mapowanie z backendu
+                }));
+            },
 
             // logowanie błędów w przypadku problemów z serwerem
             error: (err) => console.error('Błąd ładowania kategorii', err),

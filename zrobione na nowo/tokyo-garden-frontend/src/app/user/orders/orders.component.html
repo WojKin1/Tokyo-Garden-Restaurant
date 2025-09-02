@@ -1,67 +1,69 @@
-<div class="container">
-  <h1>Twoje zamówienie</h1>
+<header>
+    <h1>Twoje Zamówienie</h1>
+    <p>Sprawdź szczegóły i złóż zamówienie</p>
+</header>
 
-  <div id="order-details">
-    <h2>Szczegóły zamówienia</h2>
-    <div *ngFor="let item of cart" class="order-item">
-      <div class="order-item-details">
-        <h4>{{ item.nazwa_pozycji }}</h4>
-        <p>{{ item.cena | currency:'PLN':'symbol':'1.2-2' }}</p>
-      </div>
-    </div>
-  </div>
+<section class="order-section">
+    <div *ngIf="cart.length === 0" class="empty-cart">Twój koszyk jest pusty.</div>
 
-  <form (ngSubmit)="submitOrder()">
-    <div id="order-type">
-      <h4>Opcje Zamówienia:</h4>
-      <select [(ngModel)]="orderData.orderOptions" name="orderOptions" (change)="updateDeliveryOption()">
-        <option value="W Restauracji">W Restauracji</option>
-        <option value="Na Wynos">Na Wynos</option>
-        <option value="Na Dowóz">Na Dowóz</option>
-      </select>
+    <div class="menu-items">
+        <div *ngFor="let item of cart" class="menu-item">
+            <h3 class="menu-item-name">{{ item.nazwa_pozycji }}</h3>
+            <p class="menu-item-price">{{ item.cena | currency:'PLN':'symbol':'1.2-2' }}</p>
+        </div>
     </div>
 
-    <div *ngIf="showAddressFields" id="delivery-address-field">
-      <h4>Adres dostawy:</h4>
-      <label>Miasto:</label>
-      <input type="text" name="city" [(ngModel)]="orderData.city">
+    <form (ngSubmit)="submitOrder()" class="order-form">
+        <div class="form-group">
+            <label for="orderOptions">Opcje Zamówienia:</label>
+            <select [(ngModel)]="orderData.orderOptions" name="orderOptions" (change)="updateDeliveryOption()">
+                <option value="W Restauracji">W Restauracji</option>
+                <option value="Na Wynos">Na Wynos</option>
+                <option value="Na Dowóz">Na Dowóz</option>
+            </select>
+        </div>
 
-      <label>Ulica:</label>
-      <input type="text" name="street" [(ngModel)]="orderData.street">
+        <div *ngIf="showAddressFields" class="form-group">
+            <label>Miasto:</label>
+            <input type="text" name="city" [(ngModel)]="orderData.city">
 
-      <label>Numer Domu:</label>
-      <input type="number" name="houseNumber" [(ngModel)]="orderData.houseNumber">
+            <label>Ulica:</label>
+            <input type="text" name="street" [(ngModel)]="orderData.street">
 
-      <label>Numer Mieszkania:</label>
-      <input type="number" name="apartmentNumber" [(ngModel)]="orderData.apartmentNumber">
+            <label>Numer Domu:</label>
+            <input type="number" name="houseNumber" [(ngModel)]="orderData.houseNumber">
 
-      <label>Kod Pocztowy:</label>
-      <input type="text" name="postalCode" [(ngModel)]="orderData.postalCode">
-    </div>
+            <label>Numer Mieszkania:</label>
+            <input type="number" name="apartmentNumber" [(ngModel)]="orderData.apartmentNumber">
 
-    <div id="order-comments">
-      <h4>Uwagi do zamówienia:</h4>
-      <textarea name="orderComments" [(ngModel)]="orderData.orderComments"></textarea>
-    </div>
+            <label>Kod Pocztowy:</label>
+            <input type="text" name="postalCode" [(ngModel)]="orderData.postalCode">
+        </div>
 
-    <div id="payment-method">
-      <h4>Metoda Płatności:</h4>
-      <select name="paymentMethod" [(ngModel)]="orderData.paymentMethod">
-        <option value="Karta Płatnicza">Karta Płatnicza</option>
-        <option value="Gotówka">Gotówka</option>
-      </select>
-    </div>
+        <div class="form-group">
+            <label>Uwagi do zamówienia:</label>
+            <textarea name="orderComments" [(ngModel)]="orderData.orderComments"></textarea>
+        </div>
 
-    <div id="total-price">
-      <h4>Łączna Cena:</h4>
-      <p>{{ totalPrice + additionalFee | currency:'PLN':'symbol':'1.2-2' }}</p>
-      <p *ngIf="additionalFee > 0" style="font-size: 0.7em; font-weight: normal; color: red;">
-        dodatek {{ additionalFee | currency:'PLN':'symbol':'1.2-2' }}
-      </p>
-    </div>
+        <div class="form-group">
+            <label>Metoda Płatności:</label>
+            <select name="paymentMethod" [(ngModel)]="orderData.paymentMethod">
+                <option value="Karta Płatnicza">Karta Płatnicza</option>
+                <option value="Gotówka">Gotówka</option>
+            </select>
+        </div>
 
-    <div id="submit-order">
-      <button type="submit">Złóż zamówienie</button>
-    </div>
-  </form>
-</div>
+        <div class="total">
+            <h4>Łączna cena:</h4>
+            <p>{{ totalPrice + additionalFee | currency:'PLN':'symbol':'1.2-2' }}</p>
+            <p *ngIf="additionalFee > 0" class="additional-fee">
+                dodatek {{ additionalFee | currency:'PLN':'symbol':'1.2-2' }}
+            </p>
+        </div>
+
+        <div class="cart-actions">
+            <button class="add-to-cart-button" type="submit">Złóż zamówienie</button>
+            <button class="go-home-button" type="button" (click)="goToHome()">Powrót do strony głównej</button>
+        </div>
+    </form>
+</section>

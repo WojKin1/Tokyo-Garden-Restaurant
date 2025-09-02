@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; // Import Router
 import { CartService } from '../../services/cart.service';
 
 interface Alergen {
@@ -11,7 +12,7 @@ interface Alergen {
 
 interface PozycjaMenu {
     id: number;
-    nazwa_pozycji: string;
+    nazwa: string;
     opis: string;
     skladniki: string;
     cena: number;
@@ -30,9 +31,14 @@ interface PozycjaMenu {
 export class MenuComponent implements OnInit {
     // obiekt przechowujący pozycje menu pogrupowane po kategorii
     groupedMenu: { [category: string]: PozycjaMenu[] } = {};
+    // flaga do kontrolowania widoczności przycisku koszyka
+    showCartButton = false;
 
-    // konstruktor z HttpClient i CartService
-    constructor(private http: HttpClient, private cartService: CartService) { }
+    constructor(
+        private http: HttpClient,
+        private cartService: CartService,
+        private router: Router // Dodanie Router do konstruktora
+    ) { }
 
     // metoda wywoływana przy inicjalizacji komponentu
     ngOnInit(): void {
@@ -48,23 +54,50 @@ export class MenuComponent implements OnInit {
                 }, {} as { [category: string]: PozycjaMenu[] });
             },
             error: (err) => {
-                // logowanie błędu w konsoli jeśli nie uda się pobrać danych
+                // logowanie błędu w konsoli jeśli nie uda się pobierać danych
                 console.error('Błąd ładowania menu:', err);
             }
+        });
+        // subskrypcja zmian w koszyku, aby aktualizować widoczność przycisku
+        this.cartService.getCart().subscribe((cart) => {
+            this.showCartButton = cart.length > 0;
         });
     }
 
     // dodawanie pozycji do koszyka
     addToCart(item: PozycjaMenu): void {
-        // wywołanie serwisu koszyka i dodanie elementu
+        console.log('Przekazywana pozycja:', item);
         this.cartService.addToCart({
+            // wywołanie serwisu koszyka i dodanie elementu
             id: item.id,
-            nazwa_pozycji: item.nazwa_pozycji,
+            nazwa_pozycji: item.nazwa,
             cena: item.cena,
             ilosc: 1,
             image_data: item.image_data
         });
         // logowanie informacji o dodaniu do koszyka
         console.log('Dodano do koszyka:', item);
+
+        // wyświetlenie pop-upu z danymi dania
+        const popupMessage = `
+            Dodano do koszyka:
+            - Nazwa: ${item.nazwa}
+            - Cena: ${item.cena} zł
+            - Opis: ${item.opis}
+            - Składniki: ${item.skladniki}
+            - Alergeny: ${item.alergeny.map(a => a.nazwa_Alergenu).join(', ') || 'Brak'}
+        `;
+        alert(popupMessage);
+    }
+
+    // metoda do przejścia na stronę główną
+    goToHome(): void {
+        // Nawigacja do strony głównej
+        this.router.navigate(['/']);
+    }
+
+    // metoda do przejścia do koszyka
+    goToCart(): void {
+        this.router.navigate(['/cart']);
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { PozycjaService } from '../../services/pozycja.service';
-import { AuthService } from '../../services/auth.service'; // <-- dodane
+import { AuthService } from '../../services/auth.service';
 
 export interface AlergenDto {
     id: number;
@@ -19,7 +19,6 @@ export interface PozycjaDto {
     nazwa_pozycji: string;
     opis: string;
     cena: number;
-    skladniki: string;
     alergeny?: AlergenDto[];
     kategoria_menu?: KategoriaDto;
 }
@@ -38,29 +37,40 @@ export class PozycjaListComponent implements OnInit {
 
     constructor(
         private pozycjaService: PozycjaService,
-        private authService: AuthService, // <-- dodane
-        private router: Router             // <-- dodane
+        private authService: AuthService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
-        // blokada dostępu
         if (!this.authService.isAdmin()) {
-            this.router.navigate(['/']); // np. strona główna
+            this.router.navigate(['/']);
             return;
         }
-
         this.loadPozycje();
     }
 
     loadPozycje(): void {
-        if (!this.authService.isAdmin()) return; 
+        if (!this.authService.isAdmin()) return;
 
         this.loading = true;
         this.errorMessage = '';
 
         this.pozycjaService.getAllPozycje().subscribe({
             next: (data) => {
-                this.pozycje = data || [];
+                this.pozycje = (data || []).map(p => ({
+                    id: p.id,
+                    nazwa_pozycji: p.nazwa, // mapowanie z backendu
+                    opis: p.opis,
+                    cena: p.cena,
+                    alergeny: p.alergeny?.map((a: any) => ({
+                        id: a.id,
+                        nazwa_alergenu: a.nazwaAlergenu
+                    })),
+                    kategoria_menu: p.kategoria ? {
+                        id: p.kategoria.id,
+                        nazwa_kategorii: p.kategoria.nazwaKategorii
+                    } : undefined
+                }));
                 this.loading = false;
             },
             error: (err) => {
@@ -72,7 +82,7 @@ export class PozycjaListComponent implements OnInit {
     }
 
     deletePozycja(id: number): void {
-        if (!this.authService.isAdmin()) return; 
+        if (!this.authService.isAdmin()) return;
 
         if (!confirm('Czy na pewno chcesz usunąć tę pozycję?')) return;
 

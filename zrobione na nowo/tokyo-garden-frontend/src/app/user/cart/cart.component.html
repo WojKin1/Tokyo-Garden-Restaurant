@@ -1,32 +1,42 @@
-<div class="container">
-    <h1>Twój koszyk</h1>
+<header>
+    <h1>Twój Koszyk</h1>
+    <p>Sprawdź swoje zamówienie przed finalizacją</p>
+</header>
 
-    <div *ngIf="loading">Ładowanie...</div>
+
+<section class="cart-section">
+    <div *ngIf="loading" class="loading">Ładowanie...</div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-    <div class="cart-item" *ngFor="let item of cart">
-        <div class="item-info">
-            <h4>{{ item.nazwa_pozycji }}</h4>
-            <p>{{ item.cena }} PLN</p>
+    <div class="menu-items">
+        <div *ngFor="let item of cart" class="menu-item">
+            <h3 class="menu-item-name">{{ item.nazwa_pozycji || 'Brak nazwy' }}</h3>
+            <p class="menu-item-price">{{ item.cena }} zł</p>
+            <h4 class="description_h">Ilość:</h4>
             <div class="quantity-control">
-                <button (click)="decrease(item)">-</button>
-                <span>{{ item.ilosc }}</span>
-                <button (click)="increase(item)">+</button>
+                <button class="quantity-button" (click)="decrease(item)">-</button>
+                <span class="quantity-display">{{ item.ilosc }}</span>
+                <button class="quantity-button" (click)="increase(item)">+</button>
             </div>
-            <button (click)="remove(item)">Usuń</button>
+            <button class="remove-button" (click)="remove(item)">Usuń z koszyka</button>
         </div>
     </div>
 
     <div class="total">
-        Łączna cena: {{ totalPrice }} PLN
+        <h4 class="description_h">Łączna cena:</h4>
+        <p>{{ totalPrice }} zł</p>
     </div>
 
-    <button (click)="finalizeOrder()">Złóż zamówienie</button>
+    <div class="cart-actions">
+        <button class="add-to-cart-button"
+                id="checkout-button"
+                (click)="finalizeOrder()"
+                [disabled]="!cart.length">
+            Złóż zamówienie
+        </button>
 
-
-    <button id="checkout-button"
-            (click)="finalizeOrder()"
-            [disabled]="!cart.length">
-        Złóż zamówienie
-    </button>
-</div>
+        <button class="go-home-button" (click)="goToHome()">
+            Powrót do strony głównej
+        </button>
+    </div>
+</section>
