@@ -38,5 +38,10 @@ namespace TokyoGarden.BL
             await _repo.UpdateAsync(order);
             return order;
         }
+
+        public Task GetUserByIdAsync(object uzytkownikId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
