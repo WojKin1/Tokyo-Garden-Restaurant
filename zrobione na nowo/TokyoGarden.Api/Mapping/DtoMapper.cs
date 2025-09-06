@@ -4,10 +4,10 @@ using TokyoGarden.Model;
 
 namespace TokyoGarden.Api.Mapping
 {
-    // Klasa statyczna do mapowania encji na DTO
+    // Klasa pomocnicza do konwersji encji bazodanowych na obiekty DTO
     public static class DtoMapper
     {
-        // Mapowanie encji Uzytkownicy na UzytkownikDTO
+        // Konwertuje encję użytkownika na obiekt DTO zawierający dane użytkownika
         public static UzytkownikDTO ToDto(this Uzytkownicy u) =>
             u == null ? null! : new UzytkownikDTO
             {
@@ -17,7 +17,7 @@ namespace TokyoGarden.Api.Mapping
                 TypUzytkownika = u.typ_uzytkownika
             };
 
-        // Mapowanie encji Adresy na AdresDTO
+        // Konwertuje encję adresu na obiekt DTO zawierający dane adresowe
         public static AdresDTO ToDto(this Adresy a) =>
             a == null ? null! : new AdresDTO
             {
@@ -28,7 +28,7 @@ namespace TokyoGarden.Api.Mapping
                 NrMieszkania = a.nr_mieszkania
             };
 
-        // Mapowanie encji Kategorie na KategoriaDTO
+        // Konwertuje encję kategorii na obiekt DTO zawierający nazwę kategorii
         public static KategoriaDTO ToDto(this Kategorie k) =>
             k == null ? null! : new KategoriaDTO
             {
@@ -36,7 +36,7 @@ namespace TokyoGarden.Api.Mapping
                 NazwaKategorii = k.nazwa_kategorii
             };
 
-        // Mapowanie encji Alergeny na AlergenDTO
+        // Konwertuje encję alergenu na obiekt DTO zawierający nazwę alergenu
         public static AlergenDTO ToDto(this Alergeny a) =>
             a == null ? null! : new AlergenDTO
             {
@@ -44,7 +44,7 @@ namespace TokyoGarden.Api.Mapping
                 NazwaAlergenu = a.nazwa_alergenu
             };
 
-        // Mapowanie encji Pozycje_Menu na PozycjaMenuDTO
+        // Konwertuje encję pozycji menu na obiekt DTO z kategorią i podstawowymi danymi
         public static PozycjaMenuDTO ToDto(this Pozycje_Menu p) =>
             p == null ? null! : new PozycjaMenuDTO
             {
@@ -53,10 +53,11 @@ namespace TokyoGarden.Api.Mapping
                 Cena = p.cena,
                 Opis = p.opis,
                 Kategoria = p.kategoria_menu?.ToDto(),
-                Alergeny = p.alergeny?.Select(x => x.ToDto()).ToList() ?? new()
+                // Alergeny mogą być dodane w przyszłości jeśli będą potrzebne
+                //Alergeny = p.alergeny?.Select(x => x.ToDto()).ToList() ?? new()
             };
 
-        // Mapowanie encji Pozycje_Zamowienia na PozycjaZamowieniaDTO
+        // Konwertuje encję pozycji zamówienia na obiekt DTO z powiązaną pozycją menu
         public static PozycjaZamowieniaDTO ToDto(this Pozycje_Zamowienia pz) =>
             pz == null ? null! : new PozycjaZamowieniaDTO
             {
@@ -66,7 +67,7 @@ namespace TokyoGarden.Api.Mapping
                 PozycjaMenu = pz.pozycja_menu?.ToDto()
             };
 
-        // Mapowanie encji Zamowienia na ZamowienieDTO
+        // Konwertuje encję zamówienia na obiekt DTO z użytkownikiem i listą pozycji
         public static ZamowienieDTO ToDto(this Zamowienia z) =>
             z == null ? null! : new ZamowienieDTO
             {

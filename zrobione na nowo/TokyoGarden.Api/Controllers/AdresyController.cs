@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TokyoGarden.Api.Mapping;
 using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
-    // Kontroler API dla operacji na adresach
     [Route("api/[controller]")]
     [ApiController]
     public class AdresyController : ControllerBase
     {
+        // Serwis odpowiedzialny za operacje na danych adresowych
         private readonly IAdresyService _service;
 
-        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        // Konstruktor kontrolera z wstrzykiwaniem zależności serwisu adresowego
         public AdresyController(IAdresyService service)
         {
             _service = service;
         }
 
-        // Pobieranie wszystkich adresów z bazy danych
+        // Zwraca listę wszystkich adresów dostępnych w bazie danych
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +28,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(a => a.ToDto()));
         }
 
-        // Pobieranie adresu po identyfikatorze
+        // Zwraca pojedynczy adres na podstawie jego identyfikatora
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -36,15 +37,27 @@ namespace TokyoGarden.Api.Controllers
             return Ok(address.ToDto());
         }
 
-        // Tworzenie nowego adresu w bazie danych
+        // Tworzy nowy adres na podstawie danych przesłanych w formacie JSON
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Model.Adresy address)
+        public async Task<IActionResult> Create([FromBody] JsonElement body)
         {
+            // Tworzy obiekt adresu na podstawie właściwości JSON
+            var address = new Model.Adresy
+            {
+                miasto = body.GetProperty("miasto").GetString(),
+                ulica = body.GetProperty("ulica").GetString(),
+                nr_domu = body.TryGetProperty("nr_domu", out var nrDomu) ? nrDomu.GetString() : null,
+                nr_mieszkania = body.TryGetProperty("nr_mieszkania", out var nrMieszkania) ? nrMieszkania.GetString() : null
+            };
+
+            // Dodaje nowy adres do bazy danych za pomocą serwisu
             await _service.AddAsync(address);
+
+            // Zwraca odpowiedź HTTP 201 z lokalizacją nowego zasobu
             return CreatedAtAction(nameof(GetById), new { id = address.id }, address.ToDto());
         }
 
-        // Aktualizacja istniejącego adresu
+        // Aktualizuje istniejący adres na podstawie przesłanych danych
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Adresy address)
         {
@@ -53,7 +66,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Usuwanie adresu po identyfikatorze
+        // Usuwa adres z bazy danych na podstawie jego identyfikatora
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -61,7 +74,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Pobieranie adresów po nazwie miasta
+        // Zwraca listę adresów znajdujących się w podanym mieście
         [HttpGet("city/{city}")]
         public async Task<IActionResult> GetByCity(string city)
         {

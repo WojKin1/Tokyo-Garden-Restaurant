@@ -7,14 +7,14 @@ using TokyoGarden.IDAL;
 using TokyoGarden.Model;
 using BCrypt.Net;
 
-// Tworzenie instancji aplikacji webowej
+// Tworzy obiekt konfiguracji aplikacji webowej ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
 
-// Konfiguracja DbContext z SQL Server
+// Rejestruje kontekst bazy danych z użyciem SQL Server i połączenia z konfiguracji
 builder.Services.AddDbContext<DbTokyoGarden>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Konfiguracja serializacji JSON dla kontrolerów
+// Konfiguruje opcje serializacji JSON dla kontrolerów API
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
@@ -22,7 +22,7 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Ustawienie polityki CORS dla frontendu
+// Definiuje politykę CORS umożliwiającą dostęp z aplikacji frontendowej
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     );
 });
 
-// Rejestracja repozytoriów w kontenerze DI
+// Rejestruje repozytoria danych w kontenerze DI jako zależności
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUzytkownikRepository, UzytkownikRepository>();
 builder.Services.AddScoped<IPozycjeMenuRepository, PozycjeMenuRepository>();
@@ -44,7 +44,7 @@ builder.Services.AddScoped<IAlergenyRepository, AlergenyRepository>();
 builder.Services.AddScoped<IAdresyRepository, AdresyRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Rejestracja serwisów biznesowych
+// Rejestruje serwisy logiki biznesowej w kontenerze DI
 builder.Services.AddScoped<IUzytkownikService, UzytkownikService>();
 builder.Services.AddScoped<IPozycjeMenuService, PozycjeMenuService>();
 builder.Services.AddScoped<IKategorieService, KategorieService>();
@@ -53,23 +53,23 @@ builder.Services.AddScoped<IPozycjeZamowieniaService, PozycjeZamowieniaService>(
 builder.Services.AddScoped<IAlergenyService, AlergenyService>();
 builder.Services.AddScoped<IAdresyService, AdresyService>();
 
-// Dodanie obsługi Swagger dla API
+// Dodaje obsługę Swaggera do dokumentacji API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Budowanie aplikacji
+// Tworzy instancję aplikacji webowej z wcześniej skonfigurowanymi usługami
 var app = builder.Build();
 
-// Inicjalizacja bazy danych i seedowanie
+// Tworzy zakres usług i inicjalizuje bazę danych oraz dane startowe
 using (var scope = app.Services.CreateScope())
 {
     var sp = scope.ServiceProvider;
     var db = sp.GetRequiredService<DbTokyoGarden>();
 
-    // Migracja bazy danych
+    // Wykonuje migrację bazy danych lub tworzy ją jeśli nie istnieje
     db.Database.Migrate(); // lub EnsureCreated();
 
-    // Seedowanie kategorii menu
+    // Dodaje domyślne kategorie menu jeśli baza jest pusta
     if (!db.KategorieMenu.Any())
     {
         var sushi = new Kategorie { nazwa_kategorii = "Sushi" };
@@ -79,7 +79,7 @@ using (var scope = app.Services.CreateScope())
         db.KategorieMenu.AddRange(sushi, ramen, napoje);
         db.SaveChanges();
 
-        // Seedowanie pozycji menu
+        // Dodaje przykładowe pozycje menu przypisane do kategorii
         db.PozycjeMenu.AddRange(
             new Pozycje_Menu { nazwa_pozycji = "California Roll", opis = "8 szt. łosoś+awokado", cena = 28m, skladniki = "ryż, łosoś, awokado", kategoria_menu = sushi },
             new Pozycje_Menu { nazwa_pozycji = "Ramen Miso", opis = "Bulion miso", cena = 35m, skladniki = "makaron, bulion miso, wieprzowina", kategoria_menu = ramen },
@@ -88,7 +88,8 @@ using (var scope = app.Services.CreateScope())
 
         db.SaveChanges();
     }
-    // Seedowanie użytkowników z hashowaniem haseł
+
+    // Dodaje użytkowników z domyślnymi danymi i zaszyfrowanym hasłem
     if (!db.Uzytkownicy.Any())
     {
         var admin = new Uzytkownicy
@@ -110,25 +111,25 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Włączenie Swaggera w trybie deweloperskim
+// Włącza Swaggera tylko w środowisku deweloperskim
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Przekierowanie na HTTPS
+// Przekierowuje wszystkie żądania HTTP na HTTPS
 app.UseHttpsRedirection();
 
-// Włączenie polityki CORS przed kontrolerami
+// Włącza politykę CORS przed uruchomieniem kontrolerów
 app.UseCors("AllowFrontend");
 
-// Włączenie autentykacji i autoryzacji
+// Włącza obsługę autentykacji i autoryzacji w aplikacji
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapowanie endpointów kontrolerów
+// Mapuje kontrolery API na odpowiednie endpointy HTTP
 app.MapControllers();
 
-// Uruchomienie aplikacji
+// Uruchamia aplikację webową
 app.Run();

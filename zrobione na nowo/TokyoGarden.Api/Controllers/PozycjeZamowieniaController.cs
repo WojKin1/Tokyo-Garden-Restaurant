@@ -6,20 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
-    // Kontroler API dla operacji na pozycjach zamówienia
     [Route("api/[controller]")]
     [ApiController]
     public class PozycjeZamowieniaController : ControllerBase
     {
+        // Serwis odpowiedzialny za operacje na pozycjach zamówienia w systemie
         private readonly IPozycjeZamowieniaService _service;
 
-        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        // Konstruktor kontrolera z wstrzykiwaniem zależności serwisu pozycji zamówienia
         public PozycjeZamowieniaController(IPozycjeZamowieniaService service)
         {
             _service = service;
         }
 
-        // Pobieranie wszystkich pozycji zamówienia z detalami
+        // Zwraca listę wszystkich pozycji zamówienia wraz z powiązanymi szczegółami
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(p => p.ToDto()));
         }
 
-        // Pobieranie pozycji zamówienia po identyfikatorze
+        // Zwraca konkretną pozycję zamówienia na podstawie jej identyfikatora
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -37,17 +37,20 @@ namespace TokyoGarden.Api.Controllers
             return Ok(item.ToDto());
         }
 
-        // Tworzenie nowej pozycji zamówienia w bazie danych
+        // Tworzy nową pozycję zamówienia na podstawie przesłanych danych
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Pozycje_Zamowienia item)
         {
             await _service.AddAsync(item);
+
+            // Pobiera świeżo dodaną pozycję zamówienia z pełnymi szczegółami
             var all = await _service.GetAllWithDetailsAsync();
             var fresh = all.FirstOrDefault(p => p.id == item.id);
+
             return CreatedAtAction(nameof(GetById), new { id = item.id }, fresh?.ToDto() ?? item.ToDto());
         }
 
-        // Aktualizacja istniejącej pozycji zamówienia
+        // Aktualizuje istniejącą pozycję zamówienia na podstawie identyfikatora
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Pozycje_Zamowienia item)
         {
@@ -56,7 +59,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Usuwanie pozycji zamówienia po identyfikatorze
+        // Usuwa pozycję zamówienia z systemu na podstawie jej identyfikatora
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -64,7 +67,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Pobieranie pozycji zamówienia po identyfikatorze zamówienia
+        // Zwraca listę pozycji zamówienia przypisanych do konkretnego zamówienia
         [HttpGet("order/{orderId}")]
         public async Task<IActionResult> GetByOrder(int orderId)
         {

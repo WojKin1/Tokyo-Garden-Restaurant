@@ -6,20 +6,20 @@ using TokyoGarden.IBL;
 
 namespace TokyoGarden.Api.Controllers
 {
-    // Kontroler API dla operacji na kategoriach
     [Route("api/[controller]")]
     [ApiController]
     public class KategorieController : ControllerBase
     {
+        // Serwis odpowiedzialny za operacje na danych kategorii produktów
         private readonly IKategorieService _service;
 
-        // Inicjalizacja serwisu przez wstrzykiwanie zależności
+        // Konstruktor kontrolera z wstrzykiwaniem zależności serwisu kategorii
         public KategorieController(IKategorieService service)
         {
             _service = service;
         }
 
-        // Pobieranie wszystkich kategorii z bazy danych
+        // Zwraca listę wszystkich kategorii dostępnych w bazie danych
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +27,7 @@ namespace TokyoGarden.Api.Controllers
             return Ok(list.Select(k => k.ToDto()));
         }
 
-        // Pobieranie kategorii po identyfikatorze
+        // Zwraca pojedynczą kategorię na podstawie jej identyfikatora
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -35,15 +35,17 @@ namespace TokyoGarden.Api.Controllers
             return item == null ? NotFound() : Ok(item.ToDto());
         }
 
-        // Tworzenie nowej kategorii w bazie danych
+        // Tworzy nową kategorię na podstawie danych przesłanych w żądaniu
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Model.Kategorie item)
         {
             await _service.AddAsync(item);
+
+            // Zwraca odpowiedź HTTP 201 z lokalizacją nowo utworzonej kategorii
             return CreatedAtAction(nameof(GetById), new { id = item.id }, item.ToDto());
         }
 
-        // Aktualizacja istniejącej kategorii
+        // Aktualizuje dane istniejącej kategorii na podstawie identyfikatora
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Kategorie item)
         {
@@ -52,7 +54,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Usuwanie kategorii po identyfikatorze
+        // Usuwa kategorię z bazy danych na podstawie jej identyfikatora
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -60,7 +62,7 @@ namespace TokyoGarden.Api.Controllers
             return NoContent();
         }
 
-        // Pobieranie kategorii po nazwie
+        // Zwraca kategorię na podstawie jej nazwy przekazanej w adresie URL
         [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetByName(string name)
         {

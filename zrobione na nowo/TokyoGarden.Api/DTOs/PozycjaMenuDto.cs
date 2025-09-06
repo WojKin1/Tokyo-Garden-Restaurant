@@ -10,6 +10,6 @@ namespace TokyoGarden.Api.DTOs
         public decimal Cena { get; set; }
         public string? Opis { get; set; }
         public KategoriaDTO? Kategoria { get; set; }
-        public List<AlergenDTO> Alergeny { get; set; } = new();
+        //public List<AlergenDTO> Alergeny { get; set; } = new();
     }
 }

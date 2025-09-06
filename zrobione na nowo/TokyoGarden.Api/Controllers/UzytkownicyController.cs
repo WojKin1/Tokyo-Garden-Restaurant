@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TokyoGarden.Api.Mapping;
 using TokyoGarden.IBL;
 using TokyoGarden.Model;
+using BCrypt.Net;
 
 namespace TokyoGarden.Api.Controllers
 {
@@ -11,92 +12,103 @@ namespace TokyoGarden.Api.Controllers
     [ApiController]
     public class UzytkownicyController : ControllerBase
     {
+        // Serwis odpowiedzialny za operacje na danych użytkowników
         private readonly IUzytkownikService _service;
+        private readonly IZamowieniaService _zamowieniaService;
 
-        public UzytkownicyController(IUzytkownikService service)
+        // Konstruktor kontrolera z wstrzykiwaniem zależności serwisów
+        public UzytkownicyController(IUzytkownikService service, IZamowieniaService zamowieniaService)
         {
             _service = service;
+            _zamowieniaService = zamowieniaService;
         }
 
-        // Metoda zwraca listę wszystkich użytkowników w systemie
+        // Zwraca listę wszystkich użytkowników dostępnych w systemie
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllAsync();
-            // Tutaj mapujemy encje na DTO aby nie ujawniać całego modelu
             return Ok(list.Select(u => u.ToDto()));
         }
 
-        // Metoda pobiera konkretnego użytkownika po identyfikatorze
+        // Zwraca pojedynczego użytkownika na podstawie jego identyfikatora
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _service.GetByIdAsync(id);
             if (user == null) return NotFound();
-            // Jeżeli użytkownik istnieje zwracamy DTO zamiast encji
             return Ok(user.ToDto());
         }
 
-        // Tworzenie nowego użytkownika poprzez przesłanie danych w JSON
+        // Tworzy nowego użytkownika po uprzednim sprawdzeniu unikalności nazwy
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Uzytkownicy user)
         {
-            // sprawdzenie czy login jest zajęty przez innego użytkownika
-            if ((await _service.GetAllAsync()).Any(u => u.nazwa_uzytkownika == user.nazwa_uzytkownika))
+            if (await _service.UsernameExistsAsync(user.nazwa_uzytkownika))
                 return BadRequest("Użytkownik o tej nazwie już istnieje");
 
-            // 🔒 hashowanie hasła aby nie przechowywać plaintextu
+            // Hashowanie hasła przed zapisaniem użytkownika
             user.haslo = BCrypt.Net.BCrypt.HashPassword(user.haslo);
-
-            // zapisujemy użytkownika do bazy danych przez serwis
             await _service.AddAsync(user);
-            // zwracamy informację o utworzeniu nowego użytkownika
+
+            // Zwraca odpowiedź HTTP 201 z lokalizacją nowo utworzonego użytkownika
             return CreatedAtAction(nameof(GetById), new { id = user.id }, user.ToDto());
         }
 
-        // Aktualizacja danych istniejącego użytkownika na podstawie ID
+        // Aktualizuje dane istniejącego użytkownika na podstawie jego identyfikatora
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Uzytkownicy user)
         {
-            // Sprawdzamy zgodność identyfikatora w URL i w obiekcie
             if (id != user.id) return BadRequest();
+
+            // Hashowanie hasła, jeśli jest podane
+            if (!string.IsNullOrEmpty(user.haslo))
+            {
+                user.haslo = BCrypt.Net.BCrypt.HashPassword(user.haslo);
+            }
             await _service.UpdateAsync(user);
-            // Zwracamy brak treści bo update nie zwraca obiektu
             return NoContent();
         }
 
-        // Usuwanie użytkownika z systemu po identyfikatorze
+        // Usuwa użytkownika z systemu na podstawie jego identyfikatora
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            // Sprawdzenie, czy użytkownik istnieje
+            var user = await _service.GetByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Użytkownik o podanym identyfikatorze nie istnieje.");
+            }
+
+            // Pobranie i usunięcie powiązanych zamówień
+            var orders = await _zamowieniaService.GetByUserIdAsync(id);
+            foreach (var order in orders)
+            {
+                await _zamowieniaService.DeleteAsync(order.id);
+            }
+
+            // Usunięcie użytkownika
             await _service.DeleteAsync(id);
-            // Zwracamy status 204 aby potwierdzić usunięcie
             return NoContent();
         }
 
-        // Logowanie użytkownika i weryfikacja danych uwierzytelniających
+        // Autoryzuje użytkownika na podstawie przesłanych danych logowania
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest req)
         {
-            // Szukamy użytkownika po nazwie wśród wszystkich w bazie
-            var user = (await _service.GetAllAsync())
-                .FirstOrDefault(u => u.nazwa_uzytkownika == req.Username);
-
-            // Jeżeli nie istnieje lub hasło się nie zgadza zwracamy 401
+            var user = await _service.GetByUsernameAsync(req.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.haslo))
                 return Unauthorized("Błędny login lub hasło");
 
-            // Jeśli dane poprawne zwracamy DTO użytkownika
             return Ok(user.ToDto());
         }
     }
 
-    // Klasa pomocnicza reprezentująca dane logowania
+    // Klasa pomocnicza reprezentująca dane logowania użytkownika
     public class LoginRequest
     {
-        // Nazwa użytkownika wykorzystywana przy logowaniu
         public string Username { get; set; }
-        // Hasło przekazywane do weryfikacji z hashem w bazie
         public string Password { get; set; }
     }
 }
