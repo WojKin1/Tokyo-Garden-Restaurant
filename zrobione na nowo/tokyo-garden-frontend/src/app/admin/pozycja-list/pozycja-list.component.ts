@@ -59,7 +59,7 @@ export class PozycjaListComponent implements OnInit {
             next: (data) => {
                 this.pozycje = (data || []).map(p => ({
                     id: p.id,
-                    nazwa_pozycji: p.nazwa, // mapowanie z backendu
+                    nazwa_pozycji: p.nazwa,
                     opis: p.opis,
                     cena: p.cena,
                     alergeny: p.alergeny?.map((a: any) => ({

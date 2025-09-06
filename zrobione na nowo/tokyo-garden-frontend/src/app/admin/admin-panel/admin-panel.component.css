@@ -67,7 +67,7 @@ p {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #8e44ad; /* Fioletowy kolor pasuj¹cy do stylu */
+    background-color: #8e44ad; 
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -80,7 +80,6 @@ p {
         background-color: #6c3483;
     }
 
-/* Responsywnoœæ */
 @media (max-width: 600px) {
     .admin-panel-container {
         margin: 10px;

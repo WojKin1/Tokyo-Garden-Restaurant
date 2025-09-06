@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router'; // Dodaj Router
+import { RouterLink, Router } from '@angular/router'; 
 import { CartService, CartItem } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user.service';
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
         private cartService: CartService,
         private userService: UserService,
-        private router: Router // Dodaj Router do iniekcji
+        private router: Router 
     ) { }
 
     ngOnInit(): void {

@@ -1,0 +1,56 @@
+<div class="order-status-container">
+    <div class="filter-panel">
+        <label for="recordLimit">Liczba rekordow:</label>
+        <select id="recordLimit" [(ngModel)]="selectedRecordLimit" (change)="applyFilters()">
+            <option *ngFor="let limit of recordLimitOptions" [value]="limit">{{ limit }}</option>
+        </select>
+        <label for="timeFilter">Czas (godziny wstecz):</label>
+        <select id="timeFilter" [(ngModel)]="selectedTimeFilter" (change)="applyFilters()">
+            <option *ngFor="let hours of timeFilterOptions" [value]="hours">{{ hours }}</option>
+        </select>
+        <label for="hideCompletedAndCanceled">Ukryj anulowane i zakonczone:</label>
+        <input type="checkbox" id="hideCompletedAndCanceled" [(ngModel)]="hideCompletedAndCanceled" (change)="applyFilters()">
+    </div>
+
+    <div *ngIf="filteredOrders.length > 0; else noOrders">
+        <h2>Zarzadzanie statusami zamowien</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Zamowienia</th>
+                    <th>Data</th>
+                    <th>U¿ytkownik</th>
+                    <th>Cena</th>
+                    <th>Metoda p³atnoœci</th>
+                    <th>Opcje zamowienia</th>
+                    <th>Dodatkowe informacje</th>
+                    <th>Status</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of filteredOrders">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.dataZamowienia | date:'medium' }}</td>
+                    <td>{{ order.uzytkownik?.nazwaUzytkownika || 'Brak danych u¿ytkownika' }}</td>
+                    <td>{{ order.lacznaCena | currency:'PLN' }}</td>
+                    <td>{{ order.metodaPlatnosci }}</td>
+                    <td>{{ order.opcjeZamowienia }}</td>
+                    <td [innerHTML]="order.dodatkoweInformacje"></td>
+                    <td>{{ order.statusZamowienia }}</td>
+                    <td>
+                        <select [(ngModel)]="order.statusZamowienia"
+                                (change)="updateOrderStatus(order.id, order.statusZamowienia)">
+                            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #noOrders>
+        <p class="no-orders">Brak zamowien do wyœwietlenia.</p>
+    </ng-template>
+
+    <button type="button" (click)="goToAdmin()">Panel administratora</button>
+</div>

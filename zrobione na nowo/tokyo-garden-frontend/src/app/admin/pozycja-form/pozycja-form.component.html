@@ -1,7 +1,7 @@
 <div class="container">
     <h1>{{ isEditMode ? 'Edytuj Pozycję' : 'Dodaj Pozycję' }}</h1>
 
-    <form (ngSubmit)="savePozycja()" enctype="multipart/form-data" #form="ngForm">
+    <form (ngSubmit)="savePozycja(form)" #form="ngForm">
         <input type="hidden" [(ngModel)]="pozycja.id" name="id" />
 
         <div class="form-group">
@@ -26,24 +26,9 @@
 
         <div class="form-group" *ngIf="kategorie.length">
             <label for="kategoria">Kategoria:</label>
-            <select id="kategoria" name="kategoria_id" [(ngModel)]="pozycja.kategoria_id" required>
-                <option *ngFor="let k of kategorie" [value]="k.id">{{ k.nazwaKategorii }}</option>
+            <select id="kategoria" [(ngModel)]="pozycja.kategoria_id" name="kategoria" required>
+                <option *ngFor="let k of kategorie" [value]="k.id"> {{ k.nazwa_kategorii }} </option>
             </select>
-        </div>
-
-        <div class="form-group" *ngIf="alergeny.length">
-            <label for="alergeny">Alergeny:</label>
-            <select id="alergeny" name="alergeny" [(ngModel)]="pozycja.alergeny" multiple>
-                <option *ngFor="let a of alergeny" [value]="a.id">{{ a.nazwaAlergenu }}</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="zdjecie">Zdjęcie:</label>
-            <input type="file" id="zdjecie" (change)="onFileSelected($event)" />
-            <div *ngIf="pozycja.image_data">
-                <img [src]="'data:image/png;base64,' + pozycja.image_data" alt="Zdjęcie" style="max-width: 200px; margin-top: 10px;" />
-            </div>
         </div>
 
         <button type="submit">Zapisz</button>

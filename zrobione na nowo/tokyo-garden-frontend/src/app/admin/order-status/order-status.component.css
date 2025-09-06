@@ -1,0 +1,113 @@
+.order-status-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .table th, .table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .table th {
+        background-color: #4c2264;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95em;
+        text-transform: uppercase;
+    }
+
+    .table td {
+        color: #34495e;
+        font-size: 0.9em;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #ecf0f1;
+        transition: background-color 0.3s ease;
+    }
+
+select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+    select:focus {
+        border-color: #8e44ad; 
+        outline: none;
+    }
+
+    select:hover {
+        border-color: #6c3483;
+    }
+
+.no-orders {
+    color: #7f8c8d;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .order-status-container {
+        max-width: 90%;
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    select {
+        font-size: 0.85em;
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .table {
+        font-size: 0.8em;
+    }
+
+        .table th, .table td {
+            padding: 8px;
+        }
+
+    h2 {
+        font-size: 1.5em;
+    }
+}

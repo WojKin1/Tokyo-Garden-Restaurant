@@ -1,4 +1,3 @@
-/* Kontener ca³ego widoku */
 .container {
     max-width: 500px;
     margin: 20px auto;
@@ -9,14 +8,12 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-    /* Logo na górze */
     .container img {
         display: block;
         margin: 0 auto 15px;
-        max-width: 80px; /* zmniejszone logo */
+        max-width: 80px; 
     }
 
-    /* Nag³ówek */
     .container h2 {
         text-align: center;
         margin-bottom: 20px;
@@ -24,12 +21,10 @@
         color: #333;
     }
 
-/* Grupy pól z etykietami */
 .form-group {
     margin-bottom: 15px;
 }
 
-    /* Etykieta pola */
     .form-group label {
         display: block;
         font-weight: bold;
@@ -37,18 +32,16 @@
         color: #555;
     }
 
-    /* Wartoœæ pola wyœwietlana w p */
     .form-group p {
         margin: 0;
         padding: 8px 10px;
-        background: #fff; /* bia³e t³o dla pola */
+        background: #fff; 
         border: 1px solid #ccc;
         border-radius: 4px;
         color: #333;
         font-size: 1em;
     }
 
-/* Wyœwietlanie komunikatów b³êdów */
 .error {
     color: red;
     margin-bottom: 10px;

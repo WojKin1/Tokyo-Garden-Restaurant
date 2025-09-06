@@ -6,7 +6,6 @@ import { UserService, UserDto } from '../../services/user.service';
 @Component({
     selector: 'app-admin-panel',
     standalone: true,
-    // Dodajemy wymagane modu³y, CommonModule i RouterModule
     imports: [CommonModule, RouterModule],
     templateUrl: './admin-panel.component.html',
     styleUrls: ['./admin-panel.component.css']

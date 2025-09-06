@@ -42,6 +42,9 @@ export const routes: Routes = [
   { path: 'admin/pozycja/new', loadComponent: () => import('./admin/pozycja-form/pozycja-form.component').then(m => m.PozycjaFormComponent) },
   { path: 'admin/pozycja/edit/:id', loadComponent: () => import('./admin/pozycja-form/pozycja-form.component').then(m => m.PozycjaFormComponent) },
 
+  // Admin - zmiana statusu zamowienia
+  { path: 'admin/zamowienia', loadComponent: () => import('./admin/order-status/order-status.component').then(m => m.OrderStatusComponent) },
+
   // Fallback na home
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

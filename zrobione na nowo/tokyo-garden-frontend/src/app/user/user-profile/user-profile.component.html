@@ -2,13 +2,11 @@
     <img src="/assets/logo.png" alt="Logo">
     <h2>Informacje o Użytkowniku</h2>
 
-    <!-- Nawigacja użytkownika -->
     <div class="nav-buttons" style="margin: 20px 0; text-align: center;">
         <button class="nav-btn" routerLink="/">Strona główna</button>
         <button class="nav-btn" (click)="logout()">Wyloguj się</button>
     </div>
 
-    <!-- Przycisk do panelu admina, tylko dla Admin -->
     <div *ngIf="isAdmin" style="margin-top: 20px; text-align: center;">
         <button class="admin-btn" (click)="goToAdmin()">
             Panel Admina

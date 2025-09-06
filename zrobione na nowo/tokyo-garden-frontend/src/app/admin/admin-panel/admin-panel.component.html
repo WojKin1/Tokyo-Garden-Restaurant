@@ -1,14 +1,11 @@
 <div class="admin-panel-container">
     <img src="/assets/logo.png" alt="Logo" class="logo">
     <h2>Panel Admina</h2>
-    <!-- nawigacja u¿ytkownika -->
     <div class="user-nav">
         <a routerLink="/" class="admin-btn">Strona g³ówna</a>
         <a routerLink="/user/profile" class="admin-btn">Profil</a>
     </div>
-    <!-- Status u¿ytkownika -->
     <p *ngIf="statusMessage">{{ statusMessage }}</p>
-    <!-- Sekcja admina -->
     <div *ngIf="isAdmin" class="admin-nav">
         <div class="nav-section">
             <h4>Alergeny</h4>
@@ -24,6 +21,10 @@
             <h4>Pozycje menu</h4>
             <a routerLink="/admin/pozycje" routerLinkActive="active" class="nav-link">Lista pozycji menu</a>
             <a routerLink="/admin/pozycja/new" class="admin-btn">Dodaj now¹ pozycjê</a>
+        </div>
+        <div class="nav-section">
+            <h4>Zamówienia</h4>
+            <a routerLink="/admin/zamowienia" routerLinkActive="active" class="admin-btn">Zarz¹dzanie statusami zamówieñ</a>
         </div>
     </div>
 </div>

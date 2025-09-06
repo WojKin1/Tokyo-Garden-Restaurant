@@ -33,16 +33,14 @@ export class LoginComponent {
             this.errors = ['Proszę wypełnić wszystkie pola.'];
             return;
         }
-
         // Resetowanie błędów przed wysłaniem żądania
         this.errors = [];
         // Ustawienie flagi ładowania na true
         this.loading = true;
-
         // Wysłanie danych logowania na backend
         this.http.post<any>('/api/Uzytkownicy/login', {
-            username: this.loginData.login,
-            password: this.loginData.password
+            Username: this.loginData.login, // Poprawiono na wielką literę
+            Password: this.loginData.password // Poprawiono na wielką literę
         })
             .subscribe({
                 // Obsługa poprawnego logowania
@@ -50,7 +48,6 @@ export class LoginComponent {
                     // Wybór storage w zależności od zaznaczenia "rememberMe"
                     const storage = this.loginData.rememberMe ? localStorage : sessionStorage;
                     storage.setItem('currentUser', JSON.stringify(user));
-
                     // Wyłączenie flagi ładowania po zalogowaniu
                     this.loading = false;
                     // Przekierowanie użytkownika na stronę główną
