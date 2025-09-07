@@ -116,15 +116,16 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Włącza Swaggera tylko w środowisku deweloperskim
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Włącza Swaggera (OPCJA B – zawsze, także w Production)  // <<< DODANE
+app.UseSwagger();                                         // <<< DODANE
+app.UseSwaggerUI();                                       // <<< DODANE
 
 // Przekierowuje wszystkie żądania HTTP na HTTPS
 app.UseHttpsRedirection();
+
+// Serwowanie plików statycznych z katalogu wwwroot (HTML/CSS/JS)  // <<< DODANE
+app.UseDefaultFiles();   // szuka index.html pod "/"                // <<< DODANE
+app.UseStaticFiles();                                            // <<< DODANE
 
 // Włącza politykę CORS przed uruchomieniem kontrolerów
 app.UseCors("AllowFrontend");
