@@ -10,9 +10,15 @@ using BCrypt.Net;
 // Tworzy obiekt konfiguracji aplikacji webowej ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
 
-// Rejestruje kontekst bazy danych z użyciem SQL Server i połączenia z konfiguracji
+// Rejestruje kontekst bazy danych z użyciem PostgreSQL i połączenia z konfiguracji
 builder.Services.AddDbContext<DbTokyoGarden>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    opt.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("TokyoGarden.Api") // <-- migracje w projekcie API
+    )
+);
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Konfiguruje opcje serializacji JSON dla kontrolerów API
 builder.Services.AddControllers()
@@ -22,14 +28,13 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Definiuje politykę CORS umożliwiającą dostęp z aplikacji frontendowej
+// Definiuje politykę CORS – pozwala na dostęp z dowolnego frontendu (na zaliczenie)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials()
     );
 });
 
