@@ -1,12 +1,20 @@
-# Etap 1: build
+# ---------- BUILD ----------
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY . .
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app
 
-# Etap 2: runtime
+# kopiujemy CAŁY kontekst (root = "zrobione na nowo")
+COPY . .
+
+# RESTORE tylko projektu API (pociągnie zależne biblioteki przez ProjectReference)
+RUN dotnet restore "TokyoGarden.Api/TokyoGarden.Api.csproj"
+
+# PUBLISH projektu API
+RUN dotnet publish "TokyoGarden.Api/TokyoGarden.Api.csproj" -c Release -o /app
+
+# ---------- RUNTIME ----------
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "TokyoGarden.Api.dll"]
+
+# Render ustawia $PORT — wystartuj pod ten port
+CMD ["sh", "-c", "dotnet TokyoGarden.Api.dll --urls http://0.0.0.0:$PORT"]
