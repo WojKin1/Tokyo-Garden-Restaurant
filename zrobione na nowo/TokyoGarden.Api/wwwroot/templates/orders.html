@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zamówienia</title>
+    <link rel="stylesheet" type="text/css" href="../css/orders.css">
+</head>
+<body>
+<h1>Twoje zamówienie</h1>
+
+<div id="order-details">
+    <h2>Szczegóły zamówienia</h2>
+    <div th:each="item, iter : ${cart}" class="order-item">
+        <div class="order-item-details">
+            <h4 th:text="${item.Nazwa_Pozycji}"></h4>
+            <p th:text="${item.Cena} + ' PLN'"></p>
+        </div>
+    </div>
+</div>
+<form id="order-form" method="post" th:action="@{/orders-restaurant}">
+    <div id="order-type">
+        <h4>Opcje Zamówienia:</h4>
+        <select id="delivery-option" name="orderOptions" onchange="toggleDeliveryAddress()">
+            <option value="W Restauracji">W Restauracji</option>
+            <option value="Na Wynos">Na Wynos</option>
+            <option value="Na Dowóz">Na Dowóz</option>
+        </select>
+    </div>
+    <div id="delivery-address-field" style="display: none;">
+        <h4>Adres dostawy:</h4>
+        <label for="city">Miasto:</label>
+        <input type="text" id="city" name="city" th:value="${session['fr_city']}" placeholder="Podaj miasto">
+
+        <label for="street">Ulica:</label>
+        <input type="text" id="street" name="street" th:value="${session['fr_street']}" placeholder="Podaj ulicę">
+
+        <label for="house-number">Numer Domu:</label>
+        <input type="number" id="house-number" name="house-number" th:value="${session['fr_house-number']}" placeholder="Podaj numer domu">
+
+        <label for="apartment-number">Numer Mieszkania:</label>
+        <input type="number" id="apartment-number" name="apartment-number" th:value="${session['fr_apartment-number']}" placeholder="Podaj numer mieszkania">
+
+        <label for="postal-code">Kod Pocztowy:</label>
+        <input type="text" id="postal-code" name="postal-code" th:value="${session['fr_postal-code']}" placeholder="Podaj kod pocztowy">
+    </div>
+
+    <div id="order-comments">
+        <h4>Uwagi do zamówienia:</h4>
+        <textarea id="order-comments-text" name="orderComments" placeholder="Wprowadź uwagi do zamówienia"></textarea>
+    </div>
+
+    <div id="payment-method">
+        <h4>Metoda Płatności:</h4>
+        <select id="payment-method-select" name="paymentMethod">
+            <option value="Karta Płatnicza">Karta Płatnicza</option>
+            <option value="Gotówka">Gotówka</option>
+        </select>
+    </div>
+
+    <div id="total-price">
+        <h4>Łączna Cena:</h4>
+        <p id="total-price-value" th:text="${totalPrice} + ' PLN'">0 PLN</p>
+        <p id="additional-fee" style="display: none; font-size: 0.7em; font-weight: normal; color: red;"></p>
+    </div>
+
+    <div id="submit-order">
+        <button type="submit">Złóż zamówienie</button>
+    </div>
+</form>
+
+<script>
+    function toggleDeliveryAddress() {
+        var deliveryOption = document.getElementById("delivery-option").value;
+        var deliveryAddressField = document.getElementById("delivery-address-field");
+        var form = document.getElementById("order-form");
+        var additionalFeeText = document.getElementById("additional-fee");
+        var totalPriceElement = document.getElementById("total-price-value");
+
+        var basePrice = parseFloat(totalPriceElement.getAttribute("data-base-price"));
+        var additionalFee = 0;
+
+        if (deliveryOption === "Na Dowóz") {
+            deliveryAddressField.style.display = "block";
+            form.action = "/orders-delivery";
+            additionalFee = 20;
+            additionalFeeText.textContent = "dodatek 20 PLN za dowóz";
+            additionalFeeText.style.display = "block";
+        } else if (deliveryOption === "Na Wynos") {
+            deliveryAddressField.style.display = "none";
+            form.action = "/orders-takeaway";
+            additionalFee = 5;
+            additionalFeeText.textContent = "dodatek 5 PLN za opakowanie";
+            additionalFeeText.style.display = "block";
+        } else {
+            deliveryAddressField.style.display = "none";
+            form.action = "/orders-restaurant";
+            additionalFeeText.style.display = "none";
+        }
+
+        var totalPrice = basePrice + additionalFee;
+        totalPriceElement.textContent = totalPrice.toFixed(2) + ' PLN';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var totalPriceElement = document.getElementById("total-price-value");
+        var basePrice = parseFloat(totalPriceElement.textContent);
+        totalPriceElement.setAttribute("data-base-price", basePrice);
+
+        toggleDeliveryAddress();
+    });
+</script>
+
+</body>
+</html>

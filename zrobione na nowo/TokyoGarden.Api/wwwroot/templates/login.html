@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/login-submit',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            window.location.href = '/';
+                        } else {
+                            $('#errors').empty().append('<li class="error">' + response.message + '</li>');
+                        }
+                    },
+                    error: function(response) {
+                        $('#errors').empty();
+                        if (response.responseJSON && response.responseJSON.message) {
+                            $('#errors').append('<li class="error">' + response.responseJSON.message + '</li>');
+                        } else {
+                            $('#errors').append('<li class="error">Wystąpił nieznany błąd.</li>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <img src="css/logo.png">
+    <h2>Logowanie</h2>
+    <div>
+        <!-- Wyświetlanie błędów -->
+        <ul id="errors"></ul>
+    </div>
+    <form form method="post" th:action="@{/login-submit}">
+        <div class="form-group">
+            <input type="text" id="login" name="login" th:value="${session['fr_login']}" required placeholder="Login">
+        </div>
+        <div class="form-group">
+            <input type="password" id="password" name="password" th:value="${session['fr_password']}" required placeholder="Hasło">
+        </div>
+        <div class="form-group checkbox-group">
+            <label class="toggle" style="margin-right: 8px;">
+                <input type="checkbox" id="remember-me" name="remember-me" class="toggle-checkbox">
+                <span class="toggle-slider"></span>
+            </label>
+            <label style="margin-left: 0;">Zapamiętaj mnie</label>
+            <label><a href="#">Zapomniałeś hasła</a></label>
+        </div>
+        <div class="form-group">
+            <button type="submit">Zaloguj</button>
+        </div>
+        <div class="form-group">
+            <a href="/register">Utwórz konto</a></br></br>
+        </div>
+    </form>
+</div>
+</body>
+</html>

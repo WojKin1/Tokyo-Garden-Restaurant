@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <title>Dodaj/Edytuj Alergen</title>
+</head>
+<body>
+<div class="container">
+    <h1>Dodaj/Edytuj Alergen</h1>
+    <form th:action="@{/admin/alergen}" th:object="${alergen}" method="post">
+        <input type="hidden" th:value="${ID_Alergen}" name="id" />
+        <div class="form-group">
+            <label for="nazwa">Nazwa:</label>
+            <input type="text" id="nazwa" th:value="${Nazwa_Alergenu}" name="nazwa" required />
+        </div>
+        <div class="form-group">
+            <label for="opis">Opis:</label>
+            <input type="text" id="opis" th:value="${Opis_Alergenu}" name="opis" required />
+        </div>
+        <div class="form-group">
+            <label for="typ">Typ:</label>
+            <input type="text" id="typ" th:value="${Typ_Alergenu}" name="typ" required />
+        </div>
+        <div class="form-group">
+            <label for="zrodlo">Źródło:</label>
+            <input type="text" id="zrodlo" th:value="${Zrodlo_Alergenu}" name="zrodlo" required />
+        </div>
+        <button type="submit">Zapisz</button>
+        <button type="button" onclick="window.location.href='/admin/alergeny'">Anuluj</button>
+    </form>
+</div>
+
+</body>
+</html>

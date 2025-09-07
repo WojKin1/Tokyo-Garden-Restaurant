@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_list.css">
+    <title>Lista Pozycji Menu</title>
+</head>
+<body>
+<div class="container">
+    <h1>Lista Pozycji Menu</h1>
+    <a class="add-button" href="/admin/pozycja/new">Dodaj Pozycję</a>
+    <div class="menu-items">
+        <div class="menu-item" th:each="pozycja : ${pozycje}">
+            <div class="item-header">
+                <h2 th:text="${pozycja.Nazwa_Pozycji}">Nazwa</h2>
+                <p class="category" th:text="${pozycja.kategoria.nazwa_Kategorii}">Nazwa Kategorii</p>
+            </div>
+            <p class="description" th:text="${pozycja.Opis}">Opis</p>
+            <p class="price" th:text="${pozycja.Cena} + ' zł'">Cena</p>
+            <p class="ingredients" th:text="${pozycja.Skladniki}">Składniki</p>
+
+            <!-- Dodanie sekcji wyświetlania alergenów -->
+            <div class="allergens">
+                <p>Alergeny:</p>
+                <ul>
+                    <li th:each="alergen : ${pozycja.alergeny}" th:text="${alergen.nazwa_Alergenu}">Alergen</li>
+                </ul>
+            </div>
+
+            <div class="actions">
+                <a class="edit-button" th:href="@{/admin/pozycja/edit/{id}(id=${pozycja.ID_Pozycja_Menu})}">Edytuj</a>
+                <a class="delete-button" th:href="@{/admin/pozycja/delete/{id}(id=${pozycja.ID_Pozycja_Menu})}">Usuń</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

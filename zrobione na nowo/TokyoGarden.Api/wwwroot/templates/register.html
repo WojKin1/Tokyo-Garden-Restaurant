@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestracja</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/register-submit',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            window.location.href = '/';
+                        } else {
+                            $('#errors').empty();
+                            response.errors.forEach(function(error) {
+                                $('#errors').append('<li class="error">' + error + '</li>');
+                            });
+                        }
+                    },
+                    error: function(response) {
+                        $('#errors').empty();
+                        if (response.responseJSON && response.responseJSON.errors) {
+                            response.responseJSON.errors.forEach(function(error) {
+                                $('#errors').append('<li class="error">' + error + '</li>');
+                            });
+                        } else {
+                            $('#errors').append('<li class="error">Wystąpił nieznany błąd.</li>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <img src="css/logo.png">
+    <h2>Rejestracja</h2>
+    <div>
+        <!-- Wyświetlanie błędów -->
+        <ul id="errors"></ul>
+    </div>
+    <form form method="post" th:action="@{/register-submit}">
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="nick" name="nick" th:value="${session['fr_nick']}" required placeholder="Nazwa">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" name="email" th:value="${session['fr_email']}" required placeholder="Email">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="haslo1" name="haslo1" th:value="${session['fr_haslo1']}" required placeholder="Hasło">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="haslo2" name="haslo2" th:value="${session['fr_haslo2']}" required placeholder="Powtórz hasło">
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control" id="phone" name="phone" th:value="${session['fr_phone']}" required placeholder="Telefon">
+        </div>
+
+        <div class="form-group checkbox-group" style="margin-bottom: 10px">
+            <label class="toggle" style="margin-right: 8px;">
+                <input type="checkbox" id="remember-me" name="remember-me" class="toggle-checkbox">
+                <span class="toggle-slider"></span>
+            </label>
+            <label style="margin-left: 0;">Zapamiętaj mnie</label>
+            <input type="checkbox" class="form-check-input" id="regulamin" name="regulamin" th:checked="${session['fr_regulamin']}">
+            <label class="form-check-label" for="regulamin" style="margin-left: 0;">Akceptuję regulamin</label>
+        </div>
+        <a href="/Regulamin.txt" target="_blank" style="display:block; margin-top: 8px; margin-bottom: 20px">Przeczytaj regulamin</a>
+        <div class="form-group">
+            <button type="submit">Zarejestruj</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

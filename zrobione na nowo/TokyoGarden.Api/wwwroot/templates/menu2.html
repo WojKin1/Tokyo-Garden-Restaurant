@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - JemToDobre</title>
+    <link rel="stylesheet" type="text/css" href="../css/menu.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+    .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-top: #4c2264 solid 2px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+<header>
+    <h1>Nasze Menu</h1>
+    <p>Odkryj smak Japonii!</p>
+</header>
+<nav>
+    <div class="nav-left">
+        <div class="nav-links">
+            <a th:href="@{menu2}">Menu</a>
+            <a href="#about">O nas</a>
+            <a href="#contact-form">Kontakt</a>
+        </div>
+    </div>
+    <div class="center-link">
+        <a th:href="@{menu2}">Zamów teraz</a>
+    </div>
+    <div class="nav-right">
+        <div class="nav-links nav-right login-register" id="loginRegisterLinks">
+            <a th:if="${isLoggedIn}" href="logout">Wyloguj</a>
+            <a th:unless="${isLoggedIn}" href="login">Zaloguj</a>
+            <a th:unless="${isLoggedIn}" href="register">Zarejestruj</a>
+            <div th:if="${isLoggedIn}" class="dropdown">
+                <button class="dropbtn"><span style="font-family: 'Courier New', monospace; font-size: 1.2em;">Profil</span> <i class="fas fa-user" style="padding-left: 13px; font-size: 1.2em;"></i></button>
+                <div class="dropdown-content">
+                    <a href="/user/profile">Mój Profil</a>
+                    <a href="/user/edit">Edytuj Informacje</a>
+                </div>
+            </div>
+        </div>
+        <div class="cart-icon">
+            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</nav>
+
+<section class="first-section">
+    <p class="first-section-nav">Daj sie zaskoczyć naszym nietuzinkowym smakiem!!</p>
+</section>
+
+<section th:each="entry : ${pozycjeMenuMap}" class="menu-section">
+    <h2 class="category-title" th:text="${entry.key.Nazwa_Kategorii}">Nazwa Kategorii</h2>
+    <div class="menu-items">
+        <div th:each="pozycja : ${entry.value}" class="menu-item">
+            <!-- Wyświetlanie nazwy pozycji -->
+            <h3 class="menu-item-name" th:text="${pozycja.Nazwa_Pozycji}">Nazwa Pozycji</h3>
+
+            <!-- Wyświetlanie zdjęcia (jeśli dostępne) -->
+            <img th:if="${pozycja.imageData != null}"
+                 th:src="'data:image/png;base64,' + ${pozycja.imageData}"
+                 alt="Zdjęcie dania"/>
+
+            <!-- Wyświetlanie opisu -->
+            <p th:text="${pozycja.Opis}">Opis</p>
+
+            <!-- Wyświetlanie składników -->
+            <h4 class="description_h">Składniki:</h4>
+            <p th:text="${pozycja.Skladniki}">Składniki</p>
+
+            <!-- Wyświetlanie alergenów -->
+            <h4 class="description_h">Alergeny:</h4>
+            <div class="alergen-list">
+                <div th:each="alergen : ${pozycja.alergeny}" class="alergen" style="text-align: center">
+                    <span th:text="${alergen.nazwa_Alergenu}"></span>
+                    <!--<p>Opis alergenu: <span th:text="${alergen.opis_Alergenu}"></span></p>-->
+                </div>
+            </div>
+
+            <!-- Wyświetlanie ceny -->
+            <h4 class="description_h">Cena</h4>
+            <p th:text="${pozycja.Cena} + ' zł'">Cena</p>
+
+            <!-- Formularz dodawania do koszyka -->
+            <form th:action="@{/cart/add/{id}(id=${pozycja.ID_Pozycja_Menu})}" method="post">
+                <button type="submit" class="add-to-cart-button">Dodaj do koszyka</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="footer-content">
+        <div class="contact-info">
+            <h2>Kontakt</h2>
+            <p>Zapraszamy do odwiedzenia naszej restauracji!</p>
+            <p>Adres: ul. Sushi 123, 00-000 Katowice</p>
+            <p>Telefon: 123-456-789</p>
+            <p>Email: info@Jem-ToDobre.com</p>
+        </div>
+        <div class="additional-info">
+            <h2>Informacje</h2>
+            <p>Zachęcamy do składania zamówień telefonicznie lub online.</p>
+            <p>Nasza restauracja oferuje również catering na różne okazje.</p>
+        </div>
+    </div>
+    <div class="social-media">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Jem-ToDobre. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+
+<button id="back-to-top" title="Wróć na górę"><i class="fas fa-chevron-up"></i></button>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            let offset = 80;
+            let target = document.querySelector(this.getAttribute('href'));
+            let targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            let startingPosition = window.pageYOffset;
+            let distance = targetPosition - startingPosition - offset;
+            let duration = 800; // czas trwania animacji w milisekundach
+            let startTime = null;
+
+            function scrollToTarget(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let step = Math.min(progress / duration, 1); // zapewnienie, że step będzie zawsze <= 1
+                window.scrollTo(0, startingPosition + distance * easeInOutQuad(step));
+
+                if (progress < duration) {
+                    window.requestAnimationFrame(scrollToTarget);
+                }
+            }
+
+            function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            window.requestAnimationFrame(scrollToTarget);
+        });
+    });
+    let backToTopButton = document.getElementById("back-to-top");
+
+    window.onscroll = function() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopButton.classList.add("show");
+        } else {
+            backToTopButton.classList.remove("show");
+        }
+    };
+
+    backToTopButton.addEventListener('click', function() {
+        let startingPosition = window.pageYOffset;
+        let duration = 800; // czas trwania animacji w milisekundach
+        let startTime = null;
+
+        function scrollToTop(timestamp) {
+            if (!startTime) startTime = timestamp;
+            let progress = timestamp - startTime;
+            let step = Math.min(progress / duration, 1); // zapewnienie, że step będzie zawsze <= 1
+            window.scrollTo(0, startingPosition * (1 - easeInOutQuad(step)));
+
+            if (progress < duration) {
+                window.requestAnimationFrame(scrollToTop);
+            }
+        }
+
+        function easeInOutQuad(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+        window.requestAnimationFrame(scrollToTop);
+    });
+
+    let nav = document.querySelector('nav');
+    let navLinks = document.querySelector('.nav-links');
+    let centerLink = document.querySelector('.center-link');
+    let loginRegister = document.querySelector('.login-register');
+    let firstSection = document.querySelector('section');
+    let navMargin = document.querySelector('.nav-right');
+
+    let navOffsetTop = nav.offsetTop;
+
+    function updateNav() {
+        if (window.pageYOffset >= navOffsetTop) {
+            nav.classList.add('sticky');
+            navLinks.classList.add('sticky');
+            centerLink.classList.add('sticky');
+            navMargin.classList.add('sticky');
+            firstSection.classList.add('sticky-margin');
+        } else {
+            nav.classList.remove('sticky');
+            navLinks.classList.remove('sticky');
+            centerLink.classList.remove('sticky'); // Usuwanie klasy sticky z centerLink
+            navMargin.classList.remove('sticky');
+            firstSection.classList.remove('sticky-margin');
+        }
+    }
+
+    window.addEventListener('scroll', updateNav);
+</script>
+
+</body>
+</html>
+

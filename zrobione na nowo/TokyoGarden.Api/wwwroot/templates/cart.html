@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="../css/cart.css">
+
+
+</head>
+<body>
+<h1>Twoje zamówienie</h1>
+<div id="cart-items">
+    <div th:each="item, iter : ${cart}" class="cart-item">
+        <div class="item-details">
+            <img th:if="${item.imageData != null}"
+                 th:src="'data:image/png;base64,' + ${item.imageData}"
+                 alt="Zdjęcie dania" class="item-image" />
+            <div class="item-info">
+                <h4 th:text="${item.Nazwa_Pozycji}"></h4>
+                <p th:text="${item.Cena} + ' PLN'"></p>
+            </div>
+        </div>
+        <form th:action="@{/cart/remove/{index}(index=${iter.index})}" method="post">
+            <button type="submit">Usuń</button>
+        </form>
+    </div>
+</div>
+
+<div id="total-price">
+    <h4>Łączna Cena:</h4>
+    <p id="total-price-value" th:text="${totalPrice} + ' PLN'">0 PLN</p>
+</div>
+
+<a th:href="@{orders}"><button type="button" id="checkout-button">Złóż zamówienie</button></a>
+
+</body>
+</html>

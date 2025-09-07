@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    <title>Dodaj/Edytuj Pozycję Menu</title>
+</head>
+<body>
+<div class="container">
+    <h1>Dodaj/Edytuj Pozycję Menu</h1>
+    <form th:action="@{/admin/pozycja}" th:object="${pozycja}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:value="${ID_Pozycja_Menu}" />
+        <div class="form-group">
+            <label for="nazwa">Nazwa:</label>
+            <input type="text" id="nazwa" th:value="${Nazwa_Pozycji}" name="nazwa" required />
+        </div>
+        <div class="form-group">
+            <label for="opis">Opis:</label>
+            <input type="text" id="opis" th:value="${Opis}" name="opis" required />
+        </div>
+        <div class="form-group">
+            <label for="cena">Cena:</label>
+            <input type="number" step="0.01" id="cena" th:value="${Cena}" name="cena" required />
+        </div>
+        <div class="form-group">
+            <label for="skladniki">Składniki:</label>
+            <input type="text" id="skladniki" th:value="${Skladniki}" name="skladniki" required />
+        </div>
+        <div class="form-group">
+            <label for="kategoria">Kategoria:</label>
+            <select id="kategoria" th:value="${ID_Kategoria}" name="kategoria">
+                <option th:each="kategoria : ${kategorie}" th:value="${kategoria.ID_Kategoria}" th:text="${kategoria.Nazwa_Kategorii}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="alergeny">Alergeny:</label>
+            <select id="alergeny" name="alergeny" multiple>
+                <option th:each="alergen : ${alergeny}" th:value="${alergen.ID_Alergen}" th:text="${alergen.Nazwa_Alergenu}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="zdjecie">Zdjęcie:</label>
+            <input type="file" name="zdjecie" id="zdjecie" accept=".jpg, .jpeg, .png" />
+            <label for="zdjecie" class="custom-file-label" th:text="${pozycja.imageData != null ? 'Zmień plik' : 'Wybierz plik'}"></label>
+        </div>
+        <button type="submit">Zapisz</button>
+        <button type="button" onclick="window.location.href='/admin/pozycje'">Anuluj</button>
+    </form>
+</div>
+<script>
+    document.getElementById('zdjecie').addEventListener('change', function() {
+        var fileName = this.value.split('\\').pop();
+        var label = this.nextElementSibling;
+        label.textContent = fileName ? fileName : 'Wybierz plik';
+    });
+</script>
+</body>
+</html>
