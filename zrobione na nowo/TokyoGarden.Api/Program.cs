@@ -6,6 +6,7 @@ using TokyoGarden.IBL;
 using TokyoGarden.IDAL;
 using TokyoGarden.Model;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Http; // <- dla CookiePolicyOptions / SameSite
 
 // Tworzy obiekt konfiguracji aplikacji webowej ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
@@ -28,13 +29,23 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Definiuje politykę CORS – pozwala na dostęp z dowolnego frontendu (na zaliczenie)
+// ----- CORS z credkami (dla cookie) -----
+// UWAGA: z AllowCredentials nie można używać AllowAnyOrigin.
+// Wpisz tu frontend z Render + localhost do dev:
+var allowedOrigins = new[]
+{
+    "https://tokyo-garden-restaurant-1.onrender.com", // STATIC (frontend na Render)
+    "http://localhost:4200"                            // dev Angular
+};
+
+// Definiuje politykę CORS – pozwala na dostęp z wybranych originów i z credkami
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader()
+              .AllowCredentials() // <---- kluczowe dla cookie/sesji
     );
 });
 
@@ -116,16 +127,23 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Włącza Swaggera (OPCJA B – zawsze, także w Production)  // <<< DODANE
-app.UseSwagger();                                         // <<< DODANE
-app.UseSwaggerUI();                                       // <<< DODANE
+// Włącza Swaggera (OPCJA B – zawsze, także w Production)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Przekierowuje wszystkie żądania HTTP na HTTPS
 app.UseHttpsRedirection();
 
-// Serwowanie plików statycznych z katalogu wwwroot (HTML/CSS/JS)  // <<< DODANE
-app.UseDefaultFiles();   // szuka index.html pod "/"                // <<< DODANE
-app.UseStaticFiles();                                            // <<< DODANE
+// Serwowanie plików statycznych z katalogu wwwroot (HTML/CSS/JS)
+app.UseDefaultFiles();   // szuka index.html pod "/"
+app.UseStaticFiles();
+
+// Polityka ciasteczek dla cross-site (SameSite=None; Secure)
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.Always
+});
 
 // Włącza politykę CORS przed uruchomieniem kontrolerów
 app.UseCors("AllowFrontend");
