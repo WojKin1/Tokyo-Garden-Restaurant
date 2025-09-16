@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://tokyo-garden-restaurant.onrender.com',
-  apiBaseUrl: 'https://tokyo-garden-restaurant.onrender.com/api'
+  production: false,
+  // Zmień port/protokół jeśli u Ciebie inny – chodzi o URL lokalnego API
+  apiUrl: 'https://localhost:5280/api'
 };
