@@ -1,0 +1,150 @@
+POLITECHNIKA ŚLĄSKA
+Wydział Inżynierii Materiałowej
+
+Tworzenie aplikacji internetowych i bazodanowych
+
+TEMAT:
+Tokyo Garden Restaurant — Dokumentacja Projektu
+Uwagi prowadzącego:
+Data ostatniej modyfikacji:
+16.09.2025
+
+Podpis prowadzącego:	Imię i nazwisko:
+1. Jakub Majer
+2. Wojciech Kin
+3. Szymon Czapla
+4. Dominik Deszczka
+	Grupa dziekańska: TP 4.0
+
+0. STRESZCZENIE WYKONAWCZE	4
+CEL BIZNESOWY	4
+ZAKRES SYSTEMU	4
+KORZYŚCI I MIERNIKI	4
+1. SPECYFIKACJA	4
+KONTEKST I INTERESARIUSZE	4
+PRZYPADKI UŻYCIA (SKRÓT)	4
+WYMAGANIA NIEFUNKCJONALNE	4
+2. MODEL DANYCH I DOMENY	5
+CDM – ENCJE I RELACJE	5
+PDM – TABELE I KLUCZE	5
+KONWENCJE I INTEGRALNOŚĆ	5
+DIAGRAM KLAS EF (LOGIKA MAPOWANIA)	5
+3. ARCHITEKTURA I WARSTWY	6
+PRZEGLĄD	6
+WZORCE I DECYZJE PROJEKTOWE	6
+IDAL – INTERFEJSY	6
+DAL – EF CORE	6
+IBL/BL – LOGIKA BIZNESOWA	6
+API – WEB	6
+UI – ANGULAR	6
+4. TESTY (PODEJŚCIE I ZAKRES)	7
+ZASADY OGÓLNE	7
+DOUBLES WŁASNE I MOQ	7
+TESTY DAL Z INMEMORY	7
+TESTY KONTROLERÓW	7
+5. INTERFEJS WEB API (KONTRAKT I ZASADY)	7
+KONWENCJE REST	7
+PRZYKŁADOWE ZASOBY I OPERACJE	7
+WALIDACJA I BŁĘDY	8
+PAGINACJA/SORTOWANIE/FILTROWANIE	8
+6. FRONTEND (ANGULAR)	8
+STRUKTURA I WZORCE	8
+UX I WALIDACJE	8
+MAPOWANIE DTO	8
+7. BEZPIECZEŃSTWO I ZGODNOŚĆ	8
+AUTORYZACJA I ROLE	8
+CORS I OCHRONA DANYCH	8
+
+0. Streszczenie wykonawcze
+Cel biznesowy
+Celem systemu Tokyo Garden Restaurant jest wsparcie pełnego cyklu życia zarządzania ofertą i zamówieniami w restauracji: od definicji kategorii i pozycji menu (ze składnikami i alergenami), przez zbieranie zamówień klientów, po administrację danymi użytkowników i adresów dostaw. System ma ułatwić codzienną pracę obsłudze i zapewnić spójność danych.
+Zakres systemu
+System obejmuje backend (ASP.NET Web API + warstwa BL + DAL/EF Core) oraz frontend (Angular). Backend udostępnia RESTowe endpointy do CRUD-ów i operacji domenowych. Frontend zapewnia panel administracyjny oraz widoki list/szczegółów.
+Korzyści i mierniki
+• Redukcja błędów w danych (wymuszone relacje i walidacje po stronie BL). • Szybsza obsługa katalogu menu (kategorie, alergeny, zdjęcia). • Skalowalność: separacja warstw i wzorzec repozytorium. • Mierniki: czas wprowadzania zmiany w pozycji menu, liczba błędnych zamówień wykrytych walidacją, czasy odpowiedzi API.
+1. Specyfikacja
+Kontekst i interesariusze
+Interesariusze: Klient (przegląda menu i składa zamówienie), Administrator/Pracownik (utrzymuje dane), Właściciel (raporty i nadzór). System płatności może zostać zintegrowany w przyszłości przez bramkę płatniczą.
+Przypadki użycia (skrót)
+• Klient: przeglądanie menu, filtrowanie po kategoriach i alergenach, składanie zamówienia.
+• Administrator: dodawanie/edycja/usuwanie pozycji menu, przypinanie kategorii i alergenów, podgląd i aktualizacja statusów zamówień.
+• System: walidacja danych i spójność relacji; obliczanie wartości zamówień (suma pozycji × ilości).
+Wymagania niefunkcjonalne
+• Wydajność: endpointy listowe z paginacją/sortowaniem/filtrowaniem. • Bezpieczeństwo: autoryzacja ról (Admin/User) — do rozbudowy; walidacje wejścia; zasady CORS. • Utrzymywalność: warstwowa architektura, DI, jasno zdefiniowane kontrakty. • Jakość: testy jednostkowe dla BL/DAL i kontrolerów.
+2. Model danych i domeny
+CDM – encje i relacje
+Encje główne: Kategorie, Alergeny, Pozycje_Menu, Zamówienia, Pozycje_Zamówienia, Użytkownicy, Adresy.
+Relacje: Kategorie 1..N Pozycje_Menu; Alergeny N..M Pozycje_Menu; Zamówienia 1..N Pozycje_Zamówienia; Użytkownicy 1..N Zamówienia i 1..N Adresy.
+PDM – tabele i klucze
+Przykładowe tabele i klucze: 
+• Pozycje_Menu(id PK, nazwa, opis, składniki, cena, image_data, kategoria_id FK)
+• Kategorie(id PK, nazwa)
+• Alergeny(id PK, nazwa, opis)
+• Pozycje_Menu_Alergeny(pozycja_id FK, alergen_id FK, PK(pozycja_id, alergen_id))
+• Zamowienia(id PK, data, status, łączna_cena, metoda_płatności, opcje_zamówienia, uzytkownik_id FK, dodatkowe_info)
+• Pozycje_Zamowienia(id PK, ilosc, cena, pozycja_menu_id FK, zamowienie_id FK)
+• Uzytkownicy(id PK, nazwa, haslo, telefon, typ)
+• Adresy(id PK, miasto, ulica, nr_domu, nr_mieszkania, uzytkownik_id FK)
+Konwencje i integralność
+• PK: Id jako tożsamość. • FK z kaskadą ograniczoną wg potrzeb (np. nie usuwać zamówień przy usuwaniu użytkownika). • Indeksy: po nazwa_pozycji, data_zamowienia; indeksy dla kluczy FK. • Walidacje: nazwy i ceny wymagane, ceny > 0, ilości > 0. • N:M dla Alergeny–Pozycje realizowane przez tabelę łączącą.
+Diagram klas EF (logika mapowania)
+Klasy POCO odpowiadają tabelom; konfiguracje relacji w Fluent API/atrybutach. Kolekcje nawigacyjne dla relacji 1..N i N..M. Mapowanie pól binarnych (image_data) oraz ograniczeń długości tekstów.
+3. Architektura i warstwy
+Przegląd
+Architektura warstwowa: Model (POCO), IDAL (interfejsy repozytoriów + UnitOfWork), DAL (EF Core), IBL (interfejsy usług), BL (implementacje), API (ASP.NET Web API), UI (Angular). Zasada: BL zna IDAL, API zna IBL; brak zależności wstecznych.
+Wzorce i decyzje projektowe
+• Repository + Unit of Work: ujednolicony kontrakt CRUD i transakcje.
+• DTO vs Model: API pracuje na DTO, BL operuje na Modelu domenowym (mapowanie). 
+• DI/IoC: kontrolery wstrzykują IBL; BL wstrzykuje IDAL.
+• Walidacja: logika w BL, wstępna walidacja atrybutami w DTO.
+IDAL – interfejsy
+• IRepository<T>: Add, Update, Remove, GetById, Query (z IQuerable/IAsyncEnumerable), paginacja.
+• Specjalizacje: PozycjeMenu, Kategorie, Alergeny, Zamowienia, PozycjeZamowienia, Uzytkownicy, Adresy.
+• IUnitOfWork: SaveChanges/Commit, dostęp do repozytoriów.
+DAL – EF Core
+• DbContext (DbTokyoGarden) eksponuje DbSety encji. • Repozytorium generyczne z AsNoTracking w zapytaniach odczytowych. • Transakcje przez UnitOfWork; kontrola śledzenia i ładowania powiązań.
+IBL/BL – logika biznesowa
+• Serwisy BL egzekwują reguły: poprawność cen/ilości, obecność kategorii/alergenów, przeliczanie łącznej wartości zamówienia. • Obsługa błędów: wyjątki domenowe → mapowane na odpowiedzi HTTP 400/404/409 w API.
+API – Web
+• Kontrolery CRUD dla encji z REST konwencjami, kody 200/201/204/400/404/409. • Query endpoints: filtrowanie po kategorii/alergenach, paginacja. • ProblemDetails dla błędów.
+UI – Angular
+• Moduł Admin Panel z widokami list i formularzy edycji dla kategorii, alergenów, pozycji menu. • Serwisy HTTP, interceptory błędów, formularze reaktywne, walidacje.
+4. Testy (podejście i zakres)
+Zasady ogólne
+Testy w xUnit, nomenklatura AAA (Arrange–Act–Assert), izolacja przypadków testowych. Focus na regułach biznesowych i spójności danych.
+Doubles własne i Moq
+• Dummy: parametry obowiązkowe bez użycia.
+• Stub: deterministyczny zwrot danych (np. repozytorium zwracające stałą listę pozycji).
+• Fake: prosta implementacja (np. in-memory kolekcje) do szybkich testów BL.
+• Mock: weryfikacja interakcji (czy BL wywołało Save/Update na repozytorium).
+• Spy: rejestracja liczby wywołań/metod.
+W Moq konfigurujemy Setup/Returns i Verify, aby odwzorować te role.
+Testy DAL z InMemory
+Każdy test tworzy unikalny DbContext z nazwą bazy, aby nie współdzielić stanu. Scenariusze: CRUD, kaskady, relacje N:M, ograniczenia unikalności i walidacje na poziomie EF.
+Testy kontrolerów
+Testy jednostkowe z zamockowaną BL (sprawdzenie statusów/kontraktów) oraz testy integracyjne (minimalny host), które weryfikują poprawność routingu, serializacji i walidacji ModelState.
+5. Interfejs Web API (kontrakt i zasady)
+Konwencje REST
+Rzeczowniki w liczbie mnogiej, wersjonowanie ścieżką (np. /api/v1/pozycje-menu), kody statusu zgodne z rezultatem operacji, Location header po POST 201.
+Przykładowe zasoby i operacje
+• /api/v1/kategorie — GET (lista z paginacją), POST, GET/{id}, PUT/{id}, DELETE/{id}
+• /api/v1/alergeny — jak wyżej
+• /api/v1/pozycje-menu — GET z filtrowaniem po kategorii/alergenach; CRUD
+• /api/v1/zamowienia — GET (status), POST (utworzenie wraz z pozycjami), PUT/PATCH (aktualizacja statusu)
+• /api/v1/uzytkownicy — CRUD; /api/v1/uzytkownicy/{id}/adresy — CRUD
+Walidacja i błędy
+Walidacja DTO na wejściu; błędy jako ProblemDetails (tytuł, status, szczegóły). Konflikty (409) przy naruszeniu integralności; 404 gdy byt nie istnieje; 400 dla nieprawidłowych danych.
+Paginacja/sortowanie/filtrowanie
+Parametry zapytań np. page, pageSize, sortBy, sortDir, filters[]. BL/DAL mapuje na zapytania LINQ/EF Core.
+6. Frontend (Angular)
+Struktura i wzorce
+Struktura modułowa (np. admin, shared). Serwisy API kapsułkują wywołania HTTP; komponenty korzystają z formularzy reaktywnych (walidacje min/max, wymagane pola).
+UX i walidacje
+Pola wymagane oznaczone, formaty liczbowe dla cen, komunikaty o błędach przy focus out i submit. Widoki list obsługują paginację, filtrowanie po kategorii/alergenach; edycja w formularzach dialogowych.
+Mapowanie DTO
+Formularze → DTO request → API; odpowiedzi API → modele widoków. Idempotencja aktualizacji przez PUT, częściowe zmiany przez PATCH tam gdzie wskazane.
+7. Bezpieczeństwo i zgodność
+Autoryzacja i role
+Wariant MVP: role Admin/User; kontrolery zabezpieczone atrybutami autoryzacji. Docelowo JWT Bearer z krótkim TTL i odświeżaniem.
+CORS i ochrona danych
+CORS ograniczony do domen frontendu. Sekrety w zmiennych środowiskowych. Walidacja rozmiarów uploadów (np. image_data). Sanitizacja danych tekstowych.
