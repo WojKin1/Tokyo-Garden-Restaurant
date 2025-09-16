@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "ng serve",
-    "build": "ng build",
-    "lint": "ng lint"
+    "build": "ng build --configuration production",
+    "lint": "ng lint",
+    "postinstall": "ng version"
   },
   "dependencies": {
     "@angular/animations": "^17.3.0",
