@@ -6,22 +6,21 @@ using TokyoGarden.IBL;
 using TokyoGarden.IDAL;
 using TokyoGarden.Model;
 using BCrypt.Net;
-using Microsoft.AspNetCore.Http; // <- dla CookiePolicyOptions / SameSite
+using Microsoft.AspNetCore.Http;
 
-// Tworzy obiekt konfiguracji aplikacji webowej ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
 
-// Rejestruje kontekst bazy danych z użyciem PostgreSQL i połączenia z konfiguracji
+// DB
 builder.Services.AddDbContext<DbTokyoGarden>(opt =>
     opt.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("TokyoGarden.Api") // <-- migracje w projekcie API
+        b => b.MigrationsAssembly("TokyoGarden.Api")
     )
 );
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-// Konfiguruje opcje serializacji JSON dla kontrolerów API
+// Controllers + JSON
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
@@ -29,27 +28,35 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-// ----- CORS z credkami (dla cookie) -----
-// UWAGA: z AllowCredentials nie można używać AllowAnyOrigin.
-// Wpisz tu frontend z Render + localhost do dev:
+// CORS z credkami (cookie). Upewnij się, że tu jest domena frontu z Render.
 var allowedOrigins = new[]
 {
-    "https://tokyo-garden-restaurant-1.onrender.com", // STATIC (frontend na Render)
-    "http://localhost:4200"                            // dev Angular
+    "https://tokyo-garden-restaurant-1.onrender.com", // FRONT (Static Site)
+    "http://localhost:4200"                            // dev
 };
 
-// Definiuje politykę CORS – pozwala na dostęp z wybranych originów i z credkami
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
         policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials() // <---- kluczowe dla cookie/sesji
+              .AllowCredentials() // <<< niezbędne dla cookie
     );
 });
 
-// Rejestruje repozytoria danych w kontenerze DI jako zależności
+// === SESSION (jeśli logowanie trzymasz w Session lub chcesz cookie cross-site) ===
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "tg.session";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;            // cross-site
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // https only
+    options.IdleTimeout = TimeSpan.FromHours(12);
+});
+
+// DI
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUzytkownikRepository, UzytkownikRepository>();
 builder.Services.AddScoped<IPozycjeMenuRepository, PozycjeMenuRepository>();
@@ -60,7 +67,6 @@ builder.Services.AddScoped<IAlergenyRepository, AlergenyRepository>();
 builder.Services.AddScoped<IAdresyRepository, AdresyRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Rejestruje serwisy logiki biznesowej w kontenerze DI
 builder.Services.AddScoped<IUzytkownikService, UzytkownikService>();
 builder.Services.AddScoped<IPozycjeMenuService, PozycjeMenuService>();
 builder.Services.AddScoped<IKategorieService, KategorieService>();
@@ -69,43 +75,34 @@ builder.Services.AddScoped<IPozycjeZamowieniaService, PozycjeZamowieniaService>(
 builder.Services.AddScoped<IAlergenyService, AlergenyService>();
 builder.Services.AddScoped<IAdresyService, AdresyService>();
 
-// Dodaje obsługę Swaggera do dokumentacji API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Tworzy instancję aplikacji webowej z wcześniej skonfigurowanymi usługami
 var app = builder.Build();
 
-// Tworzy zakres usług i inicjalizuje bazę danych oraz dane startowe
+// Migracje + seed (jak miałeś)
 using (var scope = app.Services.CreateScope())
 {
     var sp = scope.ServiceProvider;
     var db = sp.GetRequiredService<DbTokyoGarden>();
+    db.Database.Migrate();
 
-    // Wykonuje migrację bazy danych lub tworzy ją jeśli nie istnieje
-    db.Database.Migrate(); // lub EnsureCreated();
-
-    // Dodaje domyślne kategorie menu jeśli baza jest pusta
     if (!db.KategorieMenu.Any())
     {
         var sushi = new Kategorie { nazwa_kategorii = "Sushi" };
         var ramen = new Kategorie { nazwa_kategorii = "Ramen" };
         var napoje = new Kategorie { nazwa_kategorii = "Napoje" };
-
         db.KategorieMenu.AddRange(sushi, ramen, napoje);
         db.SaveChanges();
 
-        // Dodaje przykładowe pozycje menu przypisane do kategorii
         db.PozycjeMenu.AddRange(
             new Pozycje_Menu { nazwa_pozycji = "California Roll", opis = "8 szt. łosoś+awokado", cena = 28m, skladniki = "ryż, łosoś, awokado", kategoria_menu = sushi },
             new Pozycje_Menu { nazwa_pozycji = "Ramen Miso", opis = "Bulion miso", cena = 35m, skladniki = "makaron, bulion miso, wieprzowina", kategoria_menu = ramen },
             new Pozycje_Menu { nazwa_pozycji = "Zielona herbata", opis = "Japońska herbata", cena = 10m, skladniki = "herbata", kategoria_menu = napoje }
         );
-
         db.SaveChanges();
     }
 
-    // Dodaje użytkowników z domyślnymi danymi i zaszyfrowanym hasłem
     if (!db.Uzytkownicy.Any())
     {
         var admin = new Uzytkownicy
@@ -127,33 +124,35 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Włącza Swaggera (OPCJA B – zawsze, także w Production)
+// Swagger (zostawiamy zawsze)
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Przekierowuje wszystkie żądania HTTP na HTTPS
+// HTTPS
 app.UseHttpsRedirection();
 
-// Serwowanie plików statycznych z katalogu wwwroot (HTML/CSS/JS)
-app.UseDefaultFiles();   // szuka index.html pod "/"
+// Statyki (wwwroot)
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Polityka ciasteczek dla cross-site (SameSite=None; Secure)
+// Polityka cookies – wymusza None+Secure gdy trzeba
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.None,
     Secure = CookieSecurePolicy.Always
 });
 
-// Włącza politykę CORS przed uruchomieniem kontrolerów
+// CORS z credkami – PRZED session/auth
 app.UseCors("AllowFrontend");
 
-// Włącza obsługę autentykacji i autoryzacji w aplikacji
+// Session – PRZED auth, aby kontrolery miały dostęp do sesji
+app.UseSession();
+
+// Auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapuje kontrolery API na odpowiednie endpointy HTTP
+// API
 app.MapControllers();
 
-// Uruchamia aplikację webową
 app.Run();
