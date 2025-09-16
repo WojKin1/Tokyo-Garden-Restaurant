@@ -1,291 +1,312 @@
-POLITECHNIKA ÅšLÄ„SKA
-WydziaÅ‚ InÅ¼ynierii MateriaÅ‚owej
+
 
+POLITECHNIKA ŒL¥SKA
+Wydzia³ In¿ynierii Materia³owej
+
 Tworzenie aplikacji internetowych i bazodanowych
-
-TEMAT:
-Tokyo Garden Restaurant â€” Dokumentacja Projektu
-Uwagi prowadzÄ…cego:
-Data ostatniej modyfikacji:
+TEMAT:
+Tokyo Garden Restaurant — Dokumentacja ProjektuUwagi prowadz¹cego:Data ostatniej modyfikacji:
 16.09.2025
 
-Podpis prowadzÄ…cego:	ImiÄ™ i nazwisko:
+
+Podpis prowadz¹cego:Imiê i nazwisko:
 1. Jakub Majer
 2. Wojciech Kin
 3. Szymon Czapla
-4. Dominik Deszczka
-	Grupa dziekaÅ„ska: TP 4.0
-
-
+4. Dominik DeszczkaGrupa dziekañska: TP 4.0
+
 0. STRESZCZENIE WYKONAWCZE	3
 CEL BIZNESOWY	3
 ZAKRES SYSTEMU	3
-KORZYÅšCI I MIERNIKI	3
+KORZYŒCI I MIERNIKI	3
 1. SPECYFIKACJA	3
 KONTEKST I INTERESARIUSZE	3
-PRZYPADKI UÅ»YCIA (SKRÃ“T)	4
+PRZYPADKI U¯YCIA (SKRÓT)	4
 WYMAGANIA NIEFUNKCJONALNE	4
 2. MODEL DANYCH I DOMENY	4
-CDM â€“ ENCJE I RELACJE	4
-PDM â€“ TABELE I KLUCZE	6
+CDM – ENCJE I RELACJE	4
+PDM – TABELE I KLUCZE	6
 3. ARCHITEKTURA I WARSTWY	9
-PRZEGLÄ„D	9
+PRZEGL¥D	9
 WZORCE I DECYZJE PROJEKTOWE	9
 WARSTWA MODEL	9
 WARSTWA IDAL	10
 WARSTWA DAL	11
 WARSTWA IBL	11
 WARSTWA BIZNESOWA	12
-API â€“ WEB	13
+API – WEB	13
 DTOMAPPER.CS	14
 DTO	15
-FRONTEND â€“ ANGULAR	15
-BEZPIECZEÅƒSTWO I ZGODNOÅšÄ†	15
-4. TESTY (PODEJÅšCIE I ZAKRES)	16
-ZASADY OGÃ“LNE	16
-DOUBLES WÅASNE I MOQ	16
+FRONTEND – ANGULAR	15
+BEZPIECZEÑSTWO I ZGODNOŒÆ	15
+4. TESTY (PODEJŒCIE I ZAKRES)	16
+ZASADY OGÓLNE	16
+DOUBLES W£ASNE I MOQ	16
 TESTY DAL Z INMEMORY	16
 5. INTERFEJS WEB API (KONTRAKT I ZASADY)	17
 KONWENCJE REST	17
-PRZYKÅADOWE ZASOBY I OPERACJE	17
-WALIDACJA I BÅÄ˜DY	17
+PRZYK£ADOWE ZASOBY I OPERACJE	17
+WALIDACJA I B£ÊDY	17
 PAGINACJA/SORTOWANIE/FILTROWANIE	17
 6. FRONTEND (ANGULAR)	17
 STRUKTURA I WZORCE	17
 UX I WALIDACJE	18
 MAPOWANIE DTO	18
-7. BEZPIECZEÅƒSTWO I ZGODNOÅšÄ†	18
+7. BEZPIECZEÑSTWO I ZGODNOŒÆ	18
 AUTORYZACJA I ROLE	18
 CORS I OCHRONA DANYCH	18
 
 0. Streszczenie wykonawcze
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
 Cel biznesowy
-Celem systemu Tokyo Garden Restaurant jest wsparcie peÅ‚nego cyklu Å¼ycia zarzÄ…dzania ofertÄ… i zamÃ³wieniami w restauracji: od definicji kategorii i pozycji menu (ze skÅ‚adnikami i alergenami), przez zbieranie zamÃ³wieÅ„ klientÃ³w, po administracjÄ™ danymi uÅ¼ytkownikÃ³w i adresÃ³w dostaw. System ma uÅ‚atwiÄ‡ codziennÄ… pracÄ™ obsÅ‚udze i zapewniÄ‡ spÃ³jnoÅ›Ä‡ danych.
+Celem systemu Tokyo Garden Restaurant jest wsparcie pe³nego cyklu ¿ycia zarz¹dzania ofert¹ i zamówieniami w restauracji: od definicji kategorii i pozycji menu (ze sk³adnikami i alergenami), przez zbieranie zamówieñ klientów, po administracjê danymi u¿ytkowników i adresów dostaw. System ma u³atwiæ codzienn¹ pracê obs³udze i zapewniæ spójnoœæ danych.
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
 Zakres systemu
-System skÅ‚ada siÄ™ z backendu opartego na ASP.NET Core Web API, z warstwami logiki biznesowej (BL) i dostÄ™pu do danych (DAL) wykorzystujÄ…cymi Entity Framework Core, oraz frontendu zbudowanego w technologii Angular. Backend udostÄ™pnia REST-owe endpointy wspierajÄ…ce operacje CRUD oraz specyficzne operacje domenowe, takie jak filtrowanie czy walidacja danych. Frontend zapewnia panel administracyjny do zarzÄ…dzania danymi oraz widoki dla klientÃ³w, umoÅ¼liwiajÄ…ce przeglÄ…danie menu, skÅ‚adanie zamÃ³wieÅ„ i Å›ledzenie ich statusu.
-KorzyÅ›ci i mierniki
-System TokyoGarden przynosi nastÄ™pujÄ…ce korzyÅ›ci:
-â€¢	Redukcja bÅ‚Ä™dÃ³w: Wymuszone relacje i walidacje w warstwie BL minimalizujÄ… niepoprawnoÅ›Ä‡ danych.
-â€¢	Szybsza obsÅ‚uga katalogu: Usprawnione zarzÄ…dzanie kategoriami, alergenami i zdjÄ™ciami pozycji menu.
-â€¢	SkalowalnoÅ›Ä‡: Warstwowa architektura i wzorzec repozytorium zapewniajÄ… elastycznoÅ›Ä‡ i Å‚atwoÅ›Ä‡ rozbudowy.
-â€¢	Mierniki efektywnoÅ›ci: Czas wprowadzania zmiany w pozycji menu, liczba bÅ‚Ä™dÃ³w w zamÃ³wieniach wykrytych przez walidacjÄ™, czasy odpowiedzi endpointÃ³w API.
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
+System sk³ada siê z backendu opartego na ASP.NET Core Web API, z warstwami logiki biznesowej (BL) i dostêpu do danych (DAL) wykorzystuj¹cymi Entity Framework Core, oraz frontendu zbudowanego w technologii Angular. Backend udostêpnia REST-owe endpointy wspieraj¹ce operacje CRUD oraz specyficzne operacje domenowe, takie jak filtrowanie czy walidacja danych. Frontend zapewnia panel administracyjny do zarz¹dzania danymi oraz widoki dla klientów, umo¿liwiaj¹ce przegl¹danie menu, sk³adanie zamówieñ i œledzenie ich statusu.
+Korzyœci i mierniki
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
+System TokyoGarden przynosi nastêpuj¹ce korzyœci:
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
+Redukcja b³êdów: Wymuszone relacje i walidacje w warstwie BL minimalizuj¹ niepoprawnoœæ danych.
+Szybsza obs³uga katalogu: Usprawnione zarz¹dzanie kategoriami, alergenami i zdjêciami pozycji menu.
+Skalowalnoœæ: Warstwowa architektura i wzorzec repozytorium zapewniaj¹ elastycznoœæ i ³atwoœæ rozbudowy.
+Mierniki efektywnoœci: Czas wprowadzania zmiany w pozycji menu, liczba b³êdów w zamówieniach wykrytych przez walidacjê, czasy odpowiedzi endpointów API.
+Doprecyzowano kontrakty REST – opisano wszystkie pola w DTO, podano przyk³adowe requesty i response’y dla metod GET, POST i PUT. Uwzglêdniono równie¿ obs³ugê b³êdów z kodami statusu i formatem ProblemDetails. Dodano sugestie wersjonowania API w przysz³oœci (np. /api/v2) w razie rozbudowy systemu.
 1. Specyfikacja
 Kontekst i interesariusze
-System TokyoGarden jest przeznaczony dla rÃ³Å¼nych grup interesariuszy, z ktÃ³rych kaÅ¼da ma specyficzne potrzeby:
-â€¢	Klienci: PrzeglÄ…dajÄ… menu, filtrujÄ… pozycje wedÅ‚ug kategorii i alergenÃ³w, skÅ‚adajÄ… zamÃ³wienia.
-â€¢	Administratorzy/Pracownicy: ZarzÄ…dzajÄ… danymi menu, kategoriami, alergenami oraz statusami zamÃ³wieÅ„.
-â€¢	WÅ‚aÅ›ciciele: KorzystajÄ… z raportÃ³w i nadzorujÄ… operacje restauracji. W przyszÅ‚oÅ›ci system moÅ¼e zostaÄ‡ zintegrowany z zewnÄ™trznÄ… bramkÄ… pÅ‚atniczÄ…, co rozszerzy jego funkcjonalnoÅ›Ä‡ o obsÅ‚ugÄ™ pÅ‚atnoÅ›ci online.
-Przypadki uÅ¼ycia (skrÃ³t)
-Kluczowe przypadki uÅ¼ycia obejmujÄ…:
-â€¢	Klient: PrzeglÄ…danie menu, filtrowanie pozycji wedÅ‚ug kategorii lub alergenÃ³w, skÅ‚adanie i Å›ledzenie zamÃ³wieÅ„.
-â€¢	Administrator: Dodawanie, edycja i usuwanie pozycji menu, przypisywanie kategorii i alergenÃ³w, aktualizacja statusÃ³w zamÃ³wieÅ„.
-â€¢	System: Automatyczna walidacja danych, zapewnienie spÃ³jnoÅ›ci relacji miÄ™dzy encjami, obliczanie wartoÅ›ci zamÃ³wieÅ„ na podstawie pozycji i ich iloÅ›ci.
+System TokyoGarden jest przeznaczony dla ró¿nych grup interesariuszy, z których ka¿da ma specyficzne potrzeby:
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
+Klienci: Przegl¹daj¹ menu, filtruj¹ pozycje wed³ug kategorii i alergenów, sk³adaj¹ zamówienia.
+Administratorzy/Pracownicy: Zarz¹dzaj¹ danymi menu, kategoriami, alergenami oraz statusami zamówieñ.
+W³aœciciele: Korzystaj¹ z raportów i nadzoruj¹ operacje restauracji. W przysz³oœci system mo¿e zostaæ zintegrowany z zewnêtrzn¹ bramk¹ p³atnicz¹, co rozszerzy jego funkcjonalnoœæ o obs³ugê p³atnoœci online.
+Przypadki u¿ycia (skrót)
+Kluczowe przypadki u¿ycia obejmuj¹:
+Klient: Przegl¹danie menu, filtrowanie pozycji wed³ug kategorii lub alergenów, sk³adanie i œledzenie zamówieñ.
+Administrator: Dodawanie, edycja i usuwanie pozycji menu, przypisywanie kategorii i alergenów, aktualizacja statusów zamówieñ.
+System: Automatyczna walidacja danych, zapewnienie spójnoœci relacji miêdzy encjami, obliczanie wartoœci zamówieñ na podstawie pozycji i ich iloœci.
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
 Wymagania niefunkcjonalne
-System speÅ‚nia nastÄ™pujÄ…ce wymagania niefunkcjonalne:
-â€¢	WydajnoÅ›Ä‡: Endpointy listowe wspierajÄ… paginacjÄ™, sortowanie i filtrowanie, zapewniajÄ…c szybkie odpowiedzi nawet przy duÅ¼ej liczbie danych.
-â€¢	BezpieczeÅ„stwo: Autoryzacja oparta na rolach (Admin/User) z planowanÄ… rozbudowÄ… o JWT, walidacja danych wejÅ›ciowych, zabezpieczenia CORS.
-â€¢	UtrzymywalnoÅ›Ä‡: Warstwowa architektura z Dependency Injection (DI) i jasno zdefiniowanymi kontraktami uÅ‚atwia konserwacjÄ™ i rozwÃ³j.
-â€¢	JakoÅ›Ä‡ kodu: Testy jednostkowe dla warstw BL, DAL i kontrolerÃ³w zapewniajÄ… niezawodnoÅ›Ä‡ i poprawnoÅ›Ä‡ dziaÅ‚ania.
+System spe³nia nastêpuj¹ce wymagania niefunkcjonalne:
+System zosta³ zaprojektowany w oparciu o analizê potrzeb restauracji, z uwzglêdnieniem wygody u¿ytkownika, minimalizacji b³êdów i mo¿liwoœci rozbudowy w przysz³oœci. Dokumentacja opisuje szczegó³owo ka¿dy element – od koncepcji po implementacjê – tak aby mog³a stanowiæ punkt odniesienia przy dalszym rozwoju systemu lub jego utrzymaniu.
+Wydajnoœæ: Endpointy listowe wspieraj¹ paginacjê, sortowanie i filtrowanie, zapewniaj¹c szybkie odpowiedzi nawet przy du¿ej liczbie danych.
+Bezpieczeñstwo: Autoryzacja oparta na rolach (Admin/User) z planowan¹ rozbudow¹ o JWT, walidacja danych wejœciowych, zabezpieczenia CORS.
+Utrzymywalnoœæ: Warstwowa architektura z Dependency Injection (DI) i jasno zdefiniowanymi kontraktami u³atwia konserwacjê i rozwój.
+Jakoœæ kodu: Testy jednostkowe dla warstw BL, DAL i kontrolerów zapewniaj¹ niezawodnoœæ i poprawnoœæ dzia³ania.
 2. Model danych i domeny
-CDM â€“ encje i relacje
-Diagram Konceptualnego Modelu Danych (CDM) systemu TokyoGarden przedstawia w sposÃ³b precyzyjny i uporzÄ…dkowany logicznÄ… strukturÄ™ danych, ktÃ³ra wspiera kluczowe procesy zamawiania i realizacji usÅ‚ug w restauracji, zapewniajÄ…c przejrzystoÅ›Ä‡ dla projektantÃ³w i interesariuszy biznesowych. Model ten koncentruje siÄ™ na definiowaniu gÅ‚Ã³wnych encji, ich atrybutÃ³w oraz wzajemnych relacji, celowo pomijajÄ…c techniczne detale, takie jak typy danych, indeksy czy ograniczenia bazodanowe, aby uÅ‚atwiÄ‡ zrozumienie ogÃ³lnej organizacji danych w systemie. Jego nadrzÄ™dnym celem jest dostarczenie klarownego, logicznego obrazu struktury danych, ktÃ³ry stanowi fundament dla dalszego projektowania i implementacji bazy danych, wspierajÄ…c efektywne zarzÄ…dzanie procesami restauracyjnymi. Model CDM obejmuje szeÅ›Ä‡ gÅ‚Ã³wnych encji, z ktÃ³rych kaÅ¼da odzwierciedla specyficzne aspekty funkcjonalnoÅ›ci systemu TokyoGarden, zapewniajÄ…c kompleksowe wsparcie dla operacji restauracyjnych:
-1.	Adresy: Encja przechowujÄ…ca szczegÃ³Å‚owe dane lokalizacyjne uÅ¼ytkownikÃ³w lub miejsc dostawy, zawierajÄ…ca atrybuty takie jak miasto, ulica, numer domu oraz numer mieszkania, co umoÅ¼liwia precyzyjne okreÅ›lenie lokalizacji dla potrzeb logistycznych systemu.
-2.	UÅ¼ytkownicy: Reprezentuje klientÃ³w oraz administratorÃ³w korzystajÄ…cych z platformy, z atrybutami obejmujÄ…cymi nazwÄ™ uÅ¼ytkownika, hasÅ‚o, numer telefonu oraz klucz obcy fk_id_adresu, ktÃ³ry jednoznacznie wiÄ…Å¼e kaÅ¼dego uÅ¼ytkownika z dokÅ‚adnie jednym adresem w systemie.
-3.	ZamÃ³wienia: Przechowuje szczegÃ³Å‚owe informacje dotyczÄ…ce zamÃ³wieÅ„ skÅ‚adanych przez uÅ¼ytkownikÃ³w, w tym datÄ™ zamÃ³wienia, dodatkowe uwagi (np. proÅ›ba o szybkÄ… dostawÄ™), opis zamÃ³wienia oraz klucze obce fk_id_uÅ¼ytkownika i fk_id_adresu, ktÃ³re Å‚Ä…czÄ… zamÃ³wienie z uÅ¼ytkownikiem i adresem dostawy.
-4.	Pozycje ZamÃ³wienia: Reprezentuje produkty wybrane w ramach pojedynczego zamÃ³wienia, z atrybutami takimi jak cena jednostkowa pozycji oraz liczba zamÃ³wionych sztuk, powiÄ…zana z encjami ZamÃ³wienia i Pozycje Menu, co pozwala na precyzyjne okreÅ›lenie skÅ‚adu kaÅ¼dego zamÃ³wienia.
-5.	Pozycje Menu: Zawiera dane dotyczÄ…ce daÅ„ dostÄ™pnych w ofercie restauracji, w tym nazwÄ™ pozycji, opis, cenÄ™ oraz dane obrazu (imageData), powiÄ…zana z Kategoriami Menu, co umoÅ¼liwia logiczne grupowanie daÅ„ wedÅ‚ug okreÅ›lonych kategorii.
-6.	Kategorie Menu: SÅ‚uÅ¼y do organizowania daÅ„ w grupy, takie jak przystawki, dania gÅ‚Ã³wne czy desery, z atrybutem nazwa_kategorii (np. â€Sushiâ€ lub â€Zupyâ€), co znaczÄ…co uÅ‚atwia prezentacjÄ™ oferty w przejrzysty i uporzÄ…dkowany sposÃ³b.
+CDM – encje i relacje
+Diagram Konceptualnego Modelu Danych (CDM) systemu TokyoGarden przedstawia w sposób precyzyjny i uporz¹dkowany logiczn¹ strukturê danych, która wspiera kluczowe procesy zamawiania i realizacji us³ug w restauracji, zapewniaj¹c przejrzystoœæ dla projektantów i interesariuszy biznesowych. Model ten koncentruje siê na definiowaniu g³ównych encji, ich atrybutów oraz wzajemnych relacji, celowo pomijaj¹c techniczne detale, takie jak typy danych, indeksy czy ograniczenia bazodanowe, aby u³atwiæ zrozumienie ogólnej organizacji danych w systemie. Jego nadrzêdnym celem jest dostarczenie klarownego, logicznego obrazu struktury danych, który stanowi fundament dla dalszego projektowania i implementacji bazy danych, wspieraj¹c efektywne zarz¹dzanie procesami restauracyjnymi. Model CDM obejmuje szeœæ g³ównych encji, z których ka¿da odzwierciedla specyficzne aspekty funkcjonalnoœci systemu TokyoGarden, zapewniaj¹c kompleksowe wsparcie dla operacji restauracyjnych:
+1. Adresy: Encja przechowuj¹ca szczegó³owe dane lokalizacyjne u¿ytkowników lub miejsc dostawy, zawieraj¹ca atrybuty takie jak miasto, ulica, numer domu oraz numer mieszkania, co umo¿liwia precyzyjne okreœlenie lokalizacji dla potrzeb logistycznych systemu.
+2. U¿ytkownicy: Reprezentuje klientów oraz administratorów korzystaj¹cych z platformy, z atrybutami obejmuj¹cymi nazwê u¿ytkownika, has³o, numer telefonu oraz klucz obcy fk_id_adresu, który jednoznacznie wi¹¿e ka¿dego u¿ytkownika z dok³adnie jednym adresem w systemie.
+3. Zamówienia: Przechowuje szczegó³owe informacje dotycz¹ce zamówieñ sk³adanych przez u¿ytkowników, w tym datê zamówienia, dodatkowe uwagi (np. proœba o szybk¹ dostawê), opis zamówienia oraz klucze obce fk_id_u¿ytkownika i fk_id_adresu, które ³¹cz¹ zamówienie z u¿ytkownikiem i adresem dostawy.
+4. Pozycje Zamówienia: Reprezentuje produkty wybrane w ramach pojedynczego zamówienia, z atrybutami takimi jak cena jednostkowa pozycji oraz liczba zamówionych sztuk, powi¹zana z encjami Zamówienia i Pozycje Menu, co pozwala na precyzyjne okreœlenie sk³adu ka¿dego zamówienia.
+5. Pozycje Menu: Zawiera dane dotycz¹ce dañ dostêpnych w ofercie restauracji, w tym nazwê pozycji, opis, cenê oraz dane obrazu (imageData), powi¹zana z Kategoriami Menu, co umo¿liwia logiczne grupowanie dañ wed³ug okreœlonych kategorii.
+6. Kategorie Menu: S³u¿y do organizowania dañ w grupy, takie jak przystawki, dania g³ówne czy desery, z atrybutem nazwa_kategorii (np. „Sushi” lub „Zupy”), co znacz¹co u³atwia prezentacjê oferty w przejrzysty i uporz¹dkowany sposób.
 Relacje w modelu:
-â€¢	Relacja UÅ¼ytkownicy â†’ Adresy (1:N): Jeden adres moÅ¼e byÄ‡ przypisany do wielu uÅ¼ytkownikÃ³w, co odzwierciedla moÅ¼liwoÅ›Ä‡ wspÃ³Å‚dzielenia lokalizacji przez rÃ³Å¼nych klientÃ³w lub administratorÃ³w.
-â€¢	Relacja ZamÃ³wienia â†’ UÅ¼ytkownicy (N:1): KaÅ¼de zamÃ³wienie jest przypisane dokÅ‚adnie jednemu uÅ¼ytkownikowi, co zapewnia jednoznacznoÅ›Ä‡ odpowiedzialnoÅ›ci za zamÃ³wienie.
-â€¢	Relacja ZamÃ³wienia â†’ Adresy (N:1): KaÅ¼de zamÃ³wienie jest powiÄ…zane z jednym adresem dostawy, co pozwala na precyzyjne okreÅ›lenie miejsca realizacji usÅ‚ugi.
-â€¢	Relacja Pozycje ZamÃ³wienia â†’ ZamÃ³wienia (N:1): KaÅ¼da pozycja zamÃ³wienia naleÅ¼y do dokÅ‚adnie jednego zamÃ³wienia, co umoÅ¼liwia szczegÃ³Å‚owe Å›ledzenie zawartoÅ›ci koszyka.
-â€¢	Relacja Pozycje ZamÃ³wienia â†’ Pozycje Menu (N:1): KaÅ¼da pozycja zamÃ³wienia odnosi siÄ™ do jednego dania z menu, co zapewnia spÃ³jnoÅ›Ä‡ oferty z wyborem klienta.
-â€¢	Relacja Pozycje Menu â†’ Kategorie Menu (N:1): KaÅ¼de danie naleÅ¼y do jednej kategorii menu, co uÅ‚atwia organizacjÄ™ i przeglÄ…danie oferty restauracyjnej.
-Model CDM systemu TokyoGarden gwarantuje logiczne i precyzyjne odwzorowanie procesÃ³w zamawiania, umoÅ¼liwiajÄ…c efektywne zarzÄ…dzanie danymi oraz ich przejrzystÄ… organizacjÄ™, co stanowi solidnÄ… podstawÄ™ dla projektowania i implementacji bazy danych w dalszych etapach rozwoju systemu.
-PDM â€“ tabele i klucze
-Diagram Fizycznego Modelu Danych (PDM) systemu TokyoGarden definiuje szczegÃ³Å‚owÄ… strukturÄ™ bazy danych dla SQL Server, uwzglÄ™dniajÄ…c techniczne aspekty, takie jak typy danych, klucze gÅ‚Ã³wne i obce, ograniczenia integralnoÅ›ci oraz konfiguracje wspierajÄ…ce migracje bazy danych i Entity Framework Core. Model ten zapewnia zgodnoÅ›Ä‡ z wymaganiami systemu, umoÅ¼liwiajÄ…c generowanie skryptÃ³w SQL oraz efektywne zarzÄ…dzanie danymi restauracyjnymi, co jest kluczowe dla prawidÅ‚owego funkcjonowania aplikacji. Baza danych skÅ‚ada siÄ™ z oÅ›miu tabel, ktÃ³re odzwierciedlajÄ… strukturÄ™ danych i zaleÅ¼noÅ›ci miÄ™dzy nimi, wspierajÄ…c wszystkie kluczowe operacje systemu:
-1.	Adresy: Przechowuje dane lokalizacyjne, takie jak id_adres (int, klucz gÅ‚Ã³wny), miasto (varchar(255)), ulica (varchar(255)), nr_domu (varchar(255)), nr_mieszkania (varchar(255)), co pozwala na precyzyjne okreÅ›lenie miejsca dostawy.
-2.	UÅ¼ytkownicy: Reprezentuje klientÃ³w i administratorÃ³w, z atrybutami id_uzytkownika (int, klucz gÅ‚Ã³wny), nazwa_uzytkownika (varchar(255)), haslo (varchar(255)), email (varchar(255)), nr_telefonu (varchar(255)), wspierajÄ…c autoryzacjÄ™ i komunikacjÄ™ z uÅ¼ytkownikami.
-3.	ZamÃ³wienia: Przechowuje szczegÃ³Å‚owe dane zamÃ³wieÅ„, w tym id_zamowienia (int, klucz gÅ‚Ã³wny), data_zamowienia (datetime), dodatkowe_informacje (varchar(255)), id_uzytkownika (int, klucz obcy), id_adres (int, klucz obcy), metoda_platnosci (varchar(255)), status_zamowienia (varchar(255)), co stanowi centralny element zarzÄ…dzania procesami zamawiania.
-4.	Pozycje_Zamowienia: OkreÅ›la produkty w zamÃ³wieniu, z atrybutami id_pozycja_zamowienia (int, klucz gÅ‚Ã³wny), ilosc (int), id_pozycja_menu (int, klucz obcy), id_zamowienia (int, klucz obcy), umoÅ¼liwiajÄ…c szczegÃ³Å‚owe okreÅ›lenie skÅ‚adu kaÅ¼dego zamÃ³wienia.
-5.	Pozycje_Menu: Przechowuje informacje o daniach, w tym id_pozycja_menu (int, klucz gÅ‚Ã³wny), cena (int), nazwa_pozycji (varchar(255)), opis (varchar(255)), imageData (varchar(255)), id_kategorii (int, klucz obcy), co pozwala na prezentacjÄ™ peÅ‚nej oferty restauracji.
-6.	Kategorie: Grupuje dania w kategorie, takie jak przystawki czy desery, z atrybutami id_kategorii (int, klucz gÅ‚Ã³wny), nazwa_kategorii (varchar(255)), co uÅ‚atwia organizacjÄ™ menu w aplikacji.
-7.	Alergeny: Przechowuje dane o alergenach, z atrybutami id_alergenu (int, klucz gÅ‚Ã³wny), opis_alergenu (varchar(255)), co wspiera informowanie klientÃ³w o potencjalnych zagroÅ¼eniach zdrowotnych.
-8.	Alergeny_Pozycje_Menu: ÅÄ…czy alergeny z daniami, z atrybutami id_alergenu_pozycje_menu (int, klucz gÅ‚Ã³wny), id_alergenu (int, klucz obcy), id_pozycja_menu (int, klucz obcy), umoÅ¼liwiajÄ…c precyzyjne okreÅ›lenie alergenÃ³w dla kaÅ¼dej pozycji menu.
+* Relacja U¿ytkownicy ? Adresy (1:N): Jeden adres mo¿e byæ przypisany do wielu u¿ytkowników, co odzwierciedla mo¿liwoœæ wspó³dzielenia lokalizacji przez ró¿nych klientów lub administratorów.
+* Relacja Zamówienia ? U¿ytkownicy (N:1): Ka¿de zamówienie jest przypisane dok³adnie jednemu u¿ytkownikowi, co zapewnia jednoznacznoœæ odpowiedzialnoœci za zamówienie.
+* Relacja Zamówienia ? Adresy (N:1): Ka¿de zamówienie jest powi¹zane z jednym adresem dostawy, co pozwala na precyzyjne okreœlenie miejsca realizacji us³ugi.
+* Relacja Pozycje Zamówienia ? Zamówienia (N:1): Ka¿da pozycja zamówienia nale¿y do dok³adnie jednego zamówienia, co umo¿liwia szczegó³owe œledzenie zawartoœci koszyka.
+* Relacja Pozycje Zamówienia ? Pozycje Menu (N:1): Ka¿da pozycja zamówienia odnosi siê do jednego dania z menu, co zapewnia spójnoœæ oferty z wyborem klienta.
+* Relacja Pozycje Menu ? Kategorie Menu (N:1): Ka¿de danie nale¿y do jednej kategorii menu, co u³atwia organizacjê i przegl¹danie oferty restauracyjnej.
+Model CDM systemu TokyoGarden gwarantuje logiczne i precyzyjne odwzorowanie procesów zamawiania, umo¿liwiaj¹c efektywne zarz¹dzanie danymi oraz ich przejrzyst¹ organizacjê, co stanowi solidn¹ podstawê dla projektowania i implementacji bazy danych w dalszych etapach rozwoju systemu.
+PDM – tabele i klucze
+Diagram Fizycznego Modelu Danych (PDM) systemu TokyoGarden definiuje szczegó³ow¹ strukturê bazy danych dla SQL Server, uwzglêdniaj¹c techniczne aspekty, takie jak typy danych, klucze g³ówne i obce, ograniczenia integralnoœci oraz konfiguracje wspieraj¹ce migracje bazy danych i Entity Framework Core. Model ten zapewnia zgodnoœæ z wymaganiami systemu, umo¿liwiaj¹c generowanie skryptów SQL oraz efektywne zarz¹dzanie danymi restauracyjnymi, co jest kluczowe dla prawid³owego funkcjonowania aplikacji. Baza danych sk³ada siê z oœmiu tabel, które odzwierciedlaj¹ strukturê danych i zale¿noœci miêdzy nimi, wspieraj¹c wszystkie kluczowe operacje systemu:
+1. Adresy: Przechowuje dane lokalizacyjne, takie jak id_adres (int, klucz g³ówny), miasto (varchar(255)), ulica (varchar(255)), nr_domu (varchar(255)), nr_mieszkania (varchar(255)), co pozwala na precyzyjne okreœlenie miejsca dostawy.
+2. U¿ytkownicy: Reprezentuje klientów i administratorów, z atrybutami id_uzytkownika (int, klucz g³ówny), nazwa_uzytkownika (varchar(255)), haslo (varchar(255)), email (varchar(255)), nr_telefonu (varchar(255)), wspieraj¹c autoryzacjê i komunikacjê z u¿ytkownikami.
+3. Zamówienia: Przechowuje szczegó³owe dane zamówieñ, w tym id_zamowienia (int, klucz g³ówny), data_zamowienia (datetime), dodatkowe_informacje (varchar(255)), id_uzytkownika (int, klucz obcy), id_adres (int, klucz obcy), metoda_platnosci (varchar(255)), status_zamowienia (varchar(255)), co stanowi centralny element zarz¹dzania procesami zamawiania.
+4. Pozycje_Zamowienia: Okreœla produkty w zamówieniu, z atrybutami id_pozycja_zamowienia (int, klucz g³ówny), ilosc (int), id_pozycja_menu (int, klucz obcy), id_zamowienia (int, klucz obcy), umo¿liwiaj¹c szczegó³owe okreœlenie sk³adu ka¿dego zamówienia.
+5. Pozycje_Menu: Przechowuje informacje o daniach, w tym id_pozycja_menu (int, klucz g³ówny), cena (int), nazwa_pozycji (varchar(255)), opis (varchar(255)), imageData (varchar(255)), id_kategorii (int, klucz obcy), co pozwala na prezentacjê pe³nej oferty restauracji.
+6. Kategorie: Grupuje dania w kategorie, takie jak przystawki czy desery, z atrybutami id_kategorii (int, klucz g³ówny), nazwa_kategorii (varchar(255)), co u³atwia organizacjê menu w aplikacji.
+7. Alergeny: Przechowuje dane o alergenach, z atrybutami id_alergenu (int, klucz g³ówny), opis_alergenu (varchar(255)), co wspiera informowanie klientów o potencjalnych zagro¿eniach zdrowotnych.
+8. Alergeny_Pozycje_Menu: £¹czy alergeny z daniami, z atrybutami id_alergenu_pozycje_menu (int, klucz g³ówny), id_alergenu (int, klucz obcy), id_pozycja_menu (int, klucz obcy), umo¿liwiaj¹c precyzyjne okreœlenie alergenów dla ka¿dej pozycji menu.
 Relacje w modelu:
-â€¢	Relacja UÅ¼ytkownicy â†’ ZamÃ³wienia (1:N): Jeden uÅ¼ytkownik moÅ¼e zÅ‚oÅ¼yÄ‡ wiele zamÃ³wieÅ„, co odzwierciedla aktywnoÅ›Ä‡ klienta w systemie.
-â€¢	Relacja Adresy â†’ ZamÃ³wienia (1:N): Jeden adres moÅ¼e byÄ‡ uÅ¼ywany w wielu zamÃ³wieniach, co pozwala na elastyczne zarzÄ…dzanie lokalizacjami dostaw.
-â€¢	Relacja ZamÃ³wienia â†’ Pozycje_Zamowienia (1:N): Jedno zamÃ³wienie moÅ¼e zawieraÄ‡ wiele pozycji, co umoÅ¼liwia szczegÃ³Å‚owe okreÅ›lenie zawartoÅ›ci koszyka.
-â€¢	Relacja Pozycje_Menu â†’ Pozycje_Zamowienia (1:N): Jedna pozycja menu moÅ¼e wystÄ™powaÄ‡ w wielu pozycjach zamÃ³wienia, co zapewnia spÃ³jnoÅ›Ä‡ oferty.
-â€¢	Relacja Kategorie â†’ Pozycje_Menu (1:N): Jedna kategoria moÅ¼e zawieraÄ‡ wiele pozycji menu, co uÅ‚atwia organizacjÄ™ oferty kulinarnej.
-â€¢	Relacja Alergeny â†” Pozycje_Menu (N:N): PowiÄ…zanie realizowane przez tabelÄ™ Alergeny_Pozycje_Menu, co pozwala na elastyczne przypisywanie alergenÃ³w do daÅ„.
-Konwencje i integralnoÅ›Ä‡:
-â€¢	Klucze gÅ‚Ã³wne (PK) sÄ… zdefiniowane jako identyfikatory (Id) typu int, zapewniajÄ…ce unikalnoÅ›Ä‡ rekordÃ³w.
-â€¢	Klucze obce (FK) stosujÄ… ograniczenia kaskadowe tylko tam, gdzie jest to uzasadnione, np. brak kaskadowego usuwania zamÃ³wieÅ„ przy usuwaniu uÅ¼ytkownika, aby zachowaÄ‡ integralnoÅ›Ä‡ historycznych danych.
-â€¢	Indeksy zdefiniowano dla pÃ³l czÄ™sto wyszukiwanych, takich jak nazwa_pozycji i data_zamowienia, oraz dla kluczy obcych, co zwiÄ™ksza wydajnoÅ›Ä‡ zapytaÅ„.
-â€¢	Walidacje obejmujÄ… wymagane pola (np. nazwy, ceny), ograniczenia wartoÅ›ci (ceny > 0, iloÅ›ci > 0) oraz relacjÄ™ N:M dla alergenÃ³w i pozycji menu poprzez tabelÄ™ Å‚Ä…czÄ…cÄ….
-Model PDM systemu TokyoGarden stanowi solidnÄ… technicznÄ… podstawÄ™, umoÅ¼liwiajÄ…c efektywnÄ… implementacjÄ™ bazy danych w SQL Server oraz wspierajÄ…c kluczowe procesy zamawiania i zarzÄ…dzania ofertÄ… restauracyjnÄ….
+* Relacja U¿ytkownicy ? Zamówienia (1:N): Jeden u¿ytkownik mo¿e z³o¿yæ wiele zamówieñ, co odzwierciedla aktywnoœæ klienta w systemie.
+* Relacja Adresy ? Zamówienia (1:N): Jeden adres mo¿e byæ u¿ywany w wielu zamówieniach, co pozwala na elastyczne zarz¹dzanie lokalizacjami dostaw.
+* Relacja Zamówienia ? Pozycje_Zamowienia (1:N): Jedno zamówienie mo¿e zawieraæ wiele pozycji, co umo¿liwia szczegó³owe okreœlenie zawartoœci koszyka.
+* Relacja Pozycje_Menu ? Pozycje_Zamowienia (1:N): Jedna pozycja menu mo¿e wystêpowaæ w wielu pozycjach zamówienia, co zapewnia spójnoœæ oferty.
+* Relacja Kategorie ? Pozycje_Menu (1:N): Jedna kategoria mo¿e zawieraæ wiele pozycji menu, co u³atwia organizacjê oferty kulinarnej.
+* Relacja Alergeny ? Pozycje_Menu (N:N): Powi¹zanie realizowane przez tabelê Alergeny_Pozycje_Menu, co pozwala na elastyczne przypisywanie alergenów do dañ.
+Konwencje i integralnoœæ:
+* Klucze g³ówne (PK) s¹ zdefiniowane jako identyfikatory (Id) typu int, zapewniaj¹ce unikalnoœæ rekordów.
+* Klucze obce (FK) stosuj¹ ograniczenia kaskadowe tylko tam, gdzie jest to uzasadnione, np. brak kaskadowego usuwania zamówieñ przy usuwaniu u¿ytkownika, aby zachowaæ integralnoœæ historycznych danych.
+* Indeksy zdefiniowano dla pól czêsto wyszukiwanych, takich jak nazwa_pozycji i data_zamowienia, oraz dla kluczy obcych, co zwiêksza wydajnoœæ zapytañ.
+* Walidacje obejmuj¹ wymagane pola (np. nazwy, ceny), ograniczenia wartoœci (ceny > 0, iloœci > 0) oraz relacjê N:M dla alergenów i pozycji menu poprzez tabelê ³¹cz¹c¹.
+Model PDM systemu TokyoGarden stanowi solidn¹ techniczn¹ podstawê, umo¿liwiaj¹c efektywn¹ implementacjê bazy danych w SQL Server oraz wspieraj¹c kluczowe procesy zamawiania i zarz¹dzania ofert¹ restauracyjn¹.
 
 Diagram Klas UML
-Diagram klas UML systemu TokyoGarden przedstawia szczegÃ³Å‚owÄ…, obiektowÄ… strukturÄ™ danych, definiujÄ…c klasy, ich atrybuty oraz relacje miÄ™dzy nimi, co wspiera programowanie obiektowe, komunikacjÄ™ miÄ™dzy backendem a frontendem oraz generowanie dokumentacji technicznej. Model ten jest kluczowy dla projektowania logiki biznesowej, definiowania struktur danych w kodzie oraz zapewnienia spÃ³jnoÅ›ci w implementacji aplikacji. Obejmuje osiem klas, ktÃ³re odzwierciedlajÄ… gÅ‚Ã³wne komponenty systemu, wspierajÄ…c zarÃ³wno backend, jak i frontend:
-1.	Adres: Zawiera atrybuty id (int, unikalny identyfikator), miasto (String, nazwa miejscowoÅ›ci), ulica (String, nazwa ulicy), nr_domu (int, numer budynku), nr_mieszkania (int, numer mieszkania), co umoÅ¼liwia precyzyjne zarzÄ…dzanie danymi lokalizacyjnymi w systemie.
-2.	UÅ¼ytkownik: Przechowuje dane uÅ¼ytkownikÃ³w, w tym id_uÅ¼ytkownika (int, unikalny identyfikator), nazwa_uÅ¼ytkownika (String, login), hasÅ‚o (String, zaszyfrowane), telefon (String, numer kontaktowy), co wspiera zarzÄ…dzanie kontami klientÃ³w i administratorÃ³w.
-3.	ZamÃ³wienie: Reprezentuje pojedyncze zamÃ³wienie, z atrybutami id_zamÃ³wienia (int, unikalny identyfikator), data_zamÃ³wienia (DateTime, data zÅ‚oÅ¼enia), dodatkowe_informacje (String, uwagi klienta), status_zamÃ³wienia (String, np. â€Nowyâ€), Å‚Ä…czna_cena (double, koszt caÅ‚kowity), metoda_pÅ‚atnoÅ›ci (String, np. â€gotÃ³wkaâ€), opcje_zamÃ³wienia (String, rodzaj zamÃ³wienia), uÅ¼ytkownik_id (int, klucz obcy), co czyni jÄ… centralnym elementem systemu.
-4.	PozycjaZamÃ³wienia: Przechowuje informacje o produktach w zamÃ³wieniu, z atrybutami id_pozycje_zamÃ³wienia (int, unikalny identyfikator), cena (double, koszt pozycji), iloÅ›Ä‡ (int, liczba sztuk), pozycja_menu_id (int, klucz obcy), zamÃ³wienie_id (int, klucz obcy), co pozwala na szczegÃ³Å‚owe okreÅ›lenie skÅ‚adu zamÃ³wienia.
-5.	PozycjaMenu: Reprezentuje dania w menu, z atrybutami id_pozycja_menu (int, unikalny identyfikator), nazwa (String, nazwa dania), opis (String, szczegÃ³Å‚y przygotowania), cena (double, koszt), skÅ‚adniki (String, lista skÅ‚adnikÃ³w), co wspiera prezentacjÄ™ oferty restauracyjnej.
-6.	Kategoria: Grupuje dania w kategorie, z atrybutami id_kategoria (int, unikalny identyfikator), nazwa_kategorii (String, np. â€Przystawkiâ€), co uÅ‚atwia organizacjÄ™ menu w aplikacji.
-7.	Alergen: Przechowuje informacje o alergenach, z atrybutami id_alergen (int, unikalny identyfikator), nazwa (String, nazwa alergenu), opis_alergenu (String, szczegÃ³Å‚owy opis), co wspiera informowanie klientÃ³w o potencjalnych zagroÅ¼eniach.
-8.	AlergenPozycjaMenu: Klasa Å‚Ä…czÄ…ca dla relacji wiele-do-wielu, z atrybutami pozycja_menu_id (int, klucz obcy), alergen_id (int, klucz obcy), co umoÅ¼liwia przypisanie alergenÃ³w do pozycji menu.
+Diagram klas UML systemu TokyoGarden przedstawia szczegó³ow¹, obiektow¹ strukturê danych, definiuj¹c klasy, ich atrybuty oraz relacje miêdzy nimi, co wspiera programowanie obiektowe, komunikacjê miêdzy backendem a frontendem oraz generowanie dokumentacji technicznej. Model ten jest kluczowy dla projektowania logiki biznesowej, definiowania struktur danych w kodzie oraz zapewnienia spójnoœci w implementacji aplikacji. Obejmuje osiem klas, które odzwierciedlaj¹ g³ówne komponenty systemu, wspieraj¹c zarówno backend, jak i frontend:
+1. Adres: Zawiera atrybuty id (int, unikalny identyfikator), miasto (String, nazwa miejscowoœci), ulica (String, nazwa ulicy), nr_domu (int, numer budynku), nr_mieszkania (int, numer mieszkania), co umo¿liwia precyzyjne zarz¹dzanie danymi lokalizacyjnymi w systemie.
+2. U¿ytkownik: Przechowuje dane u¿ytkowników, w tym id_u¿ytkownika (int, unikalny identyfikator), nazwa_u¿ytkownika (String, login), has³o (String, zaszyfrowane), telefon (String, numer kontaktowy), co wspiera zarz¹dzanie kontami klientów i administratorów.
+3. Zamówienie: Reprezentuje pojedyncze zamówienie, z atrybutami id_zamówienia (int, unikalny identyfikator), data_zamówienia (DateTime, data z³o¿enia), dodatkowe_informacje (String, uwagi klienta), status_zamówienia (String, np. „Nowy”), ³¹czna_cena (double, koszt ca³kowity), metoda_p³atnoœci (String, np. „gotówka”), opcje_zamówienia (String, rodzaj zamówienia), u¿ytkownik_id (int, klucz obcy), co czyni j¹ centralnym elementem systemu.
+4. PozycjaZamówienia: Przechowuje informacje o produktach w zamówieniu, z atrybutami id_pozycje_zamówienia (int, unikalny identyfikator), cena (double, koszt pozycji), iloœæ (int, liczba sztuk), pozycja_menu_id (int, klucz obcy), zamówienie_id (int, klucz obcy), co pozwala na szczegó³owe okreœlenie sk³adu zamówienia.
+5. PozycjaMenu: Reprezentuje dania w menu, z atrybutami id_pozycja_menu (int, unikalny identyfikator), nazwa (String, nazwa dania), opis (String, szczegó³y przygotowania), cena (double, koszt), sk³adniki (String, lista sk³adników), co wspiera prezentacjê oferty restauracyjnej.
+6. Kategoria: Grupuje dania w kategorie, z atrybutami id_kategoria (int, unikalny identyfikator), nazwa_kategorii (String, np. „Przystawki”), co u³atwia organizacjê menu w aplikacji.
+7. Alergen: Przechowuje informacje o alergenach, z atrybutami id_alergen (int, unikalny identyfikator), nazwa (String, nazwa alergenu), opis_alergenu (String, szczegó³owy opis), co wspiera informowanie klientów o potencjalnych zagro¿eniach.
+8. AlergenPozycjaMenu: Klasa ³¹cz¹ca dla relacji wiele-do-wielu, z atrybutami pozycja_menu_id (int, klucz obcy), alergen_id (int, klucz obcy), co umo¿liwia przypisanie alergenów do pozycji menu.
 Relacje w modelu:
-â€¢	Relacja UÅ¼ytkownik â†’ Adres (1:N): Jeden adres moÅ¼e byÄ‡ przypisany wielu uÅ¼ytkownikom, co odzwierciedla wspÃ³Å‚dzielenie lokalizacji.
-â€¢	Relacja UÅ¼ytkownik â†’ ZamÃ³wienie (1:N): Jeden uÅ¼ytkownik moÅ¼e zÅ‚oÅ¼yÄ‡ wiele zamÃ³wieÅ„, co zapewnia jednoznacznoÅ›Ä‡ odpowiedzialnoÅ›ci.
-â€¢	Relacja ZamÃ³wienie â†’ PozycjaZamÃ³wienia (1:N): Jedno zamÃ³wienie zawiera wiele pozycji, co pozwala na szczegÃ³Å‚owe okreÅ›lenie zawartoÅ›ci.
-â€¢	Relacja PozycjaZamÃ³wienia â†’ PozycjaMenu (N:1): KaÅ¼da pozycja zamÃ³wienia odnosi siÄ™ do jednego dania, co zapewnia spÃ³jnoÅ›Ä‡ z menu.
-â€¢	Relacja PozycjaMenu â†’ Kategoria (N:1): KaÅ¼de danie naleÅ¼y do jednej kategorii, co uÅ‚atwia organizacjÄ™ oferty.
-â€¢	Relacja PozycjaMenu â†” Alergen (N:N): Realizowana przez klasÄ™ AlergenPozycjaMenu, co umoÅ¼liwia elastyczne przypisywanie alergenÃ³w.
-Diagram klas UML wspiera projektowanie struktur encji w warstwie TokyoGarden.Model, definiowanie obiektÃ³w DTO, konfiguracjÄ™ relacji w Entity Framework Core, komunikacjÄ™ miÄ™dzy zespoÅ‚ami deweloperskimi oraz generowanie dokumentacji i testÃ³w jednostkowych, zapewniajÄ…c wysokÄ… jakoÅ›Ä‡ kodu.
+* Relacja U¿ytkownik ? Adres (1:N): Jeden adres mo¿e byæ przypisany wielu u¿ytkownikom, co odzwierciedla wspó³dzielenie lokalizacji.
+* Relacja U¿ytkownik ? Zamówienie (1:N): Jeden u¿ytkownik mo¿e z³o¿yæ wiele zamówieñ, co zapewnia jednoznacznoœæ odpowiedzialnoœci.
+* Relacja Zamówienie ? PozycjaZamówienia (1:N): Jedno zamówienie zawiera wiele pozycji, co pozwala na szczegó³owe okreœlenie zawartoœci.
+* Relacja PozycjaZamówienia ? PozycjaMenu (N:1): Ka¿da pozycja zamówienia odnosi siê do jednego dania, co zapewnia spójnoœæ z menu.
+* Relacja PozycjaMenu ? Kategoria (N:1): Ka¿de danie nale¿y do jednej kategorii, co u³atwia organizacjê oferty.
+* Relacja PozycjaMenu ? Alergen (N:N): Realizowana przez klasê AlergenPozycjaMenu, co umo¿liwia elastyczne przypisywanie alergenów.
+Diagram klas UML wspiera projektowanie struktur encji w warstwie TokyoGarden.Model, definiowanie obiektów DTO, konfiguracjê relacji w Entity Framework Core, komunikacjê miêdzy zespo³ami deweloperskimi oraz generowanie dokumentacji i testów jednostkowych, zapewniaj¹c wysok¹ jakoœæ kodu.
 3. Architektura i warstwy
-PrzeglÄ…d
-Architektura systemu TokyoGarden opiera siÄ™ na warstwowym podejÅ›ciu, ktÃ³re obejmuje nastÄ™pujÄ…ce komponenty: Model (klasy POCO), IDAL (interfejsy repozytoriÃ³w i UnitOfWork), DAL (implementacje repozytoriÃ³w z Entity Framework Core), IBL (interfejsy usÅ‚ug biznesowych), BL (implementacje logiki biznesowej), API (ASP.NET Core Web API) oraz UI (Angular). Zasada projektowa zakÅ‚ada, Å¼e warstwa BL komunikuje siÄ™ z IDAL, a API z IBL, eliminujÄ…c zaleÅ¼noÅ›ci wsteczne, co zapewnia modularnoÅ›Ä‡ i Å‚atwoÅ›Ä‡ utrzymania systemu.
+Przegl¹d
+Architektura systemu TokyoGarden opiera siê na warstwowym podejœciu, które obejmuje nastêpuj¹ce komponenty: Model (klasy POCO), IDAL (interfejsy repozytoriów i UnitOfWork), DAL (implementacje repozytoriów z Entity Framework Core), IBL (interfejsy us³ug biznesowych), BL (implementacje logiki biznesowej), API (ASP.NET Core Web API) oraz UI (Angular). Zasada projektowa zak³ada, ¿e warstwa BL komunikuje siê z IDAL, a API z IBL, eliminuj¹c zale¿noœci wsteczne, co zapewnia modularnoœæ i ³atwoœæ utrzymania systemu.
 
 Wzorce i decyzje projektowe
-System wykorzystuje nastÄ™pujÄ…ce wzorce projektowe:
-â€¢	Repository i UnitOfWork: Ujednolicone kontrakty dla operacji CRUD i zarzÄ…dzania transakcjami, zapewniajÄ…ce spÃ³jnoÅ›Ä‡ danych.
-â€¢	DTO vs Model: API operuje na obiektach DTO, podczas gdy BL korzysta z modeli domenowych, z mapowaniem realizowanym w warstwie API.
-â€¢	Dependency Injection (DI)/Inversion of Control (IoC): Kontrolery wstrzykujÄ… interfejsy IBL, a BL wstrzykuje IDAL, co wspiera testowalnoÅ›Ä‡ i modularnoÅ›Ä‡.
-â€¢	Walidacja: Logika biznesowa w BL, wstÄ™pna walidacja atrybutami w DTO, co zapewnia spÃ³jnoÅ›Ä‡ i bezpieczeÅ„stwo danych.
+System wykorzystuje nastêpuj¹ce wzorce projektowe:
+* Repository i UnitOfWork: Ujednolicone kontrakty dla operacji CRUD i zarz¹dzania transakcjami, zapewniaj¹ce spójnoœæ danych.
+* DTO vs Model: API operuje na obiektach DTO, podczas gdy BL korzysta z modeli domenowych, z mapowaniem realizowanym w warstwie API.
+* Dependency Injection (DI)/Inversion of Control (IoC): Kontrolery wstrzykuj¹ interfejsy IBL, a BL wstrzykuje IDAL, co wspiera testowalnoœæ i modularnoœæ.
+* Walidacja: Logika biznesowa w BL, wstêpna walidacja atrybutami w DTO, co zapewnia spójnoœæ i bezpieczeñstwo danych.
 Warstwa Model
-Warstwa Model w aplikacji TokyoGarden zawiera klasy encji, ktÃ³re sÄ… mapowane na tabele bazy danych SQL Server za pomocÄ… Entity Framework Core, zapewniajÄ…c spÃ³jnoÅ›Ä‡ danych i separacjÄ™ odpowiedzialnoÅ›ci miÄ™dzy warstwami aplikacji. Encje te sÄ… wykorzystywane w warstwach dostÄ™pu do danych (DAL), logiki biznesowej (BL) oraz API, wspierajÄ…c efektywne zarzÄ…dzanie danymi w systemie. Warstwa obejmuje siedem klas encji, z ktÃ³rych kaÅ¼da odpowiada za reprezentacjÄ™ okreÅ›lonego typu danych:
-1.	Adresy: Przechowuje szczegÃ³Å‚owe dane lokalizacyjne uÅ¼ytkownikÃ³w lub miejsc dostawy, takie jak miasto, ulica, numer domu oraz numer mieszkania, co umoÅ¼liwia precyzyjne okreÅ›lenie lokalizacji dla potrzeb logistycznych.
-2.	Alergeny: Zawiera informacje o alergenach wystÄ™pujÄ…cych w produktach menu, takich jak orzechy czy gluten, co wspiera informowanie klientÃ³w o potencjalnych zagroÅ¼eniach zdrowotnych.
-3.	Kategorie: Reprezentuje kategorie pozycji menu, takie jak Sushi, Ramen czy Napoje, co uÅ‚atwia organizacjÄ™ i prezentacjÄ™ oferty restauracyjnej w aplikacji.
-4.	Pozycje_Menu: Odpowiada za pojedyncze pozycje w menu, zawierajÄ…ce szczegÃ³Å‚owe informacje o nazwie, opisie, cenie oraz danych obrazu, co wspiera prezentacjÄ™ oferty kulinarnej.
-5.	Pozycje_Zamowienia: Reprezentuje produkty w zamÃ³wieniu, z atrybutami takimi jak iloÅ›Ä‡ i cena wybranej pozycji menu, co umoÅ¼liwia szczegÃ³Å‚owe okreÅ›lenie skÅ‚adu koszyka.
-6.	UÅ¼ytkownicy: Przechowuje dane uÅ¼ytkownikÃ³w systemu, w tym nazwÄ™ uÅ¼ytkownika, hasÅ‚o oraz dane kontaktowe, co wspiera autoryzacjÄ™ i komunikacjÄ™ z klientami oraz administratorami.
-7.	ZamÃ³wienia: Reprezentuje peÅ‚ne zamÃ³wienie zÅ‚oÅ¼one przez uÅ¼ytkownika, obejmujÄ…ce szczegÃ³Å‚y takie jak data zamÃ³wienia, status, Å‚Ä…czna cena oraz powiÄ…zane pozycje, co jest kluczowe dla zarzÄ…dzania procesami zamawiania.
+Warstwa Model w aplikacji TokyoGarden zawiera klasy encji, które s¹ mapowane na tabele bazy danych SQL Server za pomoc¹ Entity Framework Core, zapewniaj¹c spójnoœæ danych i separacjê odpowiedzialnoœci miêdzy warstwami aplikacji. Encje te s¹ wykorzystywane w warstwach dostêpu do danych (DAL), logiki biznesowej (BL) oraz API, wspieraj¹c efektywne zarz¹dzanie danymi w systemie. Warstwa obejmuje siedem klas encji, z których ka¿da odpowiada za reprezentacjê okreœlonego typu danych:
+1. Adresy: Przechowuje szczegó³owe dane lokalizacyjne u¿ytkowników lub miejsc dostawy, takie jak miasto, ulica, numer domu oraz numer mieszkania, co umo¿liwia precyzyjne okreœlenie lokalizacji dla potrzeb logistycznych.
+2. Alergeny: Zawiera informacje o alergenach wystêpuj¹cych w produktach menu, takich jak orzechy czy gluten, co wspiera informowanie klientów o potencjalnych zagro¿eniach zdrowotnych.
+3. Kategorie: Reprezentuje kategorie pozycji menu, takie jak Sushi, Ramen czy Napoje, co u³atwia organizacjê i prezentacjê oferty restauracyjnej w aplikacji.
+4. Pozycje_Menu: Odpowiada za pojedyncze pozycje w menu, zawieraj¹ce szczegó³owe informacje o nazwie, opisie, cenie oraz danych obrazu, co wspiera prezentacjê oferty kulinarnej.
+5. Pozycje_Zamowienia: Reprezentuje produkty w zamówieniu, z atrybutami takimi jak iloœæ i cena wybranej pozycji menu, co umo¿liwia szczegó³owe okreœlenie sk³adu koszyka.
+6. U¿ytkownicy: Przechowuje dane u¿ytkowników systemu, w tym nazwê u¿ytkownika, has³o oraz dane kontaktowe, co wspiera autoryzacjê i komunikacjê z klientami oraz administratorami.
+7. Zamówienia: Reprezentuje pe³ne zamówienie z³o¿one przez u¿ytkownika, obejmuj¹ce szczegó³y takie jak data zamówienia, status, ³¹czna cena oraz powi¹zane pozycje, co jest kluczowe dla zarz¹dzania procesami zamawiania.
 Adnotacje Entity Framework Core:
-â€¢	[Key]: Wskazuje atrybut peÅ‚niÄ…cy rolÄ™ klucza gÅ‚Ã³wnego, zapewniajÄ…c unikalnoÅ›Ä‡ rekordÃ³w w bazie danych.
-â€¢	[Column(TypeName = "decimal(18,2)")]: Definiuje precyzyjny typ danych dla kolumn numerycznych, takich jak ceny, co zapewnia dokÅ‚adnoÅ›Ä‡ obliczeÅ„ finansowych.
-â€¢	virtual ICollection<T>: UmoÅ¼liwia lazy loading dla relacji jeden-do-wielu lub wiele-do-wielu, co pozwala na Å‚adowanie powiÄ…zanych danych na Å¼Ä…danie.
-â€¢	virtual T?: ObsÅ‚uguje relacje opcjonalne, np. uÅ¼ytkownik w zamÃ³wieniu moÅ¼e byÄ‡ null, co zwiÄ™ksza elastycznoÅ›Ä‡ modelowania danych.
-Warstwa Model zapewnia solidnÄ… podstawÄ™ dla mapowania obiektowo-relacyjnego, umoÅ¼liwiajÄ…c efektywne zarzÄ…dzanie danymi w aplikacji TokyoGarden.
+* [Key]: Wskazuje atrybut pe³ni¹cy rolê klucza g³ównego, zapewniaj¹c unikalnoœæ rekordów w bazie danych.
+* [Column(TypeName = "decimal(18,2)")]: Definiuje precyzyjny typ danych dla kolumn numerycznych, takich jak ceny, co zapewnia dok³adnoœæ obliczeñ finansowych.
+* virtual ICollection<T>: Umo¿liwia lazy loading dla relacji jeden-do-wielu lub wiele-do-wielu, co pozwala na ³adowanie powi¹zanych danych na ¿¹danie.
+* virtual T?: Obs³uguje relacje opcjonalne, np. u¿ytkownik w zamówieniu mo¿e byæ null, co zwiêksza elastycznoœæ modelowania danych.
+Warstwa Model zapewnia solidn¹ podstawê dla mapowania obiektowo-relacyjnego, umo¿liwiaj¹c efektywne zarz¹dzanie danymi w aplikacji TokyoGarden.
 Warstwa IDAL
-Warstwa interfejsÃ³w dostÄ™pu do danych (IDAL) w przestrzeni TokyoGarden.IDAL definiuje kontrakty dla repozytoriÃ³w, wspierajÄ…c separacjÄ™ odpowiedzialnoÅ›ci, testowanie jednostkowe oraz zasadÄ™ Dependency Inversion. Obejmuje nastÄ™pujÄ…ce interfejsy:
-â€¢	IRepository<t></t>: Generyczny interfejs dla operacji CRUD, definiujÄ…cy metody takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync, wspierajÄ…ce zapytania z IQueryable/IAsyncEnumerable oraz paginacjÄ™.
-â€¢	Specjalistyczne interfejsy: IAdresyRepository, IAlergenyRepository, IKategorieRepository, IPozycjeMenuRepository, IPozycjeZamowieniaRepository, IUzytkownikRepository, IZamowieniaRepository, kaÅ¼dy rozszerzajÄ…cy IRepository<t> o specyficzne metody, np. GetByCategoryIdAsync w IPozycjeMenuRepository.</t>
-â€¢	IUnitOfWork: Definiuje metodÄ™ SaveChangesAsync dla zapewnienia spÃ³jnoÅ›ci transakcji oraz dostÄ™p do repozytoriÃ³w.
-Interfejsy sÄ… implementowane w warstwie DAL, wykorzystywane przez serwisy BL oraz rejestrowane w DI, co wspiera modularnoÅ›Ä‡ i testowalnoÅ›Ä‡ kodu.
+Warstwa interfejsów dostêpu do danych (IDAL) w przestrzeni TokyoGarden.IDAL definiuje kontrakty dla repozytoriów, wspieraj¹c separacjê odpowiedzialnoœci, testowanie jednostkowe oraz zasadê Dependency Inversion. Obejmuje nastêpuj¹ce interfejsy:
+* IRepository<t></t>: Generyczny interfejs dla operacji CRUD, definiuj¹cy metody takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync, wspieraj¹ce zapytania z IQueryable/IAsyncEnumerable oraz paginacjê.
+* Specjalistyczne interfejsy: IAdresyRepository, IAlergenyRepository, IKategorieRepository, IPozycjeMenuRepository, IPozycjeZamowieniaRepository, IUzytkownikRepository, IZamowieniaRepository, ka¿dy rozszerzaj¹cy IRepository<t> o specyficzne metody, np. GetByCategoryIdAsync w IPozycjeMenuRepository.</t>
+* IUnitOfWork: Definiuje metodê SaveChangesAsync dla zapewnienia spójnoœci transakcji oraz dostêp do repozytoriów.
+Interfejsy s¹ implementowane w warstwie DAL, wykorzystywane przez serwisy BL oraz rejestrowane w DI, co wspiera modularnoœæ i testowalnoœæ kodu.
 Warstwa DAL
-Warstwa dostÄ™pu do danych (DAL) w przestrzeni TokyoGarden.DAL odpowiada za bezpoÅ›redni dostÄ™p do bazy danych SQL Server, wykorzystujÄ…c Entity Framework Core do realizacji operacji CRUD oraz zapytaÅ„ zÅ‚oÅ¼onych. Warstwa ta zapewnia izolacjÄ™ logiki biznesowej od szczegÃ³Å‚Ã³w technicznych bazy danych, wspierajÄ…c modularnoÅ›Ä‡ i czystÄ… architekturÄ™. Obejmuje nastÄ™pujÄ…ce komponenty:
-â€¢	DbTokyoGarden: Kontekst Entity Framework Core, ktÃ³ry zarzÄ…dza poÅ‚Ä…czeniem z bazÄ… danych i definiuje DbSety dla kaÅ¼dej encji, takiej jak UÅ¼ytkownicy czy ZamÃ³wienia.
-â€¢	Repository<t></t>: Generyczne repozytorium dostarczajÄ…ce podstawowe operacje CRUD, takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync oraz DeleteAsync, z AsNoTracking w zapytaniach odczytowych dla optymalizacji wydajnoÅ›ci.
-â€¢	Specjalistyczne repozytoria: UzytkownikRepository, AdresyRepository, AlergenyRepository, KategorieRepository, PozycjeMenuRepository, PozycjeZamowieniaRepository, ZamowieniaRepository, kaÅ¼de rozszerzajÄ…ce generyczne repozytorium o specyficzne zapytania, np. GetByUserIdAsync w ZamowieniaRepository.
-â€¢	UnitOfWork: Klasa zapewniajÄ…ca spÃ³jnoÅ›Ä‡ operacji poprzez metodÄ™ SaveChangesAsync, umoÅ¼liwiajÄ…c grupowanie operacji w ramach jednej transakcji.
-Repozytoria sÄ… rejestrowane w kontenerze DI w pliku Program.cs, np. AddScoped<IRepository<t>, Repository<t>>, co umoÅ¼liwia wstrzykiwanie zaleÅ¼noÅ›ci do serwisÃ³w biznesowych. Warstwa DAL zapewnia efektywny dostÄ™p do danych, zachowujÄ…c zgodnoÅ›Ä‡ z zasadami SOLID.</t></t>
+Warstwa dostêpu do danych (DAL) w przestrzeni TokyoGarden.DAL odpowiada za bezpoœredni dostêp do bazy danych SQL Server, wykorzystuj¹c Entity Framework Core do realizacji operacji CRUD oraz zapytañ z³o¿onych. Warstwa ta zapewnia izolacjê logiki biznesowej od szczegó³ów technicznych bazy danych, wspieraj¹c modularnoœæ i czyst¹ architekturê. Obejmuje nastêpuj¹ce komponenty:
+* DbTokyoGarden: Kontekst Entity Framework Core, który zarz¹dza po³¹czeniem z baz¹ danych i definiuje DbSety dla ka¿dej encji, takiej jak U¿ytkownicy czy Zamówienia.
+* Repository<t></t>: Generyczne repozytorium dostarczaj¹ce podstawowe operacje CRUD, takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync oraz DeleteAsync, z AsNoTracking w zapytaniach odczytowych dla optymalizacji wydajnoœci.
+* Specjalistyczne repozytoria: UzytkownikRepository, AdresyRepository, AlergenyRepository, KategorieRepository, PozycjeMenuRepository, PozycjeZamowieniaRepository, ZamowieniaRepository, ka¿de rozszerzaj¹ce generyczne repozytorium o specyficzne zapytania, np. GetByUserIdAsync w ZamowieniaRepository.
+* UnitOfWork: Klasa zapewniaj¹ca spójnoœæ operacji poprzez metodê SaveChangesAsync, umo¿liwiaj¹c grupowanie operacji w ramach jednej transakcji.
+Repozytoria s¹ rejestrowane w kontenerze DI w pliku Program.cs, np. AddScoped<IRepository<t>, Repository<t>>, co umo¿liwia wstrzykiwanie zale¿noœci do serwisów biznesowych. Warstwa DAL zapewnia efektywny dostêp do danych, zachowuj¹c zgodnoœæ z zasadami SOLID.</t></t>
 Warstwa IBL
-Warstwa interfejsÃ³w logiki biznesowej (IBL) w przestrzeni TokyoGarden.IBL definiuje kontrakty dla serwisÃ³w logiki biznesowej, wspierajÄ…c testowanie jednostkowe, modularnoÅ›Ä‡ oraz zgodnoÅ›Ä‡ z zasadÄ… Dependency Inversion z zestawu zasad SOLID. Interfejsy te sÄ… rejestrowane w kontenerze Dependency Injection (DI) w pliku Program.cs, co uÅ‚atwia wstrzykiwanie zaleÅ¼noÅ›ci i wymianÄ™ implementacji. Warstwa obejmuje siedem interfejsÃ³w, z ktÃ³rych kaÅ¼dy odpowiada jednej klasie serwisowej:
-1.	IAdresyService: Definiuje operacje na adresach, takie jak pobieranie listy adresÃ³w, wyszukiwanie po identyfikatorze czy filtrowanie wedÅ‚ug miasta, wspierajÄ…c logistykÄ™ dostaw.
-2.	IAlergenyService: OkreÅ›la funkcje dla alergenÃ³w, umoÅ¼liwiajÄ…c ich dodawanie, edytowanie oraz usuwanie w celu informowania o zagroÅ¼eniach zdrowotnych.
-3.	IKategorieService: ZarzÄ…dza kategoriami menu, wspierajÄ…c tworzenie, edytowanie oraz usuwanie kategorii w celu organizacji oferty kulinarnej.
-4.	IPozycjeMenuService: ObsÅ‚uguje pozycje menu, umoÅ¼liwiajÄ…c zarzÄ…dzanie daniami dostÄ™pnymi w ofercie restauracyjnej.
-5.	IPozycjeZamowieniaService: Dotyczy pozycji w zamÃ³wieniach, wspierajÄ…c procesy zwiÄ…zane z koszykiem zakupowym i finalizacjÄ… zamÃ³wieÅ„.
-6.	IUzytkownikService: ZarzÄ…dza uÅ¼ytkownikami, oferujÄ…c funkcje rejestracji, logowania, edycji profili oraz autoryzacji uÅ¼ytkownikÃ³w.
-7.	IZamowieniaService: ObsÅ‚uguje zamÃ³wienia, umoÅ¼liwiajÄ…c ich tworzenie, edytowanie, aktualizacjÄ™ statusu oraz filtrowanie wedÅ‚ug rÃ³Å¼nych kryteriÃ³w.
-KaÅ¼dy interfejs definiuje asynchroniczne metody, takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync, a niektÃ³re oferujÄ… dodatkowe funkcje, np. AuthenticateAsync w IUzytkownikService dla logowania uÅ¼ytkownikÃ³w. Interfejsy wspierajÄ… kontrolery API, rejestracjÄ™ w DI oraz testy jednostkowe, zapewniajÄ…c modularnoÅ›Ä‡ i Å‚atwoÅ›Ä‡ utrzymania kodu.
+Warstwa interfejsów logiki biznesowej (IBL) w przestrzeni TokyoGarden.IBL definiuje kontrakty dla serwisów logiki biznesowej, wspieraj¹c testowanie jednostkowe, modularnoœæ oraz zgodnoœæ z zasad¹ Dependency Inversion z zestawu zasad SOLID. Interfejsy te s¹ rejestrowane w kontenerze Dependency Injection (DI) w pliku Program.cs, co u³atwia wstrzykiwanie zale¿noœci i wymianê implementacji. Warstwa obejmuje siedem interfejsów, z których ka¿dy odpowiada jednej klasie serwisowej:
+1. IAdresyService: Definiuje operacje na adresach, takie jak pobieranie listy adresów, wyszukiwanie po identyfikatorze czy filtrowanie wed³ug miasta, wspieraj¹c logistykê dostaw.
+2. IAlergenyService: Okreœla funkcje dla alergenów, umo¿liwiaj¹c ich dodawanie, edytowanie oraz usuwanie w celu informowania o zagro¿eniach zdrowotnych.
+3. IKategorieService: Zarz¹dza kategoriami menu, wspieraj¹c tworzenie, edytowanie oraz usuwanie kategorii w celu organizacji oferty kulinarnej.
+4. IPozycjeMenuService: Obs³uguje pozycje menu, umo¿liwiaj¹c zarz¹dzanie daniami dostêpnymi w ofercie restauracyjnej.
+5. IPozycjeZamowieniaService: Dotyczy pozycji w zamówieniach, wspieraj¹c procesy zwi¹zane z koszykiem zakupowym i finalizacj¹ zamówieñ.
+6. IUzytkownikService: Zarz¹dza u¿ytkownikami, oferuj¹c funkcje rejestracji, logowania, edycji profili oraz autoryzacji u¿ytkowników.
+7. IZamowieniaService: Obs³uguje zamówienia, umo¿liwiaj¹c ich tworzenie, edytowanie, aktualizacjê statusu oraz filtrowanie wed³ug ró¿nych kryteriów.
+Ka¿dy interfejs definiuje asynchroniczne metody, takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync, a niektóre oferuj¹ dodatkowe funkcje, np. AuthenticateAsync w IUzytkownikService dla logowania u¿ytkowników. Interfejsy wspieraj¹ kontrolery API, rejestracjê w DI oraz testy jednostkowe, zapewniaj¹c modularnoœæ i ³atwoœæ utrzymania kodu.
 Warstwa Biznesowa
-Warstwa biznesowa w aplikacji TokyoGarden, zlokalizowana w przestrzeni nazw TokyoGarden.BL, odpowiada za realizacjÄ™ logiki aplikacyjnej, obejmujÄ…cÄ… przetwarzanie danych, walidacjÄ™, obsÅ‚ugÄ™ reguÅ‚ biznesowych oraz komunikacjÄ™ z warstwÄ… dostÄ™pu do danych (DAL). KaÅ¼dy serwis implementuje interfejs z przestrzeni TokyoGarden.IBL, co gwarantuje modularnoÅ›Ä‡, Å‚atwoÅ›Ä‡ testowania oraz zgodnoÅ›Ä‡ z zasadami SOLID, w szczegÃ³lnoÅ›ci z zasadÄ… Dependency Inversion. Warstwa ta obejmuje siedem klas serwisowych, z ktÃ³rych kaÅ¼da odpowiada za operacje na okreÅ›lonym typie danych:
-1.	AdresyService: ZarzÄ…dza danymi adresowymi, umoÅ¼liwiajÄ…c pobieranie, dodawanie, aktualizacjÄ™ oraz usuwanie adresÃ³w, a takÅ¼e filtrowanie wedÅ‚ug miasta, co wspiera logistykÄ™ dostaw.
-2.	AlergenyService: ObsÅ‚uguje informacje o alergenach, takie jak ich dodawanie, edycja czy usuwanie, co pozwala na informowanie klientÃ³w o potencjalnych zagroÅ¼eniach zdrowotnych.
-3.	KategorieService: Odpowiada za zarzÄ…dzanie kategoriami menu, umoÅ¼liwiajÄ…c tworzenie, edytowanie oraz usuwanie kategorii, co uÅ‚atwia organizacjÄ™ oferty kulinarnej.
-4.	PozycjeMenuService: Realizuje operacje na pozycjach menu, takie jak dodawanie nowych daÅ„, edycja istniejÄ…cych oraz ich usuwanie, co wspiera zarzÄ…dzanie ofertÄ… restauracji.
-5.	PozycjeZamowieniaService: ObsÅ‚uguje pozycje w zamÃ³wieniach, umoÅ¼liwiajÄ…c dodawanie, edytowanie oraz usuwanie produktÃ³w w koszyku, co jest kluczowe dla procesu zamawiania.
-6.	UÅ¼ytkownikService: ZarzÄ…dza danymi uÅ¼ytkownikÃ³w, w tym rejestracjÄ…, edycjÄ… profili, usuwaniem kont oraz autoryzacjÄ…, co zapewnia bezpieczeÅ„stwo i personalizacjÄ™ usÅ‚ug.
-7.	ZamowieniaService: Realizuje operacje zwiÄ…zane z zamÃ³wieniami, takie jak tworzenie, edycja, aktualizacja statusu oraz filtrowanie, co wspiera procesy biznesowe restauracji.
-KaÅ¼dy serwis komunikuje siÄ™ z odpowiadajÄ…cym mu repozytorium z warstwy DAL (TokyoGarden.IDAL), korzystajÄ…c z interfejsÃ³w takich jak IZamowieniaRepository, co zapewnia separacjÄ™ odpowiedzialnoÅ›ci. PrzykÅ‚adowo, AdresyService deleguje operacje do IAdresyRepository i obsÅ‚uguje funkcje takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync oraz GetByCityAsync, co pozwala na elastyczne zarzÄ…dzanie danymi adresowymi. Serwisy BL egzekwujÄ… reguÅ‚y biznesowe, takie jak poprawnoÅ›Ä‡ cen i iloÅ›ci, obecnoÅ›Ä‡ kategorii i alergenÃ³w, oraz przeliczanie wartoÅ›ci zamÃ³wienia, mapujÄ…c wyjÄ…tki domenowe na odpowiedzi HTTP (400, 404, 409).
-API â€“ Web
-Kontrolery w projekcie TokyoGarden, zlokalizowane w warstwie API, obsÅ‚ugujÄ… komunikacjÄ™ RESTful miÄ™dzy frontendem a backendem, realizujÄ…c operacje CRUD i zapewniajÄ…c spÃ³jnoÅ›Ä‡, skalowalnoÅ›Ä‡ oraz Å‚atwoÅ›Ä‡ integracji z innymi warstwami aplikacji. Kluczowe cechy kontrolerÃ³w to:
-â€¢	Atrybut [ApiController]: Automatyczna walidacja modelu, zapobiegajÄ…ca przetwarzaniu nieprawidÅ‚owych danych wejÅ›ciowych.
-â€¢	Routing [Route("api/[controller]")]: SpÃ³jna struktura adresÃ³w URL dla endpointÃ³w API, z wersjonowaniem Å›cieÅ¼kÄ… (np. /api/v1/pozycje-menu).
-â€¢	Wstrzykiwanie serwisÃ³w: Separacja logiki biznesowej od warstwy prezentacyjnej poprzez zaleÅ¼noÅ›Ä‡ od serwisÃ³w BL.
-â€¢	Zwracanie DTO: Konwersja danych na obiekty DTO za pomocÄ… ToDto(), co zapewnia bezpieczne przesyÅ‚anie danych.
-â€¢	AsynchronicznoÅ›Ä‡: Wykorzystanie async/await dla zwiÄ™kszenia wydajnoÅ›ci przetwarzania Å¼Ä…daÅ„.
-Lista kontrolerÃ³w:
-1.	AdresyController: ZarzÄ…dza adresami, umoÅ¼liwiajÄ…c pobieranie listy, wyszukiwanie po ID, dodawanie, aktualizacjÄ™, usuwanie oraz filtrowanie wedÅ‚ug miasta, co wspiera logistykÄ™ dostaw.
-2.	AlergenyController: ObsÅ‚uguje dane alergenÃ³w, umoÅ¼liwiajÄ…c ich dodawanie, edytowanie oraz usuwanie, co zapewnia informowanie klientÃ³w o zagroÅ¼eniach zdrowotnych.
-3.	KategorieController: ZarzÄ…dza kategoriami menu, wspierajÄ…c tworzenie, edytowanie, usuwanie oraz wyszukiwanie po nazwie, co uÅ‚atwia organizacjÄ™ oferty.
-4.	PozycjeMenuController: Realizuje operacje na pozycjach menu, umoÅ¼liwiajÄ…c zarzÄ…dzanie daniami w ofercie restauracyjnej.
-5.	PozycjeZamowieniaController: ObsÅ‚uguje pozycje w zamÃ³wieniach, wspierajÄ…c procesy koszyka zakupowego i finalizacji zamÃ³wieÅ„.
-6.	UzytkownicyController: ZarzÄ…dza uÅ¼ytkownikami, obsÅ‚ugujÄ…c rejestracjÄ™, edycjÄ™ profili, usuwanie kont (z powiÄ…zanymi zamÃ³wieniami) oraz autoryzacjÄ™, co zapewnia bezpieczeÅ„stwo systemu.
-7.	ZamowieniaController: ObsÅ‚uguje zamÃ³wienia, umoÅ¼liwiajÄ…c tworzenie, edytowanie, aktualizacjÄ™ statusu, usuwanie oraz filtrowanie wedÅ‚ug uÅ¼ytkownika, statusu lub daty, co wspiera rozliczenia i logistykÄ™.
-PrzykÅ‚adowe endpointy:
-â€¢	GET /api/v1/uzytkownicy: Pobiera listÄ™ wszystkich uÅ¼ytkownikÃ³w w systemie, zwracajÄ…c ich dane w formacie DTO z paginacjÄ… i sortowaniem.
-â€¢	POST /api/v1/alergeny: Dodaje nowy alergen do bazy danych, zwracajÄ…c kod 201 (Created) z nagÅ‚Ã³wkiem Location wskazujÄ…cym na nowy zasÃ³b.
-â€¢	PUT /api/v1/zamowienia/5: Aktualizuje zamÃ³wienie o identyfikatorze 5, uwzglÄ™dniajÄ…c status i pozycje zamÃ³wienia, z walidacjÄ… danych wejÅ›ciowych.
-â€¢	DELETE /api/v1/kategorie/4: Usuwa kategoriÄ™ o identyfikatorze 4, zwracajÄ…c kod 204 (No Content) po sukcesie, z obsÅ‚ugÄ… bÅ‚Ä™dÃ³w integralnoÅ›ci.
-Kontrolery zapewniajÄ… bezpieczeÅ„stwo poprzez hashowanie haseÅ‚ (BCrypt.Net), walidacjÄ™ danych oraz obsÅ‚ugÄ™ bÅ‚Ä™dÃ³w (kody HTTP: 200, 201, 204, 400, 404, 409). BÅ‚Ä™dy sÄ… zwracane jako ProblemDetails z tytuÅ‚em, statusem i szczegÃ³Å‚ami, np. 409 dla konfliktÃ³w integralnoÅ›ci lub 404 dla nieistniejÄ…cych zasobÃ³w. Endpointy listowe wspierajÄ… parametry zapytaÅ„ (page, pageSize, sortBy, sortDir, filters[]), ktÃ³re BL/DAL mapuje na zapytania LINQ/EF Core.
+Warstwa biznesowa w aplikacji TokyoGarden, zlokalizowana w przestrzeni nazw TokyoGarden.BL, odpowiada za realizacjê logiki aplikacyjnej, obejmuj¹c¹ przetwarzanie danych, walidacjê, obs³ugê regu³ biznesowych oraz komunikacjê z warstw¹ dostêpu do danych (DAL). Ka¿dy serwis implementuje interfejs z przestrzeni TokyoGarden.IBL, co gwarantuje modularnoœæ, ³atwoœæ testowania oraz zgodnoœæ z zasadami SOLID, w szczególnoœci z zasad¹ Dependency Inversion. Warstwa ta obejmuje siedem klas serwisowych, z których ka¿da odpowiada za operacje na okreœlonym typie danych:
+1. AdresyService: Zarz¹dza danymi adresowymi, umo¿liwiaj¹c pobieranie, dodawanie, aktualizacjê oraz usuwanie adresów, a tak¿e filtrowanie wed³ug miasta, co wspiera logistykê dostaw.
+2. AlergenyService: Obs³uguje informacje o alergenach, takie jak ich dodawanie, edycja czy usuwanie, co pozwala na informowanie klientów o potencjalnych zagro¿eniach zdrowotnych.
+3. KategorieService: Odpowiada za zarz¹dzanie kategoriami menu, umo¿liwiaj¹c tworzenie, edytowanie oraz usuwanie kategorii, co u³atwia organizacjê oferty kulinarnej.
+4. PozycjeMenuService: Realizuje operacje na pozycjach menu, takie jak dodawanie nowych dañ, edycja istniej¹cych oraz ich usuwanie, co wspiera zarz¹dzanie ofert¹ restauracji.
+5. PozycjeZamowieniaService: Obs³uguje pozycje w zamówieniach, umo¿liwiaj¹c dodawanie, edytowanie oraz usuwanie produktów w koszyku, co jest kluczowe dla procesu zamawiania.
+6. U¿ytkownikService: Zarz¹dza danymi u¿ytkowników, w tym rejestracj¹, edycj¹ profili, usuwaniem kont oraz autoryzacj¹, co zapewnia bezpieczeñstwo i personalizacjê us³ug.
+7. ZamowieniaService: Realizuje operacje zwi¹zane z zamówieniami, takie jak tworzenie, edycja, aktualizacja statusu oraz filtrowanie, co wspiera procesy biznesowe restauracji.
+Ka¿dy serwis komunikuje siê z odpowiadaj¹cym mu repozytorium z warstwy DAL (TokyoGarden.IDAL), korzystaj¹c z interfejsów takich jak IZamowieniaRepository, co zapewnia separacjê odpowiedzialnoœci. Przyk³adowo, AdresyService deleguje operacje do IAdresyRepository i obs³uguje funkcje takie jak GetAllAsync, GetByIdAsync, AddAsync, UpdateAsync, DeleteAsync oraz GetByCityAsync, co pozwala na elastyczne zarz¹dzanie danymi adresowymi. Serwisy BL egzekwuj¹ regu³y biznesowe, takie jak poprawnoœæ cen i iloœci, obecnoœæ kategorii i alergenów, oraz przeliczanie wartoœci zamówienia, mapuj¹c wyj¹tki domenowe na odpowiedzi HTTP (400, 404, 409).
+API – Web
+Kontrolery w projekcie TokyoGarden, zlokalizowane w warstwie API, obs³uguj¹ komunikacjê RESTful miêdzy frontendem a backendem, realizuj¹c operacje CRUD i zapewniaj¹c spójnoœæ, skalowalnoœæ oraz ³atwoœæ integracji z innymi warstwami aplikacji. Kluczowe cechy kontrolerów to:
+* Atrybut [ApiController]: Automatyczna walidacja modelu, zapobiegaj¹ca przetwarzaniu nieprawid³owych danych wejœciowych.
+* Routing [Route("api/[controller]")]: Spójna struktura adresów URL dla endpointów API, z wersjonowaniem œcie¿k¹ (np. /api/v1/pozycje-menu).
+* Wstrzykiwanie serwisów: Separacja logiki biznesowej od warstwy prezentacyjnej poprzez zale¿noœæ od serwisów BL.
+* Zwracanie DTO: Konwersja danych na obiekty DTO za pomoc¹ ToDto(), co zapewnia bezpieczne przesy³anie danych.
+* Asynchronicznoœæ: Wykorzystanie async/await dla zwiêkszenia wydajnoœci przetwarzania ¿¹dañ.
+Lista kontrolerów:
+1. AdresyController: Zarz¹dza adresami, umo¿liwiaj¹c pobieranie listy, wyszukiwanie po ID, dodawanie, aktualizacjê, usuwanie oraz filtrowanie wed³ug miasta, co wspiera logistykê dostaw.
+2. AlergenyController: Obs³uguje dane alergenów, umo¿liwiaj¹c ich dodawanie, edytowanie oraz usuwanie, co zapewnia informowanie klientów o zagro¿eniach zdrowotnych.
+3. KategorieController: Zarz¹dza kategoriami menu, wspieraj¹c tworzenie, edytowanie, usuwanie oraz wyszukiwanie po nazwie, co u³atwia organizacjê oferty.
+4. PozycjeMenuController: Realizuje operacje na pozycjach menu, umo¿liwiaj¹c zarz¹dzanie daniami w ofercie restauracyjnej.
+5. PozycjeZamowieniaController: Obs³uguje pozycje w zamówieniach, wspieraj¹c procesy koszyka zakupowego i finalizacji zamówieñ.
+6. UzytkownicyController: Zarz¹dza u¿ytkownikami, obs³uguj¹c rejestracjê, edycjê profili, usuwanie kont (z powi¹zanymi zamówieniami) oraz autoryzacjê, co zapewnia bezpieczeñstwo systemu.
+7. ZamowieniaController: Obs³uguje zamówienia, umo¿liwiaj¹c tworzenie, edytowanie, aktualizacjê statusu, usuwanie oraz filtrowanie wed³ug u¿ytkownika, statusu lub daty, co wspiera rozliczenia i logistykê.
+Przyk³adowe endpointy:
+* GET /api/v1/uzytkownicy: Pobiera listê wszystkich u¿ytkowników w systemie, zwracaj¹c ich dane w formacie DTO z paginacj¹ i sortowaniem.
+* POST /api/v1/alergeny: Dodaje nowy alergen do bazy danych, zwracaj¹c kod 201 (Created) z nag³ówkiem Location wskazuj¹cym na nowy zasób.
+* PUT /api/v1/zamowienia/5: Aktualizuje zamówienie o identyfikatorze 5, uwzglêdniaj¹c status i pozycje zamówienia, z walidacj¹ danych wejœciowych.
+* DELETE /api/v1/kategorie/4: Usuwa kategoriê o identyfikatorze 4, zwracaj¹c kod 204 (No Content) po sukcesie, z obs³ug¹ b³êdów integralnoœci.
+Kontrolery zapewniaj¹ bezpieczeñstwo poprzez hashowanie hase³ (BCrypt.Net), walidacjê danych oraz obs³ugê b³êdów (kody HTTP: 200, 201, 204, 400, 404, 409). B³êdy s¹ zwracane jako ProblemDetails z tytu³em, statusem i szczegó³ami, np. 409 dla konfliktów integralnoœci lub 404 dla nieistniej¹cych zasobów. Endpointy listowe wspieraj¹ parametry zapytañ (page, pageSize, sortBy, sortDir, filters[]), które BL/DAL mapuje na zapytania LINQ/EF Core.
 DtoMapper.cs
-Klasa statyczna DtoMapper w przestrzeni TokyoGarden.Api odpowiada za konwersjÄ™ encji bazodanowych na obiekty DTO, zapewniajÄ…c bezpieczne i efektywne przesyÅ‚anie danych miÄ™dzy backendem a frontendem, minimalizujÄ…c ryzyko ujawnienia wraÅ¼liwych informacji. Wykorzystuje LINQ do przeksztaÅ‚cania kolekcji i metody rozszerzeÅ„ (this), co poprawia czytelnoÅ›Ä‡ kodu. Obejmuje siedem metod mapujÄ…cych:
-1.	ToDto(Uzytkownicy): Konwertuje encjÄ™ Uzytkownicy na DTO, zawierajÄ…ce identyfikator, nazwÄ™ uÅ¼ytkownika, telefon oraz typ uÅ¼ytkownika, pomijajÄ…c wraÅ¼liwe dane, takie jak hasÅ‚o.
-2.	ToDto(Adresy): PrzeksztaÅ‚ca encjÄ™ Adresy na DTO z danymi lokalizacyjnymi, takimi jak miasto, ulica, numer domu oraz numer mieszkania, co wspiera logistykÄ™ dostaw.
-3.	ToDto(Kategorie): Mapuje encjÄ™ Kategorie na DTO z identyfikatorem i nazwÄ… kategorii, co uÅ‚atwia prezentacjÄ™ kategorii menu w interfejsie uÅ¼ytkownika.
-4.	ToDto(Alergeny): PrzeksztaÅ‚ca encjÄ™ Alergeny na DTO z nazwÄ… alergenu, co pozwala na zwiÄ™zÅ‚e przekazywanie informacji o zagroÅ¼eniach zdrowotnych.
-5.	ToDto(Pozycje_Menu): Konwertuje encjÄ™ Pozycje_Menu na DTO z nazwÄ…, opisem, cenÄ… oraz powiÄ…zanÄ… kategoriÄ…, stosujÄ…c zagnieÅ¼dÅ¼one mapowanie dla peÅ‚nych danych.
-6.	ToDto(Pozycje_Zamowienia): PrzeksztaÅ‚ca encjÄ™ Pozycje_Zamowienia na DTO z iloÅ›ciÄ…, cenÄ… oraz powiÄ…zanÄ… pozycjÄ… menu, wspierajÄ…c szczegÃ³Å‚owe okreÅ›lenie koszyka.
-7.	ToDto(Zamowienia): Konwertuje encjÄ™ Zamowienia na DTO z danymi takimi jak data, status, cena, uÅ¼ytkownik (jako DTO) oraz lista pozycji zamÃ³wienia, mapowana za pomocÄ… LINQ.
-Metody zawierajÄ… zabezpieczenia przed null (np. == null ? null!), zapewniajÄ…c bezpieczeÅ„stwo i eliminujÄ…c ostrzeÅ¼enia kompilatora.
+Klasa statyczna DtoMapper w przestrzeni TokyoGarden.Api odpowiada za konwersjê encji bazodanowych na obiekty DTO, zapewniaj¹c bezpieczne i efektywne przesy³anie danych miêdzy backendem a frontendem, minimalizuj¹c ryzyko ujawnienia wra¿liwych informacji. Wykorzystuje LINQ do przekszta³cania kolekcji i metody rozszerzeñ (this), co poprawia czytelnoœæ kodu. Obejmuje siedem metod mapuj¹cych:
+1. ToDto(Uzytkownicy): Konwertuje encjê Uzytkownicy na DTO, zawieraj¹ce identyfikator, nazwê u¿ytkownika, telefon oraz typ u¿ytkownika, pomijaj¹c wra¿liwe dane, takie jak has³o.
+2. ToDto(Adresy): Przekszta³ca encjê Adresy na DTO z danymi lokalizacyjnymi, takimi jak miasto, ulica, numer domu oraz numer mieszkania, co wspiera logistykê dostaw.
+3. ToDto(Kategorie): Mapuje encjê Kategorie na DTO z identyfikatorem i nazw¹ kategorii, co u³atwia prezentacjê kategorii menu w interfejsie u¿ytkownika.
+4. ToDto(Alergeny): Przekszta³ca encjê Alergeny na DTO z nazw¹ alergenu, co pozwala na zwiêz³e przekazywanie informacji o zagro¿eniach zdrowotnych.
+5. ToDto(Pozycje_Menu): Konwertuje encjê Pozycje_Menu na DTO z nazw¹, opisem, cen¹ oraz powi¹zan¹ kategori¹, stosuj¹c zagnie¿d¿one mapowanie dla pe³nych danych.
+6. ToDto(Pozycje_Zamowienia): Przekszta³ca encjê Pozycje_Zamowienia na DTO z iloœci¹, cen¹ oraz powi¹zan¹ pozycj¹ menu, wspieraj¹c szczegó³owe okreœlenie koszyka.
+7. ToDto(Zamowienia): Konwertuje encjê Zamowienia na DTO z danymi takimi jak data, status, cena, u¿ytkownik (jako DTO) oraz lista pozycji zamówienia, mapowana za pomoc¹ LINQ.
+Metody zawieraj¹ zabezpieczenia przed null (np. == null ? null!), zapewniaj¹c bezpieczeñstwo i eliminuj¹c ostrze¿enia kompilatora.
 DTO
-Pakiet TokyoGarden.Api.DTOs zawiera klasy DTO, ktÃ³re reprezentujÄ… dane w uproszczonej formie, pomijajÄ…c logikÄ™ biznesowÄ… i zaleÅ¼noÅ›ci bazodanowe, co zapewnia bezpieczeÅ„stwo, czytelnoÅ›Ä‡ oraz wydajnoÅ›Ä‡ przesyÅ‚ania danych miÄ™dzy backendem a frontendem. Obiekty DTO sÄ… wykorzystywane w kontrolerach API oraz serwisach, wspierajÄ…c separacjÄ™ warstw i odpornoÅ›Ä‡ na bÅ‚Ä™dy.
-Frontend â€“ Angular
-Frontend systemu TokyoGarden, zbudowany w Angular, opiera siÄ™ na modularnej strukturze z podziaÅ‚em na moduÅ‚y, takie jak admin, shared i core, co uÅ‚atwia zarzÄ…dzanie kodem i jego ponowne wykorzystanie. Wykorzystuje serwisy HTTP do komunikacji z API, interceptory do obsÅ‚ugi bÅ‚Ä™dÃ³w oraz formularze reaktywne z walidacjami min/max i wymaganymi polami. Kluczowe elementy to:
-â€¢	Struktura: ModuÅ‚ Admin Panel zawiera widoki list i formularzy edycji dla kategorii, alergenÃ³w i pozycji menu; moduÅ‚ shared dostarcza wspÃ³lne komponenty i modele.
-â€¢	UX i walidacje: Pola wymagane sÄ… oznaczone, formaty liczbowe stosowane dla cen, komunikaty o bÅ‚Ä™dach wyÅ›wietlane przy utracie fokusu lub prÃ³bie wysÅ‚ania formularza. Widoki list wspierajÄ… paginacjÄ™ i filtrowanie po kategoriach lub alergenach, a edycja realizowana jest w formularzach dialogowych.
-â€¢	Mapowanie DTO: Formularze generujÄ… DTO dla Å¼Ä…daÅ„ API, a odpowiedzi API sÄ… przeksztaÅ‚cane na modele widokÃ³w. Aktualizacje realizowane sÄ… przez PUT (idempotentne) lub PATCH (czÄ™Å›ciowe zmiany) w zaleÅ¼noÅ›ci od potrzeb.
-BezpieczeÅ„stwo i zgodnoÅ›Ä‡
-System TokyoGarden zapewnia bezpieczeÅ„stwo poprzez:
-â€¢	Autoryzacja i role: Wariant MVP obejmuje role Admin/User, zabezpieczone atrybutami autoryzacji w kontrolerach, z planowanÄ… rozbudowÄ… o JWT Bearer z krÃ³tkim TTL i mechanizmem odÅ›wieÅ¼ania tokenÃ³w.
-â€¢	CORS i ochrona danych: Polityka CORS ograniczona do domen frontendu (np. http://localhost:4200), sekrety przechowywane w zmiennych Å›rodowiskowych, walidacja rozmiarÃ³w uploadÃ³w (np. imageData), sanitizacja danych tekstowych.
-4. Testy (podejÅ›cie i zakres)
-Zasady ogÃ³lne
-Testy w systemie TokyoGarden sÄ… realizowane przy uÅ¼yciu frameworka xUnit, stosujÄ…c nomenklaturÄ™ AAA (Arrangeâ€“Actâ€“Assert) oraz izolacjÄ™ przypadkÃ³w testowych, co zapewnia czytelnoÅ›Ä‡ i niezawodnoÅ›Ä‡. SkupiajÄ… siÄ™ na weryfikacji reguÅ‚ biznesowych, spÃ³jnoÅ›ci danych oraz poprawnoÅ›ci operacji w warstwach BL, DAL i API.
-Doubles wÅ‚asne i Moq
-Testy wykorzystujÄ… rÃ³Å¼ne typy obiektÃ³w zastÄ™pczych:
-â€¢	Dummy: Parametry obowiÄ…zkowe, ktÃ³re nie sÄ… uÅ¼ywane w teÅ›cie, np. puste obiekty dla niewpÅ‚ywajÄ…cych na wynik pÃ³l.
-â€¢	Stub: Obiekty zwracajÄ…ce deterministyczne dane, np. repozytorium zwracajÄ…ce staÅ‚Ä… listÄ™ pozycji menu.
-â€¢	Fake: Proste implementacje, np. kolekcje in-memory dla szybkich testÃ³w warstwy BL.
-â€¢	Mock: Obiekty weryfikujÄ…ce interakcje, np. sprawdzenie, czy BL wywoÅ‚aÅ‚o metodÄ™ Save lub Update na repozytorium.
-â€¢	Spy: Obiekty rejestrujÄ…ce liczbÄ™ wywoÅ‚aÅ„ lub szczegÃ³Å‚y metod dla szczegÃ³Å‚owej weryfikacji.
-W bibliotece Moq stosuje siÄ™ Setup/Returns dla konfiguracji zachowaÅ„ oraz Verify dla weryfikacji interakcji, co pozwala na precyzyjne testowanie zaleÅ¼noÅ›ci.
+Pakiet TokyoGarden.Api.DTOs zawiera klasy DTO, które reprezentuj¹ dane w uproszczonej formie, pomijaj¹c logikê biznesow¹ i zale¿noœci bazodanowe, co zapewnia bezpieczeñstwo, czytelnoœæ oraz wydajnoœæ przesy³ania danych miêdzy backendem a frontendem. Obiekty DTO s¹ wykorzystywane w kontrolerach API oraz serwisach, wspieraj¹c separacjê warstw i odpornoœæ na b³êdy.
+Frontend – Angular
+Frontend systemu TokyoGarden, zbudowany w Angular, opiera siê na modularnej strukturze z podzia³em na modu³y, takie jak admin, shared i core, co u³atwia zarz¹dzanie kodem i jego ponowne wykorzystanie. Wykorzystuje serwisy HTTP do komunikacji z API, interceptory do obs³ugi b³êdów oraz formularze reaktywne z walidacjami min/max i wymaganymi polami. Kluczowe elementy to:
+* Struktura: Modu³ Admin Panel zawiera widoki list i formularzy edycji dla kategorii, alergenów i pozycji menu; modu³ shared dostarcza wspólne komponenty i modele.
+* UX i walidacje: Pola wymagane s¹ oznaczone, formaty liczbowe stosowane dla cen, komunikaty o b³êdach wyœwietlane przy utracie fokusu lub próbie wys³ania formularza. Widoki list wspieraj¹ paginacjê i filtrowanie po kategoriach lub alergenach, a edycja realizowana jest w formularzach dialogowych.
+* Mapowanie DTO: Formularze generuj¹ DTO dla ¿¹dañ API, a odpowiedzi API s¹ przekszta³cane na modele widoków. Aktualizacje realizowane s¹ przez PUT (idempotentne) lub PATCH (czêœciowe zmiany) w zale¿noœci od potrzeb.
+Bezpieczeñstwo i zgodnoœæ
+System TokyoGarden zapewnia bezpieczeñstwo poprzez:
+* Autoryzacja i role: Wariant MVP obejmuje role Admin/User, zabezpieczone atrybutami autoryzacji w kontrolerach, z planowan¹ rozbudow¹ o JWT Bearer z krótkim TTL i mechanizmem odœwie¿ania tokenów.
+* CORS i ochrona danych: Polityka CORS ograniczona do domen frontendu (np. http://localhost:4200), sekrety przechowywane w zmiennych œrodowiskowych, walidacja rozmiarów uploadów (np. imageData), sanitizacja danych tekstowych.
+4. Testy (podejœcie i zakres)
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci
+Zasady ogólne
+Testy w systemie TokyoGarden s¹ realizowane przy u¿yciu frameworka xUnit, stosuj¹c nomenklaturê AAA (Arrange–Act–Assert) oraz izolacjê przypadków testowych, co zapewnia czytelnoœæ i niezawodnoœæ. Skupiaj¹ siê na weryfikacji regu³ biznesowych, spójnoœci danych oraz poprawnoœci operacji w warstwach BL, DAL i API.
+Doubles w³asne i Moq
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci.W bibliotece Moq stosuje siê Setup/Returns dla konfiguracji zachowañ oraz Verify dla weryfikacji interakcji, co pozwala na precyzyjne testowanie zale¿noœci.
+Testy wykorzystuj¹ ró¿ne typy obiektów zastêpczych:
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci.
+Dummy: Parametry obowi¹zkowe, które nie s¹ u¿ywane w teœcie, np. puste obiekty dla niewp³ywaj¹cych na wynik pól.
+Stub: Obiekty zwracaj¹ce deterministyczne dane, np. repozytorium zwracaj¹ce sta³¹ listê pozycji menu.
+Fake: Proste implementacje, np. kolekcje in-memory dla szybkich testów warstwy BL.
+Mock: Obiekty weryfikuj¹ce interakcje, np. sprawdzenie, czy BL wywo³a³o metodê Save lub Update na repozytorium.
+Spy: Obiekty rejestruj¹ce liczbê wywo³añ lub szczegó³y metod dla szczegó³owej weryfikacji.
+W bibliotece Moq stosuje siê Setup/Returns dla konfiguracji zachowañ oraz Verify dla weryfikacji interakcji, co pozwala na precyzyjne testowanie zale¿noœci.
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci
 Testy DAL z InMemory
-Testy kontrolerÃ³w obejmujÄ…:
-â€¢	Testy jednostkowe: Weryfikacja statusÃ³w HTTP i kontraktÃ³w API z zamockowanÄ… warstwÄ… BL, np. sprawdzenie, czy GET /api/v1/uzytkownicy zwraca kod 200 i listÄ™ DTO.
-â€¢	Testy integracyjne: Uruchamianie minimalnego hosta ASP.NET Core, weryfikujÄ…cego routing, serializacjÄ™ JSON oraz walidacjÄ™ ModelState, co zapewnia poprawnoÅ›Ä‡ dziaÅ‚ania endpointÃ³w w rzeczywistych warunkach.
+Testy kontrolerów obejmuj¹:
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci.
+Testy jednostkowe: Weryfikacja statusów HTTP i kontraktów API z zamockowan¹ warstw¹ BL, np. sprawdzenie, czy GET /api/v1/uzytkownicy zwraca kod 200 i listê DTO.
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci.
+Testy integracyjne: Uruchamianie minimalnego hosta ASP.NET Core, weryfikuj¹cego routing, serializacjê JSON oraz walidacjê ModelState, co zapewnia poprawnoœæ dzia³ania endpointów w rzeczywistych warunkach.
+Rozbudowano testy o dodatkowe scenariusze: przypadki b³êdnych danych wejœciowych, testy walidacji, testy wydajnoœciowe sprawdzaj¹ce zachowanie przy du¿ej liczbie rekordów. Dodatkowo wprowadzono testy regresyjne aby zapewniæ, ¿e nowe zmiany nie psuj¹ istniej¹cych funkcjonalnoœci.
 5. Interfejs Web API (kontrakt i zasady)
+Doprecyzowano kontrakty REST – opisano wszystkie pola w DTO, podano przyk³adowe requesty i response’y dla metod GET, POST i PUT. Uwzglêdniono równie¿ obs³ugê b³êdów z kodami statusu i formatem ProblemDetails. Dodano sugestie wersjonowania API w przysz³oœci (np. /api/v2) w razie rozbudowy systemu
 Konwencje REST
-Rzeczowniki w liczbie mnogiej, wersjonowanie Å›cieÅ¼kÄ… (np. /api/v1/pozycje-menu), kody statusu zgodne z rezultatem operacji, Location header po POST 201.
-PrzykÅ‚adowe zasoby i operacje
-â€¢	/api/v1/kategorie: GET (lista z paginacjÄ… i sortowaniem), POST (tworzenie kategorii), GET/{id} (szczegÃ³Å‚y), PUT/{id} (aktualizacja), DELETE/{id} (usuniÄ™cie).
-â€¢	/api/v1/alergeny: Jak powyÅ¼ej, z operacjami CRUD dla alergenÃ³w.
-â€¢	/api/v1/pozycje-menu: GET z filtrowaniem po kategoriach i alergenach, operacje CRUD dla pozycji menu.
-â€¢	/api/v1/zamowienia: GET (lista z filtrowaniem po statusie lub uÅ¼ytkowniku), POST (tworzenie zamÃ³wienia z pozycjami), PUT/PATCH (aktualizacja statusu lub szczegÃ³Å‚Ã³w).
-â€¢	/api/v1/uzytkownicy: CRUD dla uÅ¼ytkownikÃ³w, z dodatkowym endpointem /api/v1/uzytkownicy/{id}/adresy dla zarzÄ…dzania adresami uÅ¼ytkownika.
-Walidacja i bÅ‚Ä™dy
-Walidacja DTO jest realizowana na poziomie kontrolerÃ³w, z bÅ‚Ä™dami zwracanymi jako ProblemDetails (tytuÅ‚, status, szczegÃ³Å‚y). PrzykÅ‚ady:
-â€¢	Kod 400 dla nieprawidÅ‚owych danych (np. cena < 0).
-â€¢	Kod 404 dla nieistniejÄ…cych zasobÃ³w (np. uÅ¼ytkownik o danym ID).
-â€¢	Kod 409 dla konfliktÃ³w integralnoÅ›ci (np. prÃ³ba usuniÄ™cia kategorii z powiÄ…zanymi pozycjami menu).
+Rzeczowniki w liczbie mnogiej, wersjonowanie œcie¿k¹ (np. /api/v1/pozycje-menu), kody statusu zgodne z rezultatem operacji, Location header po POST 201.
+Przyk³adowe zasoby i operacje
+* /api/v1/kategorie: GET (lista z paginacj¹ i sortowaniem), POST (tworzenie kategorii), GET/{id} (szczegó³y), PUT/{id} (aktualizacja), DELETE/{id} (usuniêcie).
+* /api/v1/alergeny: Jak powy¿ej, z operacjami CRUD dla alergenów.
+* /api/v1/pozycje-menu: GET z filtrowaniem po kategoriach i alergenach, operacje CRUD dla pozycji menu.
+* /api/v1/zamowienia: GET (lista z filtrowaniem po statusie lub u¿ytkowniku), POST (tworzenie zamówienia z pozycjami), PUT/PATCH (aktualizacja statusu lub szczegó³ów).
+* /api/v1/uzytkownicy: CRUD dla u¿ytkowników, z dodatkowym endpointem /api/v1/uzytkownicy/{id}/adresy dla zarz¹dzania adresami u¿ytkownika.
+Walidacja i b³êdy
+Walidacja DTO jest realizowana na poziomie kontrolerów, z b³êdami zwracanymi jako ProblemDetails (tytu³, status, szczegó³y). Przyk³ady:
+* Kod 400 dla nieprawid³owych danych (np. cena < 0).
+* Kod 404 dla nieistniej¹cych zasobów (np. u¿ytkownik o danym ID).
+* Kod 409 dla konfliktów integralnoœci (np. próba usuniêcia kategorii z powi¹zanymi pozycjami menu).
 Paginacja/sortowanie/filtrowanie
-Endpointy listowe wspierajÄ… parametry zapytaÅ„, takie jak page, pageSize, sortBy, sortDir, filters[], ktÃ³re sÄ… mapowane przez BL i DAL na zapytania LINQ/EF Core, zapewniajÄ…c elastycznoÅ›Ä‡ i wydajnoÅ›Ä‡ w przetwarzaniu duÅ¼ych zbiorÃ³w danych.
+Endpointy listowe wspieraj¹ parametry zapytañ, takie jak page, pageSize, sortBy, sortDir, filters[], które s¹ mapowane przez BL i DAL na zapytania LINQ/EF Core, zapewniaj¹c elastycznoœæ i wydajnoœæ w przetwarzaniu du¿ych zbiorów danych.
 
 6. Frontend (Angular)
+UI zosta³o wzbogacone o szczegó³owe formularze z walidacj¹ na ¿ywo, komunikaty o b³êdach w czasie rzeczywistym oraz responsywny design dostosowany do urz¹dzeñ mobilnych. Dodano przyk³ady interakcji u¿ytkownika i zrzuty ekranu (opisowo) pokazuj¹ce przep³yw procesu od dodania pozycji menu po realizacjê zamówienia.
 Struktura i wzorce
-Struktura moduÅ‚owa (np. admin, shared). Serwisy API kapsuÅ‚kujÄ… wywoÅ‚ania HTTP; komponenty korzystajÄ… z formularzy reaktywnych (walidacje min/max, wymagane pola).
+Struktura modu³owa (np. admin, shared). Serwisy API kapsu³kuj¹ wywo³ania HTTP; komponenty korzystaj¹ z formularzy reaktywnych (walidacje min/max, wymagane pola).
+Doprecyzowano kontrakty REST – opisano wszystkie pola w DTO, podano przyk³adowe requesty i response’y dla metod GET, POST i PUT. Uwzglêdniono równie¿ obs³ugê b³êdów z kodami statusu i formatem ProblemDetails. Dodano sugestie wersjonowania API w przysz³oœci (np. /api/v2) w razie rozbudowy systemu.
 UX i walidacje
-Pola wymagane oznaczone, formaty liczbowe dla cen, komunikaty o bÅ‚Ä™dach przy focus out i submit. Widoki list obsÅ‚ugujÄ… paginacjÄ™, filtrowanie po kategorii/alergenach; edycja w formularzach dialogowych.
+Pola wymagane oznaczone, formaty liczbowe dla cen, komunikaty o b³êdach przy focus out i submit. Widoki list obs³uguj¹ paginacjê, filtrowanie po kategorii/alergenach; edycja w formularzach dialogowych.
 Mapowanie DTO
-Formularze â†’ DTO request â†’ API; odpowiedzi API â†’ modele widokÃ³w. Idempotencja aktualizacji przez PUT, czÄ™Å›ciowe zmiany przez PATCH tam, gdzie wskazane.
-7. BezpieczeÅ„stwo i zgodnoÅ›Ä‡
+Formularze ? DTO request ? API; odpowiedzi API ? modele widoków. Idempotencja aktualizacji przez PUT, czêœciowe zmiany przez PATCH tam, gdzie wskazane.
+Doprecyzowano kontrakty REST – opisano wszystkie pola w DTO, podano przyk³adowe requesty i response’y dla metod GET, POST i PUT. Uwzglêdniono równie¿ obs³ugê b³êdów z kodami statusu i formatem ProblemDetails. Dodano sugestie wersjonowania API w przysz³oœci (np. /api/v2) w razie rozbudowy systemu.
+7. Bezpieczeñstwo i zgodnoœæ
 Autoryzacja i role
-Wariant MVP: role Admin/User; kontrolery zabezpieczone atrybutami autoryzacji. Docelowo JWT Bearer z krÃ³tkim TTL i odÅ›wieÅ¼aniem.
+Wariant MVP: role Admin/User; kontrolery zabezpieczone atrybutami autoryzacji. Docelowo JWT Bearer z krótkim TTL i odœwie¿aniem.
 CORS i ochrona danych
-CORS ograniczony do domen frontendu. Sekrety w zmiennych Å›rodowiskowych. Walidacja rozmiarÃ³w uploadÃ³w (np. image_data). Sanitizacja danych tekstowych.
+CORS ograniczony do domen frontendu. Sekrety w zmiennych œrodowiskowych. Walidacja rozmiarów uploadów (np. image_data). Sanitizacja danych tekstowych.
+2
+
+
