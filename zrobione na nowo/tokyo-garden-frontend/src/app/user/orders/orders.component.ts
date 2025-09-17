@@ -100,7 +100,7 @@ export class OrdersComponent implements OnInit {
             this.router.navigate(['/login']);
             return;
         }
-        const userId = user.id;
+        //const userId = user.id;
 
         const createOrderPayload = (additionalInfo: string) => ({
             opcje_zamowienia: this.orderData.orderOptions,
@@ -108,13 +108,15 @@ export class OrdersComponent implements OnInit {
             laczna_cena: this.totalPrice + this.additionalFee,
             dodatkowe_informacje: additionalInfo,
             data_zamowienia: currentDate,
-            uzytkownik: { id: userId },
             pozycje: this.cart.map(item => ({
                 ilosc: item.ilosc,
                 cena: item.cena,
                 pozycja_menu: { id: item.id }
             }))
         });
+
+
+
 
         if (this.orderData.orderOptions === 'Na Dowóz') {
             const newAdres = {

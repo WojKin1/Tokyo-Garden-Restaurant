@@ -49,11 +49,20 @@ export class UserProfileComponent implements OnInit {
 
     // Wylogowanie u¿ytkownika
     logout() {
-        // Wyczyszczenie danych autoryzacyjnych
-        this.authService.logout();
+        this.authService.logout().subscribe({
+            next: () => {
+                this.user = null;
+                window.location.href = '/';
+            },
+            error: (err) => {
+                console.error('B³¹d podczas wylogowania:', err);
 
-        // Przekierowanie na stronê g³ówn¹
-        this.router.navigate(['/']);
+                this.user = null;
+                window.location.href = '/';
+            }
+        });
     }
+
+
 }
 
