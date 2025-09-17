@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
@@ -11,45 +12,67 @@ export interface LoginPayload {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Baza API – w env masz już /api na końcu
-  private readonly api = (environment as any).apiUrl || (environment as any).apiBaseUrl;
+  private readonly api =
+    (environment as any).apiUrl || (environment as any).apiBaseUrl;
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  /** Observable z aktualnym userem (lub null) */
+
+  /** Strumień z aktualnym userem (lub null) */
   currentUser$ = this.currentUserSubject.asObservable();
+
+  /** Getter kompatybilny ze starym użyciem: this.authService.currentUser */
+  get currentUser(): User | null {
+    return this.currentUserSubject.value;
+  }
 
   constructor(private http: HttpClient) {}
 
-  /** Wywołaj przy starcie aplikacji – odczyt zalogowanego usera z cookie-sesji */
+  /** Odczytaj użytkownika z sesji (cookie) i zapisz w pamięci */
   me(): Observable<User> {
-    return this.http.get<User>(`${this.api}/uzytkownicy/me`, { withCredentials: true })
-      .pipe(tap(u => this.currentUserSubject.next(u)));
+    return this.http
+      .get<User>(`${this.api}/uzytkownicy/me`, { withCredentials: true })
+      .pipe(tap((u) => this.currentUserSubject.next(u)));
   }
 
-  /** Logowanie – backend wystawi cookie, a my odkładamy usera w pamięci */
+  /** Wygodna metoda do przywrócenia sesji na starcie appki */
+  restoreSession(): void {
+    this.me().subscribe({
+      next: () => {},
+      error: () => {
+        // brak sesji – zostaw null
+        this.currentUserSubject.next(null);
+      },
+    });
+  }
+
+  /** Logowanie – backend ustawia cookie */
   login(payload: LoginPayload): Observable<User> {
-    return this.http.post<User>(`${this.api}/uzytkownicy/login`, payload, { withCredentials: true })
-      .pipe(tap(u => this.currentUserSubject.next(u)));
+    return this.http
+      .post<User>(`${this.api}/uzytkownicy/login`, payload, {
+        withCredentials: true,
+      })
+      .pipe(tap((u) => this.currentUserSubject.next(u)));
   }
 
-  /** Wylogowanie – backend zdejmie cookie, my czyścimy pamięć */
+  /** Wylogowanie – backend kasuje cookie */
   logout(): Observable<void> {
-    return this.http.post<void>(`${this.api}/uzytkownicy/logout`, {}, { withCredentials: true })
+    return this.http
+      .post<void>(`${this.api}/uzytkownicy/logout`, {}, { withCredentials: true })
       .pipe(tap(() => this.currentUserSubject.next(null)));
   }
 
-  /** Szybka informacja czy ktoś jest zalogowany */
+  /** Czy ktoś jest zalogowany */
   isAuthenticated(): boolean {
     return !!this.currentUserSubject.value;
   }
 
-  /** Czy bieżący user ma rolę Admin (z DTO: typUzytkownika) */
+  /** Czy bieżący user ma rolę Admin */
   isAdmin(): boolean {
     const role = this.currentUserSubject.value?.typUzytkownika;
     return (role ?? '').toLowerCase() === 'admin';
   }
 
-  /** Zwróć aktualnego usera synchronicznie (jeśli potrzebujesz) */
+  /** Dostęp synchroniczny – jeśli potrzebujesz */
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
