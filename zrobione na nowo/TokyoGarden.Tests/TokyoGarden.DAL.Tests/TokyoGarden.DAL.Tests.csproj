@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../TokyoGarden.DAL/TokyoGarden.DAL.csproj" /><ProjectReference Include="../TokyoGarden.Model/TokyoGarden.Model.csproj" />
+    <ProjectReference Include="..\..\TokyoGarden.DAL\TokyoGarden.DAL.csproj" />
+    <ProjectReference Include="..\..\TokyoGarden.Model\TokyoGarden.Model.csproj" />
   </ItemGroup>
 </Project>
