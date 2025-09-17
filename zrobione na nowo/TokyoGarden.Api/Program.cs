@@ -67,7 +67,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.Cookie.Name = "tg.auth";
         options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // Render = HTTPS
+        options.Cookie.SecurePolicy = CookieSecurePolicy.None;     // Render = HTTPS
         options.Cookie.SameSite = AspNetSameSiteMode.None;         // wymagane dla cross-site
 
         // Nie przekierowuj do HTML-owych stron logowania – SPA oczekuje 401/403
