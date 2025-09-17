@@ -1,175 +1,115 @@
-body {
-    font-family: Open Sans;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("/assets/logo2.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Nie stylujemy globalnie <body> w stylach komponentu */
+:host { display: block; }
+
+/* Tło strony + centrowanie karty */
+.auth-page{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:24px 16px;
+  background:
+    radial-gradient(transparent, rgba(0,0,0,.35)),
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    url('/assets/logo2.png') center/cover no-repeat fixed;
 }
 
-.container {
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 1);
-    width: 500px;
-    text-align: center;
+/* Panel logowania */
+.auth-card{
+  width:min(480px, 92vw);
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 25px 60px rgba(0,0,0,.35);
+  padding:24px 22px 28px;
 }
 
-.container img {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
+/* Logo */
+.brand{
+  display:block;
+  width:220px;
+  max-width:75%;
+  height:auto;
+  margin:0 auto 8px;
 }
 
-h2 {
-    margin-top: 0;
-    text-align: left;
-    padding-left: 80px;
+/* Nagłówek */
+h2{
+  margin:0 0 12px;
+  font-weight:700;
+  font-size:20px;
+  color:#1a1323;
+  text-align:left;
 }
 
-.form-group {
-    margin-bottom: 10px;
+/* Pola formularza */
+.form-group{ margin:12px 0; }
+
+.input{
+  width:100%;
+  height:42px;
+  padding:10px 12px 10px 40px;
+  border:1px solid #d7d0df;
+  border-radius:999px;
+  outline:0;
 }
 
-label {
-    display: inline-block;
-    margin-bottom: 5px;
+.row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:8px;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
-    width: 60%;
-    padding: 10px;
-    padding-left: 40px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
+.remember-label{ color:#5a4c69; font-size:14px; }
+
+/* Przycisk + link */
+.btn{
+  width:100%;
+  height:42px;
+  border:0;
+  border-radius:10px;
+  background:#4c2264;
+  color:#fff;
+  font-weight:600;
+  margin:10px 0 8px;
+  cursor:pointer;
 }
+.btn:hover{ background:#7a288a; }
 
-input[type="checkbox"] {
-    margin: 0;
-    margin-right: 5px;
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    background-color: white;
-    border: 1px solid #4c2264;
-    border-radius: 3px;
-    position: relative;
-    cursor: pointer;
+.link{
+  color:#4c2264;
+  text-decoration:none;
+  display:inline-block;
 }
+.link:hover{ text-decoration:underline; }
 
-input[type="checkbox"]:checked {
-    background-color: #4c2264;
-    border-color: #4c2264;
+/* Przełącznik "zapamiętaj" */
+.toggle{ position:relative; width:36px; height:22px; }
+.toggle-checkbox{ opacity:0; width:0; height:0; }
+.toggle-slider{
+  position:absolute; inset:0;
+  border-radius:999px;
+  background:#ccc;
+  transition:background .25s;
 }
-
-input[type="checkbox"]:checked:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 3px;
-    width: 4px;
-    height: 8px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+.toggle-slider::before{
+  content:"";
+  position:absolute;
+  width:18px; height:18px;
+  left:2px; top:2px;
+  background:#fff;
+  border-radius:50%;
+  transition:transform .25s;
 }
+.toggle-checkbox:checked + .toggle-slider{ background:#4c2264; }
+.toggle-checkbox:checked + .toggle-slider::before{ transform:translateX(14px); }
 
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+/* Błędy */
+#errors{ list-style:none; padding:0; margin:0 0 8px; }
+.error{ color:#b00020; font-size:14px; margin:4px 0; }
+
+/* Drobne poprawki dla mniejszych ekranów */
+@media (max-width:420px){
+  .brand{ width:180px; }
+  .auth-card{ padding:18px 16px 22px; }
+  h2{ font-size:18px; }
 }
-
-.checkbox-group label {
-    display: inline-block;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
-.checkbox-group label:first-child {
-    margin-left: 0;
-}
-
-.checkbox-group label:last-child {
-    margin-right: 0;
-}
-
-
-button {
-    background-color: #4c2264;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 70%;
-    margin-bottom: 20px;
-}
-
-button:hover {
-    background-color: #7a288a;
-}
-
-a {
-    color: #4c2264;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.toggle {
-    position: relative;
-    display: inline-block;
-    width: 30px;
-    height: 20px;
-    margin: 0;
-}
-
-.toggle-checkbox {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    width: 30px;
-    height: 20px;
-    background-color: #ccc;
-    transition: background-color 0.4s;
-    border-radius: 20px;
-}
-
-.toggle-slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: transform 0.4s;
-    border-radius: 50%;
-}
-
-.toggle-checkbox:checked + .toggle-slider {
-    background-color: #4c2264;
-}
-
-.toggle-checkbox:checked + .toggle-slider:before {
-    transform: translateX(10px);
-}
-

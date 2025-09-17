@@ -1,30 +1,53 @@
-<div class="container">
-  <img src="/assets/logo.png" alt="Logo">
-  <h2>Logowanie</h2>
+<div class="auth-page">
+  <div class="auth-card">
+    <img src="/assets/logo.png" alt="Logo" class="brand" />
+    <h2>Logowanie</h2>
 
-  <ul id="errors" *ngIf="errors.length">
-    <li *ngFor="let error of errors" class="error">{{ error }}</li>
-  </ul>
+    <ul id="errors" *ngIf="errors.length">
+      <li *ngFor="let error of errors" class="error">{{ error }}</li>
+    </ul>
 
-  <form (ngSubmit)="login()" #loginForm="ngForm">
-    <div class="form-group">
-      <input type="text" name="login" [(ngModel)]="loginData.login" required placeholder="Login">
-    </div>
-    <div class="form-group">
-      <input type="password" name="password" [(ngModel)]="loginData.password" required placeholder="Hasło">
-    </div>
-    <div class="form-group checkbox-group">
-      <label class="toggle">
-        <input type="checkbox" name="rememberMe" [(ngModel)]="loginData.rememberMe" class="toggle-checkbox">
-        <span class="toggle-slider"></span>
-      </label>
-      <label>Zapamiętaj mnie</label>
-    </div>
-    <div class="form-group">
-      <button type="submit" [disabled]="loading">{{ loading ? 'Logowanie...' : 'Zaloguj' }}</button>
-    </div>
-    <div class="form-group">
-      <a routerLink="/register">Utwórz konto</a>
-    </div>
-  </form>
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="form-group">
+        <input
+          class="input"
+          type="text"
+          name="login"
+          [(ngModel)]="loginData.login"
+          required
+          placeholder="Login"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          class="input"
+          type="password"
+          name="password"
+          [(ngModel)]="loginData.password"
+          required
+          placeholder="Hasło"
+        />
+      </div>
+
+      <div class="form-group row">
+        <label class="toggle">
+          <input
+            type="checkbox"
+            name="rememberMe"
+            [(ngModel)]="loginData.rememberMe"
+            class="toggle-checkbox"
+          />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="remember-label">Zapamiętaj mnie</span>
+      </div>
+
+      <button class="btn" type="submit" [disabled]="loading">
+        {{ loading ? 'Logowanie...' : 'Zaloguj' }}
+      </button>
+
+      <a class="link" routerLink="/register">Utwórz konto</a>
+    </form>
+  </div>
 </div>
