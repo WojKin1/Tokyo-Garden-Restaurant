@@ -6,6 +6,12 @@ using TokyoGarden.IBL;
 using TokyoGarden.Model;
 using BCrypt.Net;
 
+// DODANE:
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+
 namespace TokyoGarden.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -95,11 +101,57 @@ namespace TokyoGarden.Api.Controllers
 
         // Autoryzuje użytkownika na podstawie przesłanych danych logowania
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest req)
         {
             var user = await _service.GetByUsernameAsync(req.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.haslo))
                 return Unauthorized("Błędny login lub hasło");
+
+            // DODANE: zbuduj tożsamość i WYSTAW COOKIE (cookie-auth)
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                new Claim(ClaimTypes.Name, user.nazwa_uzytkownika ?? string.Empty),
+                new Claim(ClaimTypes.Role, user.typ_uzytkownika ?? "Uzytkownik")
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            var authProps = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7),
+                AllowRefresh = true
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+
+            // Zwróć DTO (front może go zapisać w localStorage, ale cookie trzyma sesję)
+            return Ok(user.ToDto());
+        }
+
+        // DODANE: wylogowanie – usuń cookie autoryzacyjne
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return NoContent();
+        }
+
+        // DODANE: zwraca bieżącego zalogowanego użytkownika na podstawie cookie
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> Me()
+        {
+            var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(idStr)) return Unauthorized();
+
+            if (!int.TryParse(idStr, out var id)) return Unauthorized();
+
+            var user = await _service.GetByIdAsync(id);
+            if (user == null) return Unauthorized();
 
             return Ok(user.ToDto());
         }

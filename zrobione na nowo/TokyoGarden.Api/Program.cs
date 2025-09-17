@@ -1,16 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Program.cs
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
+
 using TokyoGarden.BL;
 using TokyoGarden.DAL;
 using TokyoGarden.IBL;
 using TokyoGarden.IDAL;
 using TokyoGarden.Model;
 using BCrypt.Net;
-using Microsoft.AspNetCore.Http;
+
+// >>> ALIAS – usuwa konflikt nazw SameSiteMode
+using AspNetSameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DB
+// =========================
+//  DB (PostgreSQL + EF Core)
+// =========================
 builder.Services.AddDbContext<DbTokyoGarden>(opt =>
     opt.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -20,7 +29,9 @@ builder.Services.AddDbContext<DbTokyoGarden>(opt =>
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-// Controllers + JSON
+// =========================
+//  Controllers + JSON
+// =========================
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
@@ -28,35 +39,61 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-// CORS z credkami (cookie). Upewnij się, że tu jest domena frontu z Render.
+// =========================
+//  CORS (pozwól na ciasteczka z frontu Render)
+//  >>> PODAJ domenę swojego frontu (Static Site na Renderze)
 var allowedOrigins = new[]
 {
-    "https://tokyo-garden-restaurant-1.onrender.com", // FRONT (Static Site)
-    "http://localhost:4200"                            // dev
+    "https://tokyo-garden-restaurant-1.onrender.com"
 };
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
         policy.WithOrigins(allowedOrigins)
-              .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials() // <<< niezbędne dla cookie
+              .AllowAnyMethod()
+              .AllowCredentials()
     );
 });
 
-// === SESSION (jeśli logowanie trzymasz w Session lub chcesz cookie cross-site) ===
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
+// =========================
+//  Cookie Authentication
+// =========================
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "tg.auth";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // https na Render
+        options.Cookie.SameSite = AspNetSameSiteMode.None;        // >>> ważne dla cross-site
+
+        // Nie przekierowuj na /Account/Login – zwróć 401/403 do SPA
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = ctx =>
+            {
+                ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            },
+            OnRedirectToAccessDenied = ctx =>
+            {
+                ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+// Polityka ciasteczek – minimalny SameSite None
+builder.Services.AddCookiePolicy(options =>
 {
-    options.Cookie.Name = "tg.session";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.None;            // cross-site
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // https only
-    options.IdleTimeout = TimeSpan.FromHours(12);
+    options.MinimumSameSitePolicy = AspNetSameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always;
 });
 
-// DI
+// =========================
+//  DI – repozytoria i serwisy
+// =========================
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUzytkownikRepository, UzytkownikRepository>();
 builder.Services.AddScoped<IPozycjeMenuRepository, PozycjeMenuRepository>();
@@ -75,16 +112,23 @@ builder.Services.AddScoped<IPozycjeZamowieniaService, PozycjeZamowieniaService>(
 builder.Services.AddScoped<IAlergenyService, AlergenyService>();
 builder.Services.AddScoped<IAdresyService, AdresyService>();
 
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// =========================
+//  Build
+// =========================
 var app = builder.Build();
 
-// Migracje + seed (jak miałeś)
+// =========================
+//  Seed (migracje + dane startowe)
+// =========================
 using (var scope = app.Services.CreateScope())
 {
     var sp = scope.ServiceProvider;
     var db = sp.GetRequiredService<DbTokyoGarden>();
+
     db.Database.Migrate();
 
     if (!db.KategorieMenu.Any())
@@ -92,6 +136,7 @@ using (var scope = app.Services.CreateScope())
         var sushi = new Kategorie { nazwa_kategorii = "Sushi" };
         var ramen = new Kategorie { nazwa_kategorii = "Ramen" };
         var napoje = new Kategorie { nazwa_kategorii = "Napoje" };
+
         db.KategorieMenu.AddRange(sushi, ramen, napoje);
         db.SaveChanges();
 
@@ -100,6 +145,7 @@ using (var scope = app.Services.CreateScope())
             new Pozycje_Menu { nazwa_pozycji = "Ramen Miso", opis = "Bulion miso", cena = 35m, skladniki = "makaron, bulion miso, wieprzowina", kategoria_menu = ramen },
             new Pozycje_Menu { nazwa_pozycji = "Zielona herbata", opis = "Japońska herbata", cena = 10m, skladniki = "herbata", kategoria_menu = napoje }
         );
+
         db.SaveChanges();
     }
 
@@ -124,35 +170,23 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Swagger (zostawiamy zawsze)
+// =========================
+//  Middleware pipeline
+// =========================
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// HTTPS
 app.UseHttpsRedirection();
 
-// Statyki (wwwroot)
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Polityka cookies – wymusza None+Secure gdy trzeba
-app.UseCookiePolicy(new CookiePolicyOptions
-{
-    MinimumSameSitePolicy = SameSiteMode.None,
-    Secure = CookieSecurePolicy.Always
-});
-
-// CORS z credkami – PRZED session/auth
+app.UseCookiePolicy();          // <<< przed CORS + Auth
 app.UseCors("AllowFrontend");
 
-// Session – PRZED auth, aby kontrolery miały dostęp do sesji
-app.UseSession();
-
-// Auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-// API
 app.MapControllers();
 
 app.Run();
