@@ -1,34 +1,78 @@
-<div class="container">
-  <img src="assets/logo.png" alt="Logo">
-  <h2>Rejestracja</h2>
+<section class="register-page">
+  <div class="register-card">
+    <img class="brand" src="assets/logo.png" alt="Tokyo Garden" />
 
-  <ul id="errors">
-    <li *ngFor="let error of errors" class="error">{{ error }}</li>
-  </ul>
+    <h2>Rejestracja</h2>
 
-  <form (ngSubmit)="register()" #registerForm="ngForm">
-    <div class="form-group">
-      <input type="text" name="nazwaUzytkownika" [(ngModel)]="registerData.nazwaUzytkownika" required placeholder="Nazwa użytkownika">
-    </div>
-    <div class="form-group">
-      <input type="password" name="haslo1" [(ngModel)]="registerData.haslo1" required placeholder="Hasło">
-    </div>
-    <div class="form-group">
-      <input type="password" name="haslo2" [(ngModel)]="registerData.haslo2" required placeholder="Powtórz hasło">
-    </div>
-    <div class="form-group">
-      <input type="tel" name="phone" [(ngModel)]="registerData.phone" required placeholder="Telefon" pattern="[0-9]{9}">
-    </div>
+    <ul id="errors" *ngIf="errors?.length">
+      <li *ngFor="let error of errors" class="error">{{ error }}</li>
+    </ul>
 
-    <div class="form-group checkbox-group">
-      <input type="checkbox" id="regulamin" name="regulamin" [(ngModel)]="registerData.regulamin">
-      <label for="regulamin">Akceptuję regulamin</label>
-    </div>
+    <form (ngSubmit)="register()" #registerForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="nazwaUzytkownika">Nazwa użytkownika</label>
+        <input
+          id="nazwaUzytkownika"
+          type="text"
+          name="nazwaUzytkownika"
+          [(ngModel)]="registerData.nazwaUzytkownika"
+          required
+          placeholder="np. janek"
+        />
+      </div>
 
-    <a href="/Regulamin.txt" target="_blank">Przeczytaj regulamin</a>
+      <div class="form-group">
+        <label for="haslo1">Hasło</label>
+        <input
+          id="haslo1"
+          type="password"
+          name="haslo1"
+          [(ngModel)]="registerData.haslo1"
+          required
+          placeholder="Hasło"
+        />
+      </div>
 
-    <div class="form-group">
-      <button type="submit">Zarejestruj</button>
-    </div>
-  </form>
-</div>
+      <div class="form-group">
+        <label for="haslo2">Powtórz hasło</label>
+        <input
+          id="haslo2"
+          type="password"
+          name="haslo2"
+          [(ngModel)]="registerData.haslo2"
+          required
+          placeholder="Powtórz hasło"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Telefon (9 cyfr)</label>
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          [(ngModel)]="registerData.phone"
+          required
+          pattern="[0-9]{9}"
+          placeholder="np. 501234567"
+        />
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input
+          id="regulamin"
+          type="checkbox"
+          name="regulamin"
+          [(ngModel)]="registerData.regulamin"
+        />
+        <label for="regulamin">Akceptuję regulamin</label>
+      </div>
+
+      <p class="policy-link">
+        <a href="/Regulamin.txt" target="_blank" rel="noopener">Przeczytaj regulamin</a>
+      </p>
+
+      <button type="submit" class="btn-primary">Zarejestruj</button>
+    </form>
+  </div>
+</section>

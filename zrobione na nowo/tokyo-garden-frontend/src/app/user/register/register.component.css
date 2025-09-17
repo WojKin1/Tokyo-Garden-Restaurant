@@ -1,108 +1,124 @@
-body {
-    font-family: Open Sans;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("/assets/logo2.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Pełnoekranowa sekcja tylko dla tego komponentu (nie używamy body tutaj) */
+.register-page {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  /* własne tło dla strony rejestracji */
+  background:
+    linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.35)),
+    url("/assets/logo2.png") center / cover no-repeat fixed;
 }
 
-.container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 500px;
-    text-align: center;
-    padding: 20px;
+/* Karta z formularzem */
+.register-card {
+  width: min(520px, 100%);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px 22px;
+  text-align: center;
+  z-index: 1; /* nad ewentualnymi globalnymi elementami tła */
 }
 
-.card {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    margin-top: 20px;
+.brand {
+  width: 84px;
+  height: auto;
+  margin-bottom: 6px;
+  user-select: none;
 }
 
-.card-header {
-    background-color: black;
-    color: #ffffff;
-    padding: 15px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+h2 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 700;
 }
 
-.card-body {
-    padding: 20px;
+/* Lista błędów */
+#error, #errors {
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.error {
+  color: #dc3545;
+  font-size: 14px;
 }
 
+/* Pola formularza */
 .form-group {
-    margin-bottom: 20px;
+  text-align: left;
+  margin: 12px 0;
 }
 
 label {
-    font-weight: bold;
-}
-
-.error {
-    color: #dc3545;
-    font-size: 14px;
-}
-
-.btn-primary {
-    background-color: black;
-    border-color: black;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.btn-primary:hover {
-    background-color: black;
-    border-color: black;
-}
-
-.form-check-input {
-    margin-top: 0.25rem;
-}
-
-.form-check-label {
-    margin-left: 5px;
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    margin-top: 10px;
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  background: #fff;
+}
+
+input:focus {
+  border-color: #8a2be2;
+  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.15);
 }
 
 .checkbox-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-top: 8px;
 }
 
-.checkbox-group label {
-    display: inline-block;
-    margin-right: 20px;
-    margin-left: 20px;
+.policy-link {
+  margin: 6px 0 14px;
+}
+.policy-link a {
+  color: #6a2adf;
+  text-decoration: none;
+}
+.policy-link a:hover {
+  text-decoration: underline;
 }
 
-.checkbox-group label:first-child {
-    margin-left: 0;
+/* Przycisk */
+.btn-primary {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  background: #000;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform .06s ease, opacity .2s ease;
+}
+.btn-primary:hover {
+  opacity: .9;
+}
+.btn-primary:active {
+  transform: translateY(1px);
 }
 
-.checkbox-group label:last-child {
-    margin-right: 0;
+/* Drobne poprawki responsywne */
+@media (max-width: 380px) {
+  .register-card {
+    padding: 20px 16px;
+  }
 }
