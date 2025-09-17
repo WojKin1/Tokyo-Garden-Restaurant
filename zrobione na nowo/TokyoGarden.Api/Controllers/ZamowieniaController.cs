@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TokyoGarden.Api.DTOs;
@@ -55,26 +57,30 @@ namespace TokyoGarden.Api.Controllers
 
 
         [HttpPost]
+        [Authorize] // wymaga zalogowania
         public async Task<IActionResult> Create([FromBody] Zamowienia item)
         {
-            if (item.uzytkownik != null && item.uzytkownik.id > 0)
-            {
-                var currentUser = await _userService.GetByIdAsync(item.uzytkownik.id);
-                if (currentUser != null)
-                    item.uzytkownik = currentUser;
-                else
-                    return BadRequest("Nie znaleziono użytkownika o podanym ID.");
-            }
-            else
-            {
-                return BadRequest("Brak danych użytkownika w zamówieniu.");
-            }
+            // Pobierz ID zalogowanego użytkownika z Claims
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out var userId))
+                return Unauthorized("Brak zalogowanego użytkownika.");
+
+            var currentUser = await _userService.GetByIdAsync(userId);
+            if (currentUser == null)
+                return Unauthorized("Nie znaleziono zalogowanego użytkownika.");
+
+            // przypisz usera z sesji (NIE z requestu)
+            item.uzytkownik = currentUser;
             item.status_zamowienia = "Nowy";
 
             await _service.AddAsync(item);
             var fresh = await _service.GetByIdWithDetailsAsync(item.id);
+
             return CreatedAtAction(nameof(GetById), new { id = item.id }, fresh.ToDto());
         }
+
+
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Model.Zamowienia item)

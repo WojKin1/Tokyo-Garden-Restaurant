@@ -121,11 +121,15 @@ namespace TokyoGarden.Api.Controllers
 
         // LOGOUT -> usuwa cookie
         [HttpPost("logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
+            // Zdejmuje cookie sesyjne z przeglądarki
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return NoContent();
+
+            return Ok(new { message = "Wylogowano" });
         }
+
 
         // BIEŻĄCY UŻYTKOWNIK -> wymaga cookie (withCredentials po stronie frontu)
         [HttpGet("me")]
