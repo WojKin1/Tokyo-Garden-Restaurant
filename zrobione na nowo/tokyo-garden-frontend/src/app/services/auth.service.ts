@@ -1,37 +1,60 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UzytkownikDTO } from '../models/uzytkownik-dto';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+export interface LoggedUser {
+  id: number;
+  nazwaUzytkownika: string;
+  typUzytkownika: string;
+  telefon?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private storageKey = 'currentUser';
+  private readonly base = environment.apiUrl; // np. https://.../api
+  private currentUserSubject = new BehaviorSubject<LoggedUser | null>(this.getStoredUser());
+  currentUser$ = this.currentUserSubject.asObservable();
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    get currentUser(): any {
-        const userStr = localStorage.getItem(this.storageKey) || sessionStorage.getItem(this.storageKey);
-        return userStr ? JSON.parse(userStr) : null;
-    }
+  private getStoredUser(): LoggedUser | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      return raw ? (JSON.parse(raw) as LoggedUser) : null;
+    } catch { return null; }
+  }
 
-    isAdmin(): boolean {
-        return this.currentUser?.typUzytkownika === 'Admin';
-    }
+  private setUser(u: LoggedUser | null) {
+    if (u) localStorage.setItem('currentUser', JSON.stringify(u));
+    else localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(u);
+  }
 
-    login(username: string, password: string): Observable<UzytkownikDTO> {
-        return this.http.post<UzytkownikDTO>('/api/uzytkownicy/login', { Username: username, Password: password })
-            .pipe(
-                tap(user => {
-                    if (user) {
-                        localStorage.setItem(this.storageKey, JSON.stringify(user));
-                    }
-                })
-            );
-    }
+  login(nazwa_uzytkownika: string, haslo: string) {
+    // Backend: POST /api/Uzytkownicy/login { Username, Password }
+    return this.http.post<LoggedUser>(`${this.base}/Uzytkownicy/login`, {
+      username: nazwa_uzytkownika,
+      password: haslo
+    }).pipe(map(u => { this.setUser(u); return u; }));
+  }
 
-    logout() {
-        localStorage.removeItem(this.storageKey);
-        sessionStorage.removeItem(this.storageKey);
-    }
+  logout() {
+    this.http.post(`${this.base}/Uzytkownicy/logout`, {}, { responseType: 'text' }).subscribe();
+    this.setUser(null);
+  }
+
+  /** Przywróć sesję z cookie po odświeżeniu strony */
+  restoreSession() {
+    this.http.get<LoggedUser>(`${this.base}/Uzytkownicy/me`)
+      .pipe(
+        map(u => { this.setUser(u); return u; }),
+        catchError(() => { this.setUser(null); return of(null); })
+      )
+      .subscribe();
+  }
+
+  get currentUser(): LoggedUser | null {
+    return this.currentUserSubject.value;
+  }
 }

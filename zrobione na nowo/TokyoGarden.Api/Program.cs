@@ -40,11 +40,13 @@ builder.Services.AddControllers()
     });
 
 // =========================
-//  CORS (pozwól na ciasteczka z frontu Render)
-//  >>> PODAJ domenę swojego frontu (Static Site na Renderze)
+//  CORS – dopuszczamy ciasteczka z frontu
+//  (wpisz tu wszystkie prawdziwe domeny frontu)
+// =========================
 var allowedOrigins = new[]
 {
-    "https://tokyo-garden-restaurant-1.onrender.com"
+    "https://tokyo-garden-restaurant-1.onrender.com",
+    "http://localhost:4200"
 };
 
 builder.Services.AddCors(options =>
@@ -65,10 +67,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.Cookie.Name = "tg.auth";
         options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // https na Render
-        options.Cookie.SameSite = AspNetSameSiteMode.None;        // >>> ważne dla cross-site
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // Render = HTTPS
+        options.Cookie.SameSite = AspNetSameSiteMode.None;         // wymagane dla cross-site
 
-        // Nie przekierowuj na /Account/Login – zwróć 401/403 do SPA
+        // Nie przekierowuj do HTML-owych stron logowania – SPA oczekuje 401/403
         options.Events = new CookieAuthenticationEvents
         {
             OnRedirectToLogin = ctx =>
@@ -84,7 +86,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         };
     });
 
-// Polityka ciasteczek – minimalny SameSite None
+// Polityka ciasteczek – minimalnie None + Secure
 builder.Services.AddCookiePolicy(options =>
 {
     options.MinimumSameSitePolicy = AspNetSameSiteMode.None;
@@ -122,7 +124,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // =========================
-//  Seed (migracje + dane startowe)
+/*  Seed (migracje + dane startowe) */
 // =========================
 using (var scope = app.Services.CreateScope())
 {
@@ -181,7 +183,7 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.UseCookiePolicy();          // <<< przed CORS + Auth
+app.UseCookiePolicy();          // ważne: przed CORS/Authentication
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
